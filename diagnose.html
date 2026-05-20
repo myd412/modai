@@ -70,10 +70,24 @@ body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; background:#f5
 .light-red { background:#e74c3c; }
 .report-section { background:#fff; border-radius:12px; margin:12px 24px; padding:20px; }
 .report-section h3 { font-size:15px; font-weight:500; margin-bottom:12px; color:#1a1a2e; }
-.report-section p { font-size:14px; line-height:1.7; color:#555; margin-bottom:10px; }
+.report-section p { font-size:15px; line-height:2; color:#333; margin-bottom:10px; }
 .report-section .finding { background:#fff8e1; border-left:3px solid #f39c12; padding:12px 16px; margin:10px 0; font-size:13px; line-height:1.6; border-radius:0 8px 8px 0; }
 .report-section .finding.green { background:#e8f5e9; border-color:#27ae60; }
 .report-section .finding.red { background:#ffebee; border-color:#e74c3c; }
+
+/* Report typography improvements */
+.report-section .sec-title { font-size:17px; font-weight:600; color:#1a1a2e; margin:24px 0 12px; padding-bottom:8px; border-bottom:1px solid #eee; }
+.report-section .sec-title:first-child { margin-top:0; }
+.report-section .warn-box { color:#c0392b; background:#fff5f5; border-left:3px solid #e74c3c; padding:14px 16px; margin:14px 0; font-size:14px; line-height:1.9; border-radius:0 10px 10px 0; }
+.report-section .overview-num { font-size:15px; line-height:2.2; color:#333; margin-bottom:6px; padding-left:4px; }
+.report-section .overview-lead { font-size:17px; font-weight:500; color:#1a1a2e; line-height:2; margin-bottom:14px; }
+.report-section .overview-warn { font-size:14px; line-height:2; color:#c0392b; margin:10px 0; padding:10px 14px; background:#fff5f5; border-radius:8px; }
+.report-section .closing { font-size:15px; line-height:2; color:#888; margin-bottom:8px; }
+
+/* QR section */
+.qr-section { background:#fff; border-radius:12px; margin:12px 24px; padding:24px; text-align:center; }
+.qr-section p { font-size:14px; color:#666; margin-bottom:14px; }
+.qr-section img { width:180px; height:180px; border-radius:8px; object-fit:cover; }
 
 .report-blur { position:relative; }
 .report-blur::after { content:' '; position:absolute; inset:0; background:rgba(255,255,255,0.7); backdrop-filter:blur(8px); border-radius:12px; display:flex; align-items:center; justify-content:center; }
@@ -163,7 +177,7 @@ body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; background:#f5
     <div class="lead-sub">填写以下信息，即可免费查看完整报告和针对性建议</div>
     <form id="lead-form" method="POST" action="https://formsubmit.co/03360317@163.com" target="form-target" onsubmit="handleLeadSubmit()">
       <input type="hidden" name="_subject" value="【墨岱科技】新留资：企业诊断报告">
-      <input type="hidden" name="_next" id="form-redirect" value="">
+      <input type="hidden" name="_next" id="form-redirect" value="https://myd412.github.io/modai/diagnose.html">
       <input type="hidden" name="sales_score" id="hf-sales">
       <input type="hidden" name="ops_score" id="hf-ops">
       <input type="hidden" name="fin_score" id="hf-fin">
@@ -420,8 +434,8 @@ function selectOption(idx) {
 
 function nextQuestion() {
   if (answers[currentQ] < 0) return;
-  // Check for probe
-  if (!probeAnswers[currentQ] && probeAnswers[currentQ] !== -1 && showProbe(currentQ)) {
+  // Check for probe (probeAnswers[currentQ] === undefined means not yet shown)
+  if (probeAnswers[currentQ] === undefined && showProbe(currentQ)) {
     return;
   }
   currentQ++;
@@ -470,8 +484,8 @@ function buildArticle(partial) {
   let rSales=rateLine('sales'), rOps=rateLine('ops'), rFin=rateLine('fin');
   let lines=[{n:'业绩线',s:scores.sales,m:scoreMax.sales,r:rSales},{n:'交付线',s:scores.ops,m:scoreMax.ops,r:rOps},{n:'财务线',s:scores.fin,m:scoreMax.fin,r:rFin}];
 
-  let scoreCard='<div class="report-score-cards fade-in" style="margin:16px 0;">';
-  lines.forEach(c=>{ scoreCard+='<div class="card"><div class="label">'+c.n+'</div><div class="score">'+c.s+'<span style="font-size:14px;color:#bbb">/'+c.m+'</span></div><div class="light light-'+c.r+'"></div></div>'; });
+  let scoreCard='<div class="report-score-cards fade-in">';
+  lines.forEach(c=>{ scoreCard+='<div class="card"><div class="label">'+c.n+'</div><div class="score">'+c.s+'<span>/'+c.m+'</span></div><div class="light light-'+c.r+'"></div></div>'; });
   scoreCard+='</div>';
 
   let header='<div class="report-header fade-in"><div class="report-type-tag">'+getOverallType()+'</div><h2>小微企业诊断报告</h2><div class="date">'+new Date().toLocaleDateString('zh-CN')+'</div></div>';
@@ -486,27 +500,27 @@ function buildArticle(partial) {
   if(answers[29]===0||answers[29]===3){ painPoints.push('企业经营对个人依赖度过高，存在结构性风险'); warnings.push('老板成了最大天花板——不是能力不够，是精力有上限。'); }
   if(painPoints.length===0) painPoints.push('三条业务线整体运转正常，暂未发现明显风险点。稳定不等于没问题——可能有被忽略的优化机会');
 
-  overview.push('<p style="font-size:17px;font-weight:500;color:#1a1a2e;line-height:2;margin-bottom:16px;">根据你的答题情况，我们识别出<strong>'+painPoints.length+'个值得关注的方面</strong>：</p>');
-  painPoints.forEach((pp,i)=>{ overview.push('<p style="font-size:15px;line-height:2;color:#333;margin-bottom:10px;"><strong>'+(i+1)+'.</strong> '+pp+'</p>'); });
-  if(warnings.length>0) overview.push('<p style="font-size:14px;line-height:2;color:#c0392b;margin:8px 0;">'+warnings.join(' ')+'</p>');
+  // Overview section HTML
+  let overviewHtml = '<div class="overview-lead">根据你的答题情况，我们识别出<strong>'+painPoints.length+'个值得关注的方面</strong>：</div>';
+  painPoints.forEach((pp,i)=>{ overviewHtml += '<div class="overview-num"><strong>'+(i+1)+'.</strong> '+pp+'</div>'; });
+  if(warnings.length>0) overviewHtml += '<div class="overview-warn">'+warnings.join(' ')+'</div>';
 
   if(partial){
     let h=header+scoreCard;
-    overview.forEach(p=>{ h+='<div class="report-section fade-in" style="padding:0 24px;margin:8px 0;"><div style="font-size:15px;line-height:2;color:#333;">'+p+'</div></div>'; });
-    h+='<div class="report-section report-blur" style="position:relative;min-height:200px;padding:24px;">';
-    h+='<h3 style="font-size:16px;">详细拆解与行动建议</h3>';
-    h+='<p style="color:#666;line-height:1.8;">每条线的深度分析 · 问题根源与连锁影响 · 针对性改善建议</p>';
+    h+='<div class="report-section fade-in">'+overviewHtml+'</div>';
+    h+='<div class="report-section report-blur" style="position:relative;min-height:200px;">';
+    h+='<h3>详细拆解与行动建议</h3>';
+    h+='<p style="color:#888;">每条线的深度分析 · 问题根源与连锁影响 · 针对性改善建议</p>';
     h+='<div class="report-lock"><div class="lock-icon">🔒</div><div class="lock-text">填写信息，免费查看完整报告</div><button class="unlock-btn" onclick="showLeadForm()">免费查看完整报告</button></div></div>';
     return h;
   }
 
   let h=header+scoreCard;
-  overview.push('<p style="font-size:15px;line-height:2;color:#333;margin-top:16px;">下面是对每条线的详细拆解。</p>');
-  overview.forEach(p=>{ h+='<div class="report-section fade-in" style="padding:0 24px;margin:8px 0;"><div style="font-size:15px;line-height:2;color:#333;">'+p+'</div></div>'; });
+  h+='<div class="report-section fade-in">'+overviewHtml+'<div class="overview-num" style="color:#888;margin-top:12px;">下面是对每条线的详细拆解。</div></div>';
 
   let sales=[], ops=[], fin=[], boss=[];
 
-  sales.push('<p><strong>一、客户从哪来——业绩线</strong></p>');
+  sales.push('<div class="sec-title">一、客户从哪来 —— 业绩线</div>');
   if(rSales==='green'){
     sales.push('<p>获客渠道比较多元，客户结构不算高度集中，口碑转介绍也在运转。相比很多同规模企业依赖老板个人人脉的情况，这个基础是好的。</p><p>可以关注的是：老客户维护是否有系统化机制、转化率是否有进一步提升空间。这些不是眼下最紧迫的事，但做好了能让增长更可控。</p>');
   } else if(rSales==='yellow'){
@@ -518,10 +532,10 @@ function buildArticle(partial) {
     if(answers[4]===0&&answers[3]===0) sales.push('<p>两个问题叠加，形成了比较脆弱的局面：<strong>获客高度依赖你个人，且最大的客户占了相当高的营收比例</strong>。你和大客户都成了运营的单点——任何一方出状况，都可能对业务造成较大冲击。不是一定会发生，但抗风险能力确实偏弱。</p>');
     if(answers[10]===0&&answers[11]===0) sales.push('<p>为拿单而过度承诺，容易形成恶性循环：短期促成成交→交货做不到→客户满意度降→口碑受影响→新客更难→更需要靠承诺来抢单。如果这个循环已经在运转，需要尽快打断。</p>');
     if(answers[8]===0) sales.push('<p>老客户流失率偏高也需要正视。客户做完一单不回头，要么是交付没达到预期，要么是维护没跟上。结果是你不断失去存量客户，同时要花更多成本去获取新客。</p>');
-    sales.push('<p class="warn" style="color:#c0392b;background:#fff5f5;border-left:3px solid #e74c3c;padding:12px 16px;margin:12px 0;font-size:14px;line-height:1.8;border-radius:0 8px 8px 0;"><strong>如果持续不改善：</strong>客户集中度过高+过度承诺+老客流失会互相放大。客户越少越不敢挑、越不敢挑越容易接到不合适的单、越做越差客户越少——可能在某个节点加速恶化，到了那时再想挽回，代价会大很多。</p>');
+    sales.push('<div class="warn-box"><strong>如果持续不改善：</strong>客户集中度过高+过度承诺+老客流失会互相放大。客户越少越不敢挑、越不敢挑越容易接到不合适的单、越做越差客户越少——可能在某个节点加速恶化，到了那时再想挽回，代价会大很多。</div>');
   }
 
-  ops.push('<p><strong>二、活能不能干出来——交付线</strong></p>');
+  ops.push('<div class="sec-title">二、活能不能干出来 —— 交付线</div>');
   if(rOps==='green'){
     ops.push('<p>交付目前比较稳。产能利用合理，排产有计划，质量波动不大。对怎么把活做好有基本把控。</p><p>值得思考的是：现在的稳是靠你盯得紧，还是靠流程本身在跑。如果是前者，建议逐步把关键流程书面化——让体系来保障，而不是靠个人精力。</p>');
   } else if(rOps==='yellow'){
@@ -533,10 +547,10 @@ function buildArticle(partial) {
     if(answers[15]===0&&(answers[14]>=2||answers[13]>=2)) ops.push('<p>交付状态比较吃紧：车间积压偏多、排产缺少系统计划、交期偏长。这种状态下，任何小意外——缺料、病假、设备故障——都可能打乱整个节奏。建议先把排产作为优先突破口，哪怕从一块白板开始记录当前任务和预计完成时间。</p>');
     if(answers[16]===0) ops.push('<p>质量问题频发不能忽视。每次返工，损失的不只是材料和时间，更在消耗客户信任。客户嘴上不一定说，但心里记着账。次数多了，信任就没了。</p>');
     if(answers[19]===0&&answers[18]===0&&answers[17]===0) ops.push('<p>更深层的问题是：运营高度依赖个人而非流程体系。新员工上手周期长、没有书面规范、核心人员不可替代——这不是人不够好的问题，是体系建设没跟上。建议在不太忙的时候，把关键工序的标准作业流程写下来。</p>');
-    ops.push('<p class="warn" style="color:#c0392b;background:#fff5f5;border-left:3px solid #e74c3c;padding:12px 16px;margin:12px 0;font-size:14px;line-height:1.8;border-radius:0 8px 8px 0;"><strong>如果持续不改善：</strong>交付问题后果最直接。返工多→交付慢→客户不满→口碑受打击，旺季一旦爆发，可能一次性丢掉多年积累的信任。质量问题还可能带来索赔、退货等额外成本。</p>');
+    ops.push('<div class="warn-box"><strong>如果持续不改善：</strong>交付问题后果最直接。返工多→交付慢→客户不满→口碑受打击，旺季一旦爆发，可能一次性丢掉多年积累的信任。质量问题还可能带来索赔、退货等额外成本。</div>');
   }
 
-  fin.push('<p><strong>三、钱到底去哪了——财务线</strong></p>');
+  fin.push('<div class="sec-title">三、钱到底去哪了 —— 财务线</div>');
   if(rFin==='green'){
     fin.push('<p>财务整体健康。现金流有安全垫，回款没有明显拖期，你对盈亏情况基本清晰。很多企业最大隐患就是不赚也不知道自己在亏——你没这个问题。</p><p>如果想再进一步，可以从清楚总账走向精细核算：每个产品、每个客户、每条业务线的利润贡献各是多少。这些数据在做方向性决策时，比经验直觉可靠得多。</p>');
   } else if(rFin==='yellow'){
@@ -547,33 +561,38 @@ function buildArticle(partial) {
     if(answers[22]===0&&answers[23]===0) fin.push('<p>现金流和回款是最需要优先关注的财务问题。账上可用资金周期偏短，回款周期偏长——两头时差挤压在一起，运营压力会比较大。建议先做两件事：梳理应收账款，看哪些可以优先催收；评估能不能在签单时争取更高比例的预付款。</p>');
     if(answers[24]===0&&answers[25]===0) fin.push('<p>接单不少但账上没钱，这是典型信号——可能有部分单实际利润很低甚至亏损，但因没有逐单核算，难以事前判断。建议至少整理一份简单的成本-收入对照，先搞清楚哪些单在赚钱、哪些在消耗利润。</p>');
     if(answers[28]===0) fin.push('<p>缺少基本财务数据支撑，经营决策就只能凭经验。而经验未必每次都准——尤其在需要判断砍哪块、保哪块、投哪块的时候。不需要做到上市公司级别的财务体系，但每月收入、成本、利润的大致分布，对做对决策至关重要。</p>');
-    fin.push('<p class="warn" style="color:#c0392b;background:#fff5f5;border-left:3px solid #e74c3c;padding:12px 16px;margin:12px 0;font-size:14px;line-height:1.8;border-radius:0 8px 8px 0;"><strong>如果持续不改善：</strong>财务问题爆发最安静。不像质量问题有投诉，不像交付问题有人催——它就是悄悄恶化。直到某天发不出工资、供应商停止供货、或银行来电催款，那时腾挪空间往往很小。小微企业关门的原因里，现金流问题占了相当高的比例。</p>');
+    fin.push('<div class="warn-box"><strong>如果持续不改善：</strong>财务问题爆发最安静。不像质量问题有投诉，不像交付问题有人催——它就是悄悄恶化。直到某天发不出工资、供应商停止供货、或银行来电催款，那时腾挪空间往往很小。小微企业关门的原因里，现金流问题占了相当高的比例。</div>');
   }
 
   if(answers[29]===0||answers[29]===3){
-    boss.push('<p><strong>四、关于你自己</strong></p>');
+    boss.push('<div class="sec-title">四、关于你自己</div>');
     boss.push('<p>从答题看，你承担了非常多的角色：业务、生产、财务都在管。这种情况在小微企业很常见——老板是核心驱动力，一切围着老板转。</p>');
     boss.push('<p>但这也意味着：你的精力就是企业的产能上限。你盯得紧的环节运转好，顾不上的环节就会出现偏差。三条线争一个人的时间和注意力，客观上很难同时兼顾。</p>');
     boss.push('<p>不是劝你马上放手，而是建议有意识地培养一些可以接住你部分工作的机制和人。哪怕一开始效率不如你亲自做、过程中会出小错——这些代价，比所有事都压在你一个人身上的风险要小。</p>');
-    boss.push('<p class="warn" style="color:#c0392b;background:#fff5f5;border-left:3px solid #e74c3c;padding:12px 16px;margin:12px 0;font-size:14px;line-height:1.8;border-radius:0 8px 8px 0;"><strong>如果持续不改善：</strong>以个人精力驱动整个企业运转，长期难以持续。一旦你因任何原因无法正常投入，企业运营就会直接受影响。越是努力到极限，越需要开始考虑：怎么让企业慢慢不再完全依赖你的努力。</p>');
+    boss.push('<div class="warn-box"><strong>如果持续不改善：</strong>以个人精力驱动整个企业运转，长期难以持续。一旦你因任何原因无法正常投入，企业运营就会直接受影响。越是努力到极限，越需要开始考虑：怎么让企业慢慢不再完全依赖你的努力。</div>');
   }
 
-  [...sales, ...ops, ...fin, ...boss].forEach(p=>{ h+='<div class="report-section fade-in" style="padding:0 24px;margin:8px 0;"><div style="font-size:15px;line-height:2;color:#333;">'+p+'</div></div>'; });
+  [...sales, ...ops, ...fin, ...boss].forEach(p=>{ h+='<div class="report-section fade-in">'+p+'</div>'; });
 
-  h+='<div class="report-section fade-in" style="padding:0 24px;margin:8px 0;">';
-  h+='<div style="font-size:15px;line-height:2;color:#888;">以上是基于30道题的综合分析。它不可能穷尽你企业的全部情况，但像一面镜子，让你看到一些平时可能被忽略的角度。</div>';
-  h+='<div style="font-size:15px;line-height:2;color:#888;">如果哪一段让你觉得这说的确实是我企业正在发生的事，那很可能就是值得优先处理的方向。</div></div>';
-  h+='<div class="contact-section fade-in"><h4>墨岱科技 · AI驱动企业智能化升级</h4><p style="font-size:14px;line-height:1.8;color:#666;">以上分析基于你的答题结果，数据驱动、客观呈现。<br><br>如果你觉得这份诊断指出了你企业切实存在的问题，欢迎联系我们做进一步交流。我们能做的，不只是告诉你哪里出了问题——更重要的是，帮你找到具体的改善路径和可操作的方案。</p></div>';
-  h+='<div class="share-section fade-in" style="padding-top:16px;">';
-  h+='<button class="share-btn" onclick="downloadReport()" style="background:#0f3460;margin-bottom:8px;">📥 下载报告到本地</button><br>';
-  h+='<button class="share-btn" onclick="shareReport()">📤 发给合伙人也看看</button>';
+  h+='<div class="report-section fade-in">';
+  h+='<div class="closing">以上是基于30道题的综合分析。它不可能穷尽你企业的全部情况，但像一面镜子，让你看到一些平时可能被忽略的角度。</div>';
+  h+='<div class="closing">如果哪一段让你觉得这说的确实是我企业正在发生的事，那很可能就是值得优先处理的方向。</div></div>';
+  h+='<div class="contact-section fade-in"><h4>墨岱科技 · AI驱动企业智能化升级</h4><p>以上分析基于你的答题结果，数据驱动、客观呈现。<br><br>如果你觉得这份诊断指出了你企业切实存在的问题，欢迎联系我们做进一步交流。我们能做的，不只是告诉你哪里出了问题——更重要的是，帮你找到具体的改善路径和可操作的方案。</p></div>';
+  h+='<div class="share-section fade-in">';
+  h+='<button class="share-btn" onclick="downloadReport()" style="background:#0f3460;">📥 下载报告到本地</button>';
   h+='<div class="share-note">HTML文件，可离线查看，随时打开都是完整报告</div></div>';
+
+  h+='<div class="qr-section fade-in">';
+  h+='<p>想进一步聊聊？扫码加我微信</p>';
+  h+='<img src="wechat-qr.png" alt="微信二维码">';
+  h+='</div>';
+
   return h;
 }
 
 // 腾讯问卷链接（已弃用，保留占位）
 const SURVEY_URL = '';
-const FULL_REPORT_BASE = window.location.href.split('?')[0];
+const FULL_REPORT_BASE = 'https://myd412.github.io/modai/diagnose.html';
 
 function getScoreParams() {
   return 'sales=' + scores.sales + '&ops=' + scores.ops + '&fin=' + scores.fin + '&bossScore=' + scores.boss + '&answers=' + answers.join(',');
@@ -600,47 +619,29 @@ function showReport() {
   window.scrollTo(0, 0);
 }
 
-function showLeadForm() { $('lead-overlay').classList.add('show'); }
+function showLeadForm() {
+  // 预先把诊断分数填入隐藏字段，确保表单提交时带过去
+  $('hf-sales').value = scores.sales;
+  $('hf-ops').value = scores.ops;
+  $('hf-fin').value = scores.fin;
+  $('hf-boss').value = scores.boss;
+  $('hf-answers').value = answers.join(',');
+  $('lead-overlay').classList.add('show');
+}
 function closeLead() { $('lead-overlay').classList.remove('show'); }
 
-// AJAX提交表单到 formsubmit.co，提交成功后显示完整报告
+// 表单提交到 formsubmit.co（通过隐藏iframe），提交后显示完整报告
 function handleLeadSubmit() {
-  event.preventDefault();
-  const form = document.getElementById('lead-form');
-  const btn = document.getElementById('lead-submit');
+  const btn = $('lead-submit');
   btn.disabled = true;
   btn.textContent = '提交中...';
-
-  // 附上诊断分数到表单数据
-  const fd = new FormData(form);
-  fd.set('sales_score', scores.sales);
-  fd.set('ops_score', scores.ops);
-  fd.set('fin_score', scores.fin);
-  fd.set('boss_score', scores.boss);
-  fd.set('answers', answers.join(','));
-
-  fetch('https://formsubmit.co/03360317@163.com', {
-    method: 'POST',
-    body: fd,
-    headers: { 'Accept': 'application/json' }
-  }).then(res => {
-    // 无论成功与否，都显示完整报告
+  // 让表单自然提交到iframe，1秒后显示完整报告
+  setTimeout(() => {
     $('lead-overlay').classList.remove('show');
     leadSubmitted = true;
     $('report-content').innerHTML = buildArticle(false);
     window.scrollTo(0, 0);
-  }).catch(() => {
-    // 即使网络失败，也显示完整报告（留资失败不影响用户看报告）
-    $('lead-overlay').classList.remove('show');
-    leadSubmitted = true;
-    $('report-content').innerHTML = buildArticle(false);
-    window.scrollTo(0, 0);
-  });
-}
-
-function shareReport() {
-  if(navigator.share){ navigator.share({title:'企业诊断报告',text:'我刚做了企业诊断，发现了几个隐藏问题，你也看看？'}); }
-  else { alert('点击右上角 ··· 分享给朋友或微信群'); }
+  }, 1200);
 }
 
 // ===================== DOWNLOAD REPORT =====================
@@ -663,13 +664,13 @@ function getStandaloneReportHTML() {
   if(answers[29]===0||answers[29]===3){ painPoints.push('企业经营对个人依赖度过高，存在结构性风险'); warnings.push('老板成了最大天花板——不是能力不够，是精力有上限。'); }
   if(painPoints.length===0) painPoints.push('三条业务线整体运转正常，暂未发现明显风险点。稳定不等于没问题——可能有被忽略的优化机会');
 
-  overview.push('<p style="font-size:17px;font-weight:500;color:#1a1a2e;line-height:2;margin-bottom:16px;">根据你的答题情况，我们识别出<strong>'+painPoints.length+'个值得关注的方面</strong>：</p>');
-  painPoints.forEach((pp,i)=>{ overview.push('<p style="font-size:15px;line-height:2;color:#333;margin-bottom:10px;"><strong>'+(i+1)+'.</strong> '+pp+'</p>'); });
-  if(warnings.length>0) overview.push('<p style="font-size:14px;line-height:2;color:#c0392b;margin:8px 0;">'+warnings.join(' ')+'</p>');
-  overview.push('<p style="font-size:15px;line-height:2;color:#333;margin-top:16px;">下面是对每条线的详细拆解。</p>');
+  overview.push('<div class="overview-lead">根据你的答题情况，我们识别出<strong>'+painPoints.length+'个值得关注的方面</strong>：</div>');
+  painPoints.forEach((pp,i)=>{ overview.push('<div class="overview-num"><strong>'+(i+1)+'.</strong> '+pp+'</div>'); });
+  if(warnings.length>0) overview.push('<div class="overview-warn">'+warnings.join(' ')+'</div>');
+  overview.push('<div class="overview-num" style="color:#888;margin-top:12px;">下面是对每条线的详细拆解。</div>');
 
   let sales=[], ops=[], fin=[], boss=[];
-  sales.push('<p><strong>一、客户从哪来——业绩线</strong></p>');
+  sales.push('<div class="sec-title">一、客户从哪来 —— 业绩线</div>');
   if(rSales==='green'){
     sales.push('<p>获客渠道比较多元，客户结构不算高度集中，口碑转介绍也在运转。相比很多同规模企业依赖老板个人人脉的情况，这个基础是好的。</p><p>可以关注的是：老客户维护是否有系统化机制、转化率是否有进一步提升空间。这些不是眼下最紧迫的事，但做好了能让增长更可控。</p>');
   } else if(rSales==='yellow'){
@@ -681,10 +682,10 @@ function getStandaloneReportHTML() {
     if(answers[4]===0&&answers[3]===0) sales.push('<p>两个问题叠加，形成了比较脆弱的局面：<strong>获客高度依赖你个人，且最大的客户占了相当高的营收比例</strong>。你和大客户都成了运营的单点——任何一方出状况，都可能对业务造成较大冲击。不是一定会发生，但抗风险能力确实偏弱。</p>');
     if(answers[10]===0&&answers[11]===0) sales.push('<p>为拿单而过度承诺，容易形成恶性循环：短期促成成交→交货做不到→客户满意度降→口碑受影响→新客更难→更需要靠承诺来抢单。如果这个循环已经在运转，需要尽快打断。</p>');
     if(answers[8]===0) sales.push('<p>老客户流失率偏高也需要正视。客户做完一单不回头，要么是交付没达到预期，要么是维护没跟上。结果是你不断失去存量客户，同时要花更多成本去获取新客。</p>');
-    sales.push('<p class="warn" style="color:#c0392b;background:#fff5f5;border-left:3px solid #e74c3c;padding:12px 16px;margin:12px 0;font-size:14px;line-height:1.8;border-radius:0 8px 8px 0;"><strong>如果持续不改善：</strong>客户集中度过高+过度承诺+老客流失会互相放大。客户越少越不敢挑、越不敢挑越容易接到不合适的单、越做越差客户越少——可能在某个节点加速恶化，到了那时再想挽回，代价会大很多。</p>');
+    sales.push('<div class="warn-box"><strong>如果持续不改善：</strong>客户集中度过高+过度承诺+老客流失会互相放大。客户越少越不敢挑、越不敢挑越容易接到不合适的单、越做越差客户越少——可能在某个节点加速恶化，到了那时再想挽回，代价会大很多。</div>');
   }
 
-  ops.push('<p><strong>二、活能不能干出来——交付线</strong></p>');
+  ops.push('<div class="sec-title">二、活能不能干出来 —— 交付线</div>');
   if(rOps==='green'){
     ops.push('<p>交付目前比较稳。产能利用合理，排产有计划，质量波动不大。对怎么把活做好有基本把控。</p><p>值得思考的是：现在的稳是靠你盯得紧，还是靠流程本身在跑。如果是前者，建议逐步把关键流程书面化——让体系来保障，而不是靠个人精力。</p>');
   } else if(rOps==='yellow'){
@@ -696,10 +697,10 @@ function getStandaloneReportHTML() {
     if(answers[15]===0&&(answers[14]>=2||answers[13]>=2)) ops.push('<p>交付状态比较吃紧：车间积压偏多、排产缺少系统计划、交期偏长。这种状态下，任何小意外——缺料、病假、设备故障——都可能打乱整个节奏。建议先把排产作为优先突破口，哪怕从一块白板开始记录当前任务和预计完成时间。</p>');
     if(answers[16]===0) ops.push('<p>质量问题频发不能忽视。每次返工，损失的不只是材料和时间，更在消耗客户信任。客户嘴上不一定说，但心里记着账。次数多了，信任就没了。</p>');
     if(answers[19]===0&&answers[18]===0&&answers[17]===0) ops.push('<p>更深层的问题是：运营高度依赖个人而非流程体系。新员工上手周期长、没有书面规范、核心人员不可替代——这不是人不够好的问题，是体系建设没跟上。建议在不太忙的时候，把关键工序的标准作业流程写下来。</p>');
-    ops.push('<p class="warn" style="color:#c0392b;background:#fff5f5;border-left:3px solid #e74c3c;padding:12px 16px;margin:12px 0;font-size:14px;line-height:1.8;border-radius:0 8px 8px 0;"><strong>如果持续不改善：</strong>交付问题后果最直接。返工多→交付慢→客户不满→口碑受打击，旺季一旦爆发，可能一次性丢掉多年积累的信任。质量问题还可能带来索赔、退货等额外成本。</p>');
+    ops.push('<div class="warn-box"><strong>如果持续不改善：</strong>交付问题后果最直接。返工多→交付慢→客户不满→口碑受打击，旺季一旦爆发，可能一次性丢掉多年积累的信任。质量问题还可能带来索赔、退货等额外成本。</div>');
   }
 
-  fin.push('<p><strong>三、钱到底去哪了——财务线</strong></p>');
+  fin.push('<div class="sec-title">三、钱到底去哪了 —— 财务线</div>');
   if(rFin==='green'){
     fin.push('<p>财务整体健康。现金流有安全垫，回款没有明显拖期，你对盈亏情况基本清晰。很多企业最大隐患就是不赚也不知道自己在亏——你没这个问题。</p><p>如果想再进一步，可以从清楚总账走向精细核算：每个产品、每个客户、每条业务线的利润贡献各是多少。这些数据在做方向性决策时，比经验直觉可靠得多。</p>');
   } else if(rFin==='yellow'){
@@ -710,23 +711,23 @@ function getStandaloneReportHTML() {
     if(answers[22]===0&&answers[23]===0) fin.push('<p>现金流和回款是最需要优先关注的财务问题。账上可用资金周期偏短，回款周期偏长——两头时差挤压在一起，运营压力会比较大。建议先做两件事：梳理应收账款，看哪些可以优先催收；评估能不能在签单时争取更高比例的预付款。</p>');
     if(answers[24]===0&&answers[25]===0) fin.push('<p>接单不少但账上没钱，这是典型信号——可能有部分单实际利润很低甚至亏损，但因没有逐单核算，难以事前判断。建议至少整理一份简单的成本-收入对照，先搞清楚哪些单在赚钱、哪些在消耗利润。</p>');
     if(answers[28]===0) fin.push('<p>缺少基本财务数据支撑，经营决策就只能凭经验。而经验未必每次都准——尤其在需要判断砍哪块、保哪块、投哪块的时候。不需要做到上市公司级别的财务体系，但每月收入、成本、利润的大致分布，对做对决策至关重要。</p>');
-    fin.push('<p class="warn" style="color:#c0392b;background:#fff5f5;border-left:3px solid #e74c3c;padding:12px 16px;margin:12px 0;font-size:14px;line-height:1.8;border-radius:0 8px 8px 0;"><strong>如果持续不改善：</strong>财务问题爆发最安静。不像质量问题有投诉，不像交付问题有人催——它就是悄悄恶化。直到某天发不出工资、供应商停止供货、或银行来电催款，那时腾挪空间往往很小。小微企业关门的原因里，现金流问题占了相当高的比例。</p>');
+    fin.push('<div class="warn-box"><strong>如果持续不改善：</strong>财务问题爆发最安静。不像质量问题有投诉，不像交付问题有人催——它就是悄悄恶化。直到某天发不出工资、供应商停止供货、或银行来电催款，那时腾挪空间往往很小。小微企业关门的原因里，现金流问题占了相当高的比例。</div>');
   }
 
   if(answers[29]===0||answers[29]===3){
-    boss.push('<p><strong>四、关于你自己</strong></p>');
+    boss.push('<div class="sec-title">四、关于你自己</div>');
     boss.push('<p>从答题看，你承担了非常多的角色：业务、生产、财务都在管。这种情况在小微企业很常见——老板是核心驱动力，一切围着老板转。</p>');
     boss.push('<p>但这也意味着：你的精力就是企业的产能上限。你盯得紧的环节运转好，顾不上的环节就会出现偏差。三条线争一个人的时间和注意力，客观上很难同时兼顾。</p>');
     boss.push('<p>不是劝你马上放手，而是建议有意识地培养一些可以接住你部分工作的机制和人。哪怕一开始效率不如你亲自做、过程中会出小错——这些代价，比所有事都压在你一个人身上的风险要小。</p>');
-    boss.push('<p class="warn" style="color:#c0392b;background:#fff5f5;border-left:3px solid #e74c3c;padding:12px 16px;margin:12px 0;font-size:14px;line-height:1.8;border-radius:0 8px 8px 0;"><strong>如果持续不改善：</strong>以个人精力驱动整个企业运转，长期难以持续。一旦你因任何原因无法正常投入，企业运营就会直接受影响。越是努力到极限，越需要开始考虑：怎么让企业慢慢不再完全依赖你的努力。</p>');
+    boss.push('<div class="warn-box"><strong>如果持续不改善：</strong>以个人精力驱动整个企业运转，长期难以持续。一旦你因任何原因无法正常投入，企业运营就会直接受影响。越是努力到极限，越需要开始考虑：怎么让企业慢慢不再完全依赖你的努力。</div>');
   }
 
   let content=overview.map(p=>'<div class="report-section">'+p+'</div>').join('');
   content+=[...sales, ...ops, ...fin, ...boss].map(p=>'<div class="report-section">'+p+'</div>').join('');
-  content+='<div class="report-section"><div style="font-size:15px;line-height:2;color:#888;">以上是基于30道题的综合分析。它不可能穷尽你企业的全部情况，但像一面镜子，让你看到一些平时可能被忽略的角度。</div><div style="font-size:15px;line-height:2;color:#888;margin-top:8px;">如果哪一段让你觉得这说的确实是我企业正在发生的事，那很可能就是值得优先处理的方向。</div></div>';
-  content+='<div class="contact-section"><h4>墨岱科技 · AI驱动企业智能化升级</h4><p style="font-size:14px;line-height:1.8;color:#666;">以上分析基于你的答题结果，数据驱动、客观呈现。<br><br>如果你觉得这份诊断指出了你企业切实存在的问题，欢迎联系我们做进一步交流。我们能做的，不只是告诉你哪里出了问题——更重要的是，帮你找到具体的改善路径和可操作的方案。</p></div>';
+  content+='<div class="report-section"><div class="closing">以上是基于30道题的综合分析。它不可能穷尽你企业的全部情况，但像一面镜子，让你看到一些平时可能被忽略的角度。</div><div class="closing">如果哪一段让你觉得这说的确实是我企业正在发生的事，那很可能就是值得优先处理的方向。</div></div>';
+  content+='<div class="contact-section"><h4>墨岱科技 · AI驱动企业智能化升级</h4><p>以上分析基于你的答题结果，数据驱动、客观呈现。<br><br>如果你觉得这份诊断指出了你企业切实存在的问题，欢迎联系我们做进一步交流。我们能做的，不只是告诉你哪里出了问题——更重要的是，帮你找到具体的改善路径和可操作的方案。</p></div>';
 
-  return '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>墨岱科技 · 企业诊断报告</title><style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:#f5f5f5;color:#333;-webkit-font-smoothing:antialiased;}.report-screen{background:#f5f5f5;padding-bottom:40px;}.report-header{background:linear-gradient(135deg,#1a1a2e,#0f3460);color:#fff;padding:40px 24px 32px;text-align:center;}.report-type-tag{display:inline-block;background:rgba(255,255,255,0.15);border-radius:20px;padding:6px 20px;font-size:13px;margin-bottom:12px;}.report-header h2{font-size:22px;font-weight:500;margin-bottom:6px;}.report-header .date{font-size:12px;color:rgba(255,255,255,0.6);}.report-score-cards{display:flex;gap:12px;padding:20px 24px;}.report-score-cards .card{flex:1;background:#fff;border-radius:12px;padding:16px 12px;text-align:center;}.report-score-cards .card .label{font-size:12px;color:#999;margin-bottom:6px;}.report-score-cards .card .score{font-size:22px;font-weight:500;}.report-score-cards .card .light{display:inline-block;width:10px;height:10px;border-radius:50%;margin-top:4px;}.light-green{background:#27ae60;}.light-yellow{background:#f39c12;}.light-red{background:#e74c3c;}.report-section{background:#fff;border-radius:12px;margin:12px 24px;padding:20px;}.report-section h3{font-size:15px;font-weight:500;margin-bottom:12px;color:#1a1a2e;}.report-section p{font-size:14px;line-height:1.8;color:#555;margin-bottom:10px;}.contact-section{background:#fff;border-radius:12px;margin:12px 24px;padding:24px;text-align:center;}.contact-section h4{font-size:15px;font-weight:500;margin-bottom:8px;}.contact-section p{font-size:13px;color:#666;line-height:1.6;}.watermark{text-align:center;padding:20px;font-size:12px;color:#ccc;}</style></head><body><div class="report-screen">'+header+scoreCard+content+'<div class="watermark">墨岱科技 · AI驱动企业智能化升级 · 报告生成时间：'+new Date().toLocaleString('zh-CN')+'</div></div></body></html>';
+  return '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>墨岱科技 · 企业诊断报告</title><style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:#f5f5f5;color:#333;-webkit-font-smoothing:antialiased;}.report-screen{background:#f5f5f5;padding-bottom:40px;}.report-header{background:linear-gradient(135deg,#1a1a2e,#0f3460);color:#fff;padding:40px 24px 32px;text-align:center;}.report-type-tag{display:inline-block;background:rgba(255,255,255,0.15);border-radius:20px;padding:6px 20px;font-size:13px;margin-bottom:12px;}.report-header h2{font-size:22px;font-weight:500;margin-bottom:6px;}.report-header .date{font-size:12px;color:rgba(255,255,255,0.6);}.report-score-cards{display:flex;gap:12px;padding:20px 24px;}.report-score-cards .card{flex:1;background:#fff;border-radius:12px;padding:16px 12px;text-align:center;}.report-score-cards .card .label{font-size:12px;color:#999;margin-bottom:6px;}.report-score-cards .card .score{font-size:22px;font-weight:500;}.report-score-cards .card .light{display:inline-block;width:10px;height:10px;border-radius:50%;margin-top:4px;}.light-green{background:#27ae60;}.light-yellow{background:#f39c12;}.light-red{background:#e74c3c;}.report-section{background:#fff;border-radius:12px;margin:12px 24px;padding:20px;}.report-section h3{font-size:15px;font-weight:500;margin-bottom:12px;color:#1a1a2e;}.report-section p{font-size:15px;line-height:2;color:#333;margin-bottom:10px;}.sec-title{font-size:17px;font-weight:600;color:#1a1a2e;margin:24px 0 12px;padding-bottom:8px;border-bottom:1px solid #eee;}.sec-title:first-child{margin-top:0;}.warn-box{color:#c0392b;background:#fff5f5;border-left:3px solid #e74c3c;padding:14px 16px;margin:14px 0;font-size:14px;line-height:1.9;border-radius:0 10px 10px 0;}.overview-num{font-size:15px;line-height:2.2;color:#333;margin-bottom:6px;padding-left:4px;}.overview-lead{font-size:17px;font-weight:500;color:#1a1a2e;line-height:2;margin-bottom:14px;}.overview-warn{font-size:14px;line-height:2;color:#c0392b;margin:10px 0;padding:10px 14px;background:#fff5f5;border-radius:8px;}.closing{font-size:15px;line-height:2;color:#888;margin-bottom:8px;}.contact-section{background:#fff;border-radius:12px;margin:12px 24px;padding:24px;text-align:center;}.contact-section h4{font-size:15px;font-weight:500;margin-bottom:8px;}.contact-section p{font-size:14px;color:#666;line-height:1.8;}.watermark{text-align:center;padding:20px;font-size:12px;color:#ccc;}</style></head><body><div class="report-screen">'+header+scoreCard+content+'<div class="watermark">墨岱科技 · AI驱动企业智能化升级 · 报告生成时间：'+new Date().toLocaleString('zh-CN')+'</div></div></body></html>';
 }
 
 function downloadReport() {
