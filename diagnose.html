@@ -6,177 +6,174 @@
 <title>墨岱科技 · 小微企业诊断</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f5f5f5; color:#333; -webkit-font-smoothing:antialiased; }
+body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; background:#f5f5f5; color:#333; -webkit-font-smoothing:antialiased; }
 .screen { display:none; min-height:100vh; }
 .screen.active { display:block; }
 
-/* ─── Welcome / Type Selection ─── */
-.welcome { background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%); color:#fff; text-align:center; padding:60px 32px; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; }
+/* Welcome / Type Select */
+.welcome { background:linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color:#fff; text-align:center; padding:60px 32px; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; }
 .welcome .logo { width:80px; height:80px; border-radius:50%; overflow:hidden; margin-bottom:24px; }
 .welcome .logo img { width:100%; height:100%; object-fit:cover; }
-.welcome h1 { font-size:28px; font-weight:500; margin-bottom:8px; }
-.welcome .sub { font-size:15px; color:rgba(255,255,255,0.7); margin-bottom:40px; line-height:1.6; }
+.welcome h1 { font-size:26px; font-weight:500; margin-bottom:8px; }
+.welcome .sub { font-size:14px; color:rgba(255,255,255,0.65); margin-bottom:36px; line-height:1.7; }
+.type-cards { display:flex; gap:14px; padding:0 20px; margin-bottom:32px; width:100%; max-width:380px; }
+.type-card { flex:1; background:rgba(255,255,255,0.08); border-radius:16px; padding:24px 14px; text-align:center; cursor:pointer; transition:all 0.2s; border:1.5px solid rgba(255,255,255,0.12); }
+.type-card:active { transform:scale(0.96); border-color:rgba(255,255,255,0.35); background:rgba(255,255,255,0.15); }
+.type-icon { font-size:32px; margin-bottom:10px; }
+.type-name { font-size:16px; font-weight:500; margin-bottom:6px; }
+.type-desc { font-size:11px; color:rgba(255,255,255,0.55); line-height:1.5; }
+.exclude-note { font-size:11px; color:rgba(255,255,255,0.4); text-align:center; padding:0 16px; line-height:1.8; max-width:360px; }
+.footer-note { margin-top:24px; font-size:11px; color:rgba(255,255,255,0.3); }
 
-.type-grid { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:40px; width:100%; max-width:560px; }
-.type-card { flex:1; min-width:220px; background:rgba(255,255,255,0.1); border:2px solid rgba(255,255,255,0.2); border-radius:16px; padding:24px 20px; cursor:pointer; transition:all 0.25s; text-align:center; }
-.type-card:hover { background:rgba(255,255,255,0.18); border-color:rgba(255,255,255,0.5); transform:translateY(-2px); }
-.type-card .type-icon { font-size:40px; margin-bottom:12px; }
-.type-card .type-name { font-size:17px; font-weight:600; margin-bottom:10px; }
-.type-card .type-desc { font-size:12px; color:rgba(255,255,255,0.65); line-height:1.7; }
+/* Size Select */
+.size-screen { background:linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color:#fff; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 24px; }
+.size-title { font-size:20px; font-weight:500; margin-bottom:6px; }
+.size-sub { font-size:13px; color:rgba(255,255,255,0.55); margin-bottom:28px; }
+.size-cards { display:flex; flex-direction:column; gap:10px; width:100%; max-width:340px; }
+.size-card { background:rgba(255,255,255,0.08); border-radius:14px; padding:16px 20px; cursor:pointer; transition:all 0.2s; border:1.5px solid rgba(255,255,255,0.1); display:flex; justify-content:space-between; align-items:center; }
+.size-card:active { transform:scale(0.98); border-color:rgba(255,255,255,0.35); background:rgba(255,255,255,0.14); }
+.size-label { font-size:15px; font-weight:500; }
+.size-range { font-size:12px; color:rgba(255,255,255,0.5); }
 
-.exclusion-note { background:rgba(255,255,255,0.08); border-radius:12px; padding:16px 24px; max-width:480px; font-size:13px; color:rgba(255,255,255,0.55); line-height:1.8; margin-bottom:40px; }
-
-.welcome .footer-note { margin-top:32px; font-size:12px; color:rgba(255,255,255,0.35); }
-
-/* ─── Size Selection Screen ─── */
-.size-screen { background:linear-gradient(135deg,#1a1a2e,#16213e); color:#fff; padding:60px 32px; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; }
-.size-screen h2 { font-size:22px; font-weight:500; margin-bottom:8px; text-align:center; }
-.size-screen .sub { font-size:14px; color:rgba(255,255,255,0.6); margin-bottom:40px; text-align:center; }
-.size-list { display:flex; flex-direction:column; gap:12px; width:100%; max-width:400px; }
-.size-item { background:rgba(255,255,255,0.1); border:2px solid rgba(255,255,255,0.15); border-radius:14px; padding:18px 20px; cursor:pointer; transition:all 0.2s; text-align:left; }
-.size-item:hover { background:rgba(255,255,255,0.18); border-color:rgba(255,255,255,0.4); }
-.size-item .size-label { font-size:15px; font-weight:500; margin-bottom:4px; }
-.size-item .size-desc { font-size:12px; color:rgba(255,255,255,0.55); }
-
-/* ─── Question Screen ─── */
+/* Question Screen */
 .question-screen { background:#fff; }
 .q-header { padding:16px 20px; border-bottom:1px solid #eee; display:flex; align-items:center; justify-content:space-between; }
 .q-header .brand { font-size:14px; font-weight:500; color:#1a1a2e; }
 .q-header .step { font-size:12px; color:#999; }
 .q-progress-wrap { padding:0 20px; height:4px; background:#eee; }
-.q-progress-bar { height:100%; background:linear-gradient(90deg,#0f3460,#1a1a2e); transition:width 0.3s; border-radius:0; }
-.q-body { padding:40px 24px; }
-.q-section-label { font-size:12px; color:#999; margin-bottom:8px; display:flex; align-items:center; gap:6px; }
-.q-section-dot { width:8px; height:8px; border-radius:50%; display:inline-block; }
+.q-progress-bar { height:100%; background:linear-gradient(90deg, #0f3460, #1a1a2e); transition:width 0.3s; border-radius:0; }
+.q-body { padding:36px 24px 20px; }
+.q-section-label { font-size:11px; color:#999; margin-bottom:8px; letter-spacing:1px; display:flex; align-items:center; gap:6px; }
+.q-section-dot { width:7px; height:7px; border-radius:50%; display:inline-block; }
 .q-section-dot.sales { background:#e67e22; }
 .q-section-dot.ops { background:#27ae60; }
 .q-section-dot.fin { background:#e74c3c; }
-.q-section-dot.boss { background:#7f8c8d; }
-.q-title { font-size:20px; font-weight:500; line-height:1.5; margin-bottom:32px; color:#1a1a2e; }
-.q-options { display:flex; flex-direction:column; gap:12px; }
-.q-option { border:1.5px solid #e0e0e0; border-radius:12px; padding:16px 20px; font-size:15px; cursor:pointer; transition:all 0.2s; background:#fff; text-align:left; line-height:1.5; color:#333; }
+.q-title { font-size:18px; font-weight:500; line-height:1.6; margin-bottom:28px; color:#1a1a2e; }
+.q-options { display:flex; flex-direction:column; gap:10px; }
+.q-option { border:1.5px solid #e0e0e0; border-radius:12px; padding:14px 18px; font-size:14px; cursor:pointer; transition:all 0.2s; background:#fff; text-align:left; line-height:1.6; color:#333; }
 .q-option:active { transform:scale(0.98); }
 .q-option.selected { border-color:#1a1a2e; background:#f0f4ff; }
-.q-next { display:block; width:calc(100% - 48px); margin:32px 24px 0; padding:14px; background:#1a1a2e; color:#fff; border:none; border-radius:12px; font-size:16px; font-weight:500; cursor:pointer; opacity:0.3; pointer-events:none; transition:all 0.2s; }
+.q-next { display:block; width:calc(100% - 48px); margin:28px 24px 0; padding:13px; background:#1a1a2e; color:#fff; border:none; border-radius:12px; font-size:15px; font-weight:500; cursor:pointer; opacity:0.3; pointer-events:none; transition:all 0.2s; }
 .q-next.enabled { opacity:1; pointer-events:auto; }
 .q-next:active { background:#16213e; }
+.q-probe-tag { display:inline-block; background:#fff3cd; color:#856404; font-size:11px; padding:3px 10px; border-radius:10px; margin-bottom:12px; }
 
-/* ─── Probe overlay ─── */
-.probe-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.5); display:none; align-items:center; justify-content:center; z-index:100; }
-.probe-overlay.show { display:flex; }
-.probe-card { background:#fff; border-radius:16px; padding:28px 24px; width:90%; max-width:400px; max-height:80vh; overflow-y:auto; }
-.probe-card h3 { font-size:16px; font-weight:500; margin-bottom:20px; }
-.probe-card .q-options { gap:8px; }
-.probe-card .q-option { padding:12px 16px; font-size:14px; }
-.probe-card .skip { display:block; width:100%; margin-top:16px; padding:10px; background:none; border:1px solid #ddd; border-radius:10px; font-size:14px; color:#999; cursor:pointer; }
-
-/* ─── Report Screen ─── */
+/* Report Screen */
 .report-screen { background:#f5f5f5; padding-bottom:40px; }
-.report-header { background:linear-gradient(135deg,#1a1a2e,#0f3460); color:#fff; padding:40px 24px 32px; text-align:center; }
-.report-type-tag { display:inline-block; background:rgba(255,255,255,0.15); border-radius:20px; padding:6px 20px; font-size:13px; margin-bottom:12px; }
-.report-header h2 { font-size:22px; font-weight:500; margin-bottom:6px; }
-.report-header .date { font-size:12px; color:rgba(255,255,255,0.6); }
-.report-score-cards { display:flex; gap:12px; padding:20px 24px; }
-.report-score-cards .card { flex:1; background:#fff; border-radius:12px; padding:16px 12px; text-align:center; }
-.report-score-cards .card .label { font-size:12px; color:#999; margin-bottom:6px; }
-.report-score-cards .card .score { font-size:22px; font-weight:500; }
-.report-score-cards .card .light { display:inline-block; width:10px; height:10px; border-radius:50%; margin-top:4px; }
-.light-green { background:#27ae60; }
-.light-yellow { background:#f39c12; }
-.light-red { background:#e74c3c; }
-.report-section { background:#fff; border-radius:12px; margin:12px 24px; padding:20px; }
-.report-section h3 { font-size:15px; font-weight:500; margin-bottom:12px; color:#1a1a2e; }
-.report-section p { font-size:15px; line-height:2; color:#333; margin-bottom:10px; }
-.report-section .finding { background:#fff8e1; border-left:3px solid #f39c12; padding:12px 16px; margin:10px 0; font-size:13px; line-height:1.6; border-radius:0 8px 8px 0; }
-.report-section .finding.green { background:#e8f5e9; border-color:#27ae60; }
-.report-section .finding.red { background:#ffebee; border-color:#e74c3c; }
-.report-section .sec-title { font-size:17px; font-weight:600; color:#1a1a2e; margin:24px 0 12px; padding-bottom:8px; border-bottom:1px solid #eee; }
-.report-section .sec-title:first-child { margin-top:0; }
-.report-section .warn-box { color:#c0392b; background:#fff5f5; border-left:3px solid #e74c3c; padding:14px 16px; margin:14px 0; font-size:14px; line-height:1.9; border-radius:0 10px 10px 0; }
-.report-section .overview-num { font-size:15px; line-height:2.2; color:#333; margin-bottom:6px; padding-left:4px; }
-.report-section .overview-lead { font-size:17px; font-weight:500; color:#1a1a2e; line-height:2; margin-bottom:14px; }
-.report-section .overview-warn { font-size:14px; line-height:2; color:#c0392b; margin:10px 0; padding:10px 14px; background:#fff5f5; border-radius:8px; }
-.report-section .closing { font-size:15px; line-height:2; color:#888; margin-bottom:8px; }
-.qr-section { background:#fff; border-radius:12px; margin:12px 24px; padding:24px; text-align:center; }
-.qr-section p { font-size:14px; color:#666; margin-bottom:14px; }
-.qr-section img { width:180px; height:180px; border-radius:8px; object-fit:cover; }
-.report-blur { position:relative; }
-.report-blur::after { content:' '; position:absolute; inset:0; background:rgba(255,255,255,0.7); backdrop-filter:blur(8px); border-radius:12px; display:flex; align-items:center; justify-content:center; }
-.report-lock { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:2; }
-.report-lock .lock-icon { font-size:48px; margin-bottom:12px; }
-.report-lock .lock-text { font-size:14px; color:#666; margin-bottom:16px; text-align:center; line-height:1.6; }
-.report-lock .unlock-btn { background:#1a1a2e; color:#fff; border:none; border-radius:24px; padding:12px 40px; font-size:15px; font-weight:500; cursor:pointer; }
+.report-header { background:linear-gradient(135deg, #1a1a2e, #0f3460); color:#fff; padding:36px 24px 28px; text-align:center; }
+.report-type-tag { display:inline-block; background:rgba(255,255,255,0.15); border-radius:20px; padding:5px 18px; font-size:12px; margin-bottom:10px; }
+.report-header h2 { font-size:20px; font-weight:500; margin-bottom:4px; }
+.report-header .date { font-size:11px; color:rgba(255,255,255,0.55); }
 
-/* ─── Lead Form ─── */
+/* Health cards (replaces score cards) */
+.report-health-cards { display:flex; gap:10px; padding:16px 24px; }
+.health-card { flex:1; background:#fff; border-radius:12px; padding:14px 10px; text-align:center; }
+.health-card .health-label { font-size:11px; color:#999; margin-bottom:6px; }
+.health-card .health-status { font-size:13px; font-weight:500; }
+.health-green { color:#27ae60; }
+.health-yellow { color:#e67e22; }
+.health-red { color:#e74c3c; }
+
+/* Diagnosis items */
+.report-section .diag-item { border-left:3px solid; padding:10px 14px; margin:8px 0; border-radius:0 8px 8px 0; font-size:13px; line-height:1.7; }
+.report-section .diag-item.diag-high { background:#fff5f5; border-color:#e74c3c; }
+.report-section .diag-item.diag-mid { background:#fffde7; border-color:#f9a825; }
+.report-section .diag-title { font-weight:500; margin-bottom:4px; color:#333; }
+.report-section .diag-analysis { color:#555; margin-bottom:3px; }
+.report-section .diag-consequence { color:#c0392b; margin-bottom:3px; font-size:12px; }
+.report-section .diag-direction { color:#1565c0; font-size:12px; }
+.report-section .line-summary { font-size:14px; line-height:1.8; padding:8px 12px; border-radius:8px; margin-bottom:10px; }
+.report-section .line-summary.healthy { background:#e8f5e9; color:#2e7d32; }
+.report-section .line-summary.caution { background:#fff3e0; color:#e65100; }
+.report-section .line-summary.warning { background:#fff5f5; color:#c62828; }
+.report-section .line-summary.danger { background:#ffebee; color:#b71c1c; font-weight:500; }
+.report-section .overview-text { font-size:14px; line-height:1.9; color:#333; }
+.report-section .danger-box { color:#fff; background:#c0392b; padding:12px 14px; margin:10px 0; font-size:14px; line-height:1.8; border-radius:0 10px 10px 0; font-weight:500; }
+.report-section .no-issue { color:#888; font-size:13px; font-style:italic; }
+
+.report-section { background:#fff; border-radius:12px; margin:10px 24px; padding:18px; }
+.report-section h3 { font-size:14px; font-weight:500; margin-bottom:10px; color:#1a1a2e; }
+.report-section p { font-size:14px; line-height:1.9; color:#333; margin-bottom:8px; }
+.report-section .sec-title { font-size:16px; font-weight:600; color:#1a1a2e; margin:20px 0 10px; padding-bottom:6px; border-bottom:1px solid #eee; }
+.report-section .sec-title:first-child { margin-top:0; }
+.report-section .warn-box { color:#c0392b; background:#fff5f5; border-left:3px solid #e74c3c; padding:12px 14px; margin:12px 0; font-size:13px; line-height:1.8; border-radius:0 10px 10px 0; }
+
+.report-section .closing { font-size:14px; line-height:1.9; color:#888; margin-bottom:6px; }
+
+
+/* QR & Share */
+.qr-section { background:#fff; border-radius:12px; margin:10px 24px; padding:20px; text-align:center; }
+.qr-section p { font-size:13px; color:#666; margin-bottom:12px; }
+.qr-section img { width:160px; height:160px; border-radius:8px; object-fit:cover; }
+.share-section { text-align:center; padding:20px; }
+.share-section .share-btn { background:#0f3460; color:#fff; border:none; border-radius:24px; padding:11px 30px; font-size:14px; cursor:pointer; }
+.share-section .share-note { font-size:11px; color:#999; margin-top:6px; }
+
+/* Lead form overlay */
 .lead-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); display:none; align-items:center; justify-content:center; z-index:200; }
 .lead-overlay.show { display:flex; }
-.lead-card { background:#fff; border-radius:16px; padding:32px 24px; width:90%; max-width:380px; position:relative; }
-.lead-card h3 { font-size:18px; font-weight:500; margin-bottom:8px; text-align:center; }
-.lead-card .lead-sub { font-size:13px; color:#999; text-align:center; margin-bottom:24px; line-height:1.5; }
-.lead-card .field { margin-bottom:16px; }
-.lead-card .field label { display:block; font-size:13px; color:#666; margin-bottom:6px; }
-.lead-card .field input { width:100%; padding:12px; border:1.5px solid #e0e0e0; border-radius:10px; font-size:15px; outline:none; transition:border 0.2s; }
+.lead-card { background:#fff; border-radius:16px; padding:28px 22px; width:90%; max-width:370px; position:relative; }
+.lead-card h3 { font-size:17px; font-weight:500; margin-bottom:6px; text-align:center; }
+.lead-card .lead-sub { font-size:12px; color:#999; text-align:center; margin-bottom:20px; line-height:1.5; }
+.lead-card .field { margin-bottom:14px; }
+.lead-card .field label { display:block; font-size:12px; color:#666; margin-bottom:4px; }
+.lead-card .field input { width:100%; padding:11px; border:1.5px solid #e0e0e0; border-radius:10px; font-size:14px; outline:none; transition:border 0.2s; }
 .lead-card .field input:focus { border-color:#1a1a2e; }
-.lead-card .field input.error { border-color:#e74c3c; background:#fff5f5; }
-.lead-card .field .err-msg { display:none; font-size:12px; color:#e74c3c; margin-top:4px; line-height:1.4; }
-.lead-card .field .err-msg.show { display:block; }
 .lead-card .field input.optional::placeholder { color:#bbb; }
-.lead-card .submit-btn { width:100%; padding:14px; background:#1a1a2e; color:#fff; border:none; border-radius:12px; font-size:16px; font-weight:500; cursor:pointer; margin-top:8px; }
+.lead-card .submit-btn { width:100%; padding:13px; background:#1a1a2e; color:#fff; border:none; border-radius:12px; font-size:15px; font-weight:500; cursor:pointer; margin-top:6px; }
 .lead-card .submit-btn:disabled { opacity:0.5; }
-.lead-card .privacy { font-size:11px; color:#bbb; text-align:center; margin-top:12px; line-height:1.5; }
-.lead-card .close-lead { position:absolute; top:16px; right:16px; width:32px; height:32px; border-radius:50%; border:none; background:#f5f5f5; font-size:16px; cursor:pointer; color:#999; }
+.lead-card .privacy { font-size:10px; color:#bbb; text-align:center; margin-top:10px; line-height:1.5; }
+.lead-card .close-lead { position:absolute; top:14px; right:14px; width:30px; height:30px; border-radius:50%; border:none; background:#f5f5f5; font-size:15px; cursor:pointer; color:#999; }
 
-/* ─── Share Section ─── */
-.share-section { text-align:center; padding:24px; }
-.share-section .share-btn { background:#0f3460; color:#fff; border:none; border-radius:24px; padding:12px 32px; font-size:15px; cursor:pointer; }
-.share-section .share-note { font-size:12px; color:#999; margin-top:8px; }
-.contact-section { background:#fff; border-radius:12px; margin:12px 24px; padding:24px; text-align:center; }
-.contact-section h4 { font-size:15px; font-weight:500; margin-bottom:8px; }
-.contact-section p { font-size:13px; color:#666; line-height:1.6; }
 
-/* ─── Animations ─── */
-@keyframes fadeIn { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
-.fade-in { animation:fadeIn 0.4s ease; }
+/* Priority advice */
+.report-section .priority-item { display:flex; align-items:flex-start; gap:12px; padding:10px 0; border-bottom:1px solid #f0f0f0; }
+.report-section .priority-item:last-of-type { border-bottom:none; }
+.report-section .priority-num { display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; background:#1a1a2e; color:#fff; font-size:12px; font-weight:500; flex-shrink:0; }
+.report-section .priority-item div { font-size:13px; line-height:1.7; color:#333; }
+.report-section .priority-note { font-size:12px; color:#888; margin-top:12px; line-height:1.7; padding-top:10px; border-top:1px solid #f0f0f0; }
+
+/* Animations */
+@keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+.fade-in { animation:fadeIn 0.35s ease; }
 </style>
 </head>
 <body>
 
-<!-- WELCOME SCREEN -->
+<!-- TYPE SELECT SCREEN -->
 <div class="screen active" id="screen-welcome">
   <div class="welcome">
-    <div class="logo"><img src="logo.png" alt="墨岱科技" style="width:80px;height:80px;border-radius:50%;object-fit:cover;"></div>
+    <div class="logo"><img src="logo.png" alt="墨岱科技"></div>
     <h1>小微企业诊断工具</h1>
     <div class="sub">基于系统动力学的企业问题快速诊断<br>完成30道题，大约3分钟</div>
-
-    <div class="type-grid">
+    <div class="type-cards">
       <div class="type-card" onclick="selectType('production')">
         <div class="type-icon">🏭</div>
         <div class="type-name">生产型企业</div>
-        <div class="type-desc">制造 · 施工 · 工程<br>软件开发 · 技术加工<br>改装 · 制造等</div>
+        <div class="type-desc">制造 / 施工 / 工程 / 软件 / 加工</div>
       </div>
       <div class="type-card" onclick="selectType('service')">
         <div class="type-icon">💼</div>
         <div class="type-name">服务型企业</div>
-        <div class="type-desc">零售 · 餐饮 · 咨询<br>财税 · 美业 · 物流<br>贸易电商 · 连锁加盟等</div>
+        <div class="type-desc">零售 / 咨询 / 财税 / 美业 / 餐饮</div>
       </div>
     </div>
-
-    <div class="exclusion-note">
-      本工具专为生产型和服务型小微企业设计。<br>
-      房地产 · 政府项目 · 人脉驱动型业务<br>
-      暂不在服务范围内。
-    </div>
-
+    <div class="exclude-note">本工具专为生产型和服务型小微企业设计。房地产 · 政府项目 · 人脉驱动型业务 暂不在服务范围内。</div>
     <div class="footer-note">墨岱科技 · AI驱动企业智能化升级</div>
   </div>
 </div>
 
-<!-- SIZE SELECTION SCREEN -->
+<!-- SIZE SELECT SCREEN -->
 <div class="screen" id="screen-size">
   <div class="size-screen">
-    <h2 id="size-title">请确认您的企业规模</h2>
-    <div class="sub" id="size-sub">我们将根据您的规模，调整诊断题目的侧重点</div>
-    <div class="size-list" id="size-list"></div>
+    <div class="size-title">您的企业目前有多少人？</div>
+    <div class="size-sub">选择最接近的档位，帮助我们更精准地诊断</div>
+    <div class="size-cards">
+      <div class="size-card" onclick="selectSize('S1')"><span class="size-label">微型企业</span><span class="size-range">20人以下</span></div>
+      <div class="size-card" onclick="selectSize('S2')"><span class="size-label">小型一档</span><span class="size-range">20 - 50人</span></div>
+      <div class="size-card" onclick="selectSize('S3')"><span class="size-label">小型二档</span><span class="size-range">50 - 100人</span></div>
+      <div class="size-card" onclick="selectSize('S4')"><span class="size-label">小型三档</span><span class="size-range">100 - 300人</span></div>
+    </div>
   </div>
 </div>
 
@@ -193,11 +190,6 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f5f5f
   </div>
 </div>
 
-<!-- PROBE OVERLAY -->
-<div class="probe-overlay" id="probe-overlay">
-  <div class="probe-card" id="probe-card"></div>
-</div>
-
 <!-- REPORT SCREEN -->
 <div class="screen" id="screen-report">
   <div class="report-screen" id="report-content"></div>
@@ -206,21 +198,21 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f5f5f
 <!-- LEAD FORM OVERLAY -->
 <div class="lead-overlay" id="lead-overlay">
   <div class="lead-card">
-    <button class="close-lead" onclick="closeLead()">✕</button>
+    <button class="close-lead" onclick="closeLead()">×</button>
     <h3>查看完整诊断报告</h3>
     <div class="lead-sub">填写以下信息，即可免费查看完整报告和针对性建议</div>
-    <form id="lead-form" onsubmit="return handleLeadSubmit(event)">
+    <form id="lead-form" onsubmit="handleLeadSubmit(event)">
       <input type="hidden" name="_subject" value="【墨岱科技】新留资：企业诊断报告">
-      <input type="hidden" name="firm_type" id="hf-type">
-      <input type="hidden" name="firm_size" id="hf-size">
+      <input type="hidden" name="type" id="hf-type">
+      <input type="hidden" name="size" id="hf-size">
       <input type="hidden" name="sales_score" id="hf-sales">
       <input type="hidden" name="ops_score" id="hf-ops">
       <input type="hidden" name="fin_score" id="hf-fin">
-      <input type="hidden" name="boss_score" id="hf-boss">
+      <input type="hidden" name="total_score" id="hf-total">
       <input type="hidden" name="answers" id="hf-answers">
-      <div class="field"><label>姓名 *</label><input type="text" name="姓名" id="lf-name" placeholder="请输入您的真实姓名" required oninput="clearFieldError('lf-name')"><div class="err-msg" id="err-name"></div></div>
-      <div class="field"><label>手机号 *</label><input type="tel" name="手机号" id="lf-phone" placeholder="请输入11位手机号" maxlength="11" required oninput="clearFieldError('lf-phone')"><div class="err-msg" id="err-phone"></div></div>
-      <div class="field"><label>企业名称（选填）</label><input type="text" name="企业名称" id="lf-company" placeholder="选填，方便我们更好了解您" class="optional" oninput="clearFieldError('lf-company')"><div class="err-msg" id="err-company"></div></div>
+      <div class="field"><label>姓名 *</label><input type="text" name="姓名" placeholder="请输入您的姓名" required></div>
+      <div class="field"><label>手机号 *</label><input type="tel" name="手机号" placeholder="请输入您的手机号" maxlength="11" required></div>
+      <div class="field"><label>企业名称（选填）</label><input type="text" name="企业名称" placeholder="选填，方便我们更好了解您" class="optional"></div>
       <button class="submit-btn" type="submit" id="lead-submit">查看完整报告</button>
     </form>
     <div class="privacy">您的信息仅用于本次诊断服务，不会泄露给第三方</div>
@@ -228,866 +220,319 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f5f5f
 </div>
 
 <script>
-// ===================== ENTERPRISE TYPES =====================
-const ENTERPRISE_TYPES = {
-  production: {
-    label: '生产型企业',
-    sections: ['sales','ops','fin','boss'],
-    sectionLabels: { sales:'业绩开展线', ops:'生产交付线', fin:'财务管控线', boss:'综合' },
-    sectionColors: { sales:'sales', ops:'ops', fin:'fin', boss:'boss' }
-  },
-  service: {
-    label: '服务型企业',
-    sections: ['sales','ops','fin','boss'],
-    sectionLabels: { sales:'获客拓展线', ops:'服务交付线', fin:'财务管控线', boss:'综合' },
-    sectionColors: { sales:'sales', ops:'ops', fin:'fin', boss:'boss' }
-  }
-};
-
-const SIZE_LEVELS = [
-  { id:'A', label:'微型', range:'10-19人', desc:'10人以上，正式运营的小微企业' },
-  { id:'B', label:'小型一档', range:'20-50人', desc:'20-50人，初具规模的成长型企业' },
-  { id:'C', label:'小型二档', range:'50-100人', desc:'50-100人，具备一定组织架构的企业' },
-  { id:'D', label:'小型三档', range:'100-300人', desc:'100-300人，已进入精细化管理阶段' }
+// ===================== QUESTION BANKS =====================
+const PQ = [
+  {id:"Q1", type:"main", line:"sales", title:"您的客户主要通过哪些渠道了解并找到您的企业？", options:[{text:"A. 主要依赖我个人的人脉关系和行业圈层",score:1}, {text:"B. 老客户转介绍是最大来源",score:2}, {text:"C. 业务团队主动开拓为主",score:3}, {text:"D. 多种渠道均衡，有线上也有线下",score:4}]},
+  {id:"Q2", type:"main", line:"sales", title:"您最大的单一客户，其年度贡献约占企业总营收的多少？", options:[{text:"A. 超过三分之一",score:1}, {text:"B. 约五分之一到三分之一",score:2}, {text:"C. 不足五分之一，客户结构比较分散",score:4}, {text:"D. 不足五分之一，但前三客户合计占比过半",score:3}]},
+  {id:"Q3", type:"main", line:"sales", title:"您的企业中，专门负责客户开发和业务拓展的团队有几人？", options:[{text:"A. 基本上只有我自己在跑业务",score:1}, {text:"B. 1-2人",score:2}, {text:"C. 3-5人",score:3}, {text:"D. 5人以上，有明确的团队分工",score:4}]},
+  {id:"Q4", type:"main", line:"sales", title:"对于未来一到两个月的可预期订单量，您的把握程度如何？", options:[{text:"A. 完全没有预期，来什么做什么",score:1}, {text:"B. 心里有个大概方向，但缺乏具体清单",score:2}, {text:"C. 有明确的意向客户清单和跟进计划",score:4}, {text:"D. 有短期计划但经常被打乱",score:3}]},
+  {id:"Q5", type:"main", line:"sales", title:"您企业的询盘到最终签约的转化率大致处于什么水平？", options:[{text:"A. 不足三成",score:1}, {text:"B. 三到五成",score:2}, {text:"C. 五成到八成",score:3}, {text:"D. 八成以上，基本问过就成交",score:2}]},
+  {id:"Q6", type:"main", line:"sales", title:"已成交客户的复购和持续合作情况如何？", options:[{text:"A. 大量客户做一单就不再来",score:1}, {text:"B. 有一部分回头客，但不够稳定",score:2}, {text:"C. 大部分是长期稳定合作关系",score:4}, {text:"D. 回头客比例还行，但续约金额在缩水",score:2}]},
+  {id:"Q7", type:"main", line:"sales", title:"企业是否有专门的客户回访或关系维护机制？", options:[{text:"A. 完全没有，没精力管",score:1}, {text:"B. 靠我个人偶尔联系",score:2}, {text:"C. 有，但执行不太规律",score:3}, {text:"D. 有，有定期回访制度和客户档案管理",score:4}]},
+  {id:"Q8", type:"main", line:"sales", title:"在接单过程中，您是否有过明知难以兑现却仍然承诺的情况？", options:[{text:"A. 经常出现，不答应拿不下单",score:1}, {text:"B. 偶尔有，算不上常态",score:2}, {text:"C. 极少，基本能做到的才承诺",score:4}, {text:"D. 说不清楚，感觉有时候确实答应了做不到",score:1}]},
+  {id:"Q9", type:"main", line:"sales", title:"客户主动向您推荐新客户的频率如何？", options:[{text:"A. 极少发生",score:1}, {text:"B. 偶尔有一两次",score:2}, {text:"C. 比较常见，转介绍是重要获客来源",score:4}, {text:"D. 以前有，最近变少了",score:2}]},
+  {id:"Q10", type:"main", line:"sales", title:"过去一年，是否有客户因不满而明确终止合作？", options:[{text:"A. 有，不止一两例",score:1}, {text:"B. 有一两例，记不太清",score:2}, {text:"C. 没有，合作关系基本稳定",score:4}, {text:"D. 没有明确说终止，但就不下单了",score:2}]},
+  {id:"Q11", type:"main", line:"ops", title:"从客户下单到最终交付，您的平均交付周期大概是多久？", options:[{text:"A. 实际交付周期经常超出客户预期",score:1}, {text:"B. 大部分能按时，偶尔延期",score:2}, {text:"C. 基本能按承诺时间交付",score:3}, {text:"D. 不仅按时，还能预留质量检查时间",score:4}]},
+  {id:"Q12", type:"main", line:"ops", title:"您的生产/项目团队目前的忙碌程度如何？", options:[{text:"A. 经常闲着，产能利用率低",score:2}, {text:"B. 有忙有闲，大致均衡",score:3}, {text:"C. 经常加班赶工",score:2}, {text:"D. 忙不过来，已经不敢轻易接新单",score:1}]},
+  {id:"Q13", type:"main", line:"ops", title:"您的生产任务和施工项目的排期方式是怎样的？", options:[{text:"A. 没有排产计划，谁催得急先做谁的",score:1}, {text:"B. 有大致安排，但经常被插单打乱",score:2}, {text:"C. 有明确排产计划，基本能按计划推进",score:4}, {text:"D. 有计划但执行走样，经常偏离",score:2}]},
+  {id:"Q14", type:"main", line:"ops", title:"近半年内，产品或项目是否因质量问题被客户要求退货、返工或扣款？", options:[{text:"A. 有，而且发生频率不低",score:1}, {text:"B. 偶尔有一两次",score:2}, {text:"C. 基本没有，质量管控比较到位",score:4}, {text:"D. 大问题没有，但小问题不断",score:2}]},
+  {id:"Q15", type:"main", line:"ops", title:"您的生产或技术岗位对特定人员的依赖程度如何？", options:[{text:"A. 关键岗位离不开个别人，走了就麻烦",score:1}, {text:"B. 有依赖但不严重，有人能顶上",score:3}, {text:"C. 核心岗位有备份机制，不是靠单个人",score:4}, {text:"D. 关键人员不止一个，但都缺一不可",score:2}]},
+  {id:"Q16", type:"main", line:"ops", title:"新入职员工能够独立胜任工作，一般需要多长时间？", options:[{text:"A. 三个月以上，新人很难快速上手",score:1}, {text:"B. 一到三个月",score:2}, {text:"C. 一个月左右，有培训流程",score:3}, {text:"D. 两周以内，有完善的操作手册和带教",score:4}]},
+  {id:"Q17", type:"main", line:"ops", title:"您的主要原材料或外协供应商有几个？", options:[{text:"A. 就一两家，换供应商成本太高",score:1}, {text:"B. 三五家，有一定选择余地",score:3}, {text:"C. 有备选供应商体系，不依赖单家",score:4}, {text:"D. 供应商不少但质量参差不齐",score:2}]},
+  {id:"Q18", type:"main", line:"ops", title:"过去三个月，是否出现过因原料短缺或供应商问题导致停工或延期？", options:[{text:"A. 有过，而且影响不小",score:1}, {text:"B. 偶尔有，但不严重",score:2}, {text:"C. 基本没有，供应链比较稳定",score:4}, {text:"D. 供应商不稳定是常态，我们习惯了",score:1}]},
+  {id:"Q19", type:"main", line:"ops", title:"不同批次产品或不同项目之间的质量一致性如何？", options:[{text:"A. 差异比较大，客户时有反馈",score:1}, {text:"B. 大致稳定，但偶有波动",score:2}, {text:"C. 比较一致，有质量标准管控",score:4}, {text:"D. 说不上来，没怎么系统比较过",score:2}]},
+  {id:"Q20", type:"main", line:"ops", title:"您是否清楚每单/每个项目的实际交付成本？", options:[{text:"A. 不太清楚，只知道大概毛利",score:2}, {text:"B. 知道材料成本，人工和管理成本算不清",score:2}, {text:"C. 有比较准确的成本核算",score:4}, {text:"D. 完全没有成本核算概念",score:1}]},
+  {id:"Q21", type:"main", line:"fin", title:"您企业账上可动用的现金，大致能覆盖多长时间的固定支出？", options:[{text:"A. 不到一个月，经常为钱发愁",score:1}, {text:"B. 一到三个月，比较紧张",score:2}, {text:"C. 三到六个月，基本安全",score:3}, {text:"D. 六个月以上，资金储备比较充裕",score:4}]},
+  {id:"Q22", type:"main", line:"fin", title:"您的客户平均回款周期大概是多久？", options:[{text:"A. 经常拖延，三个月以上是常态",score:1}, {text:"B. 一到三个月，偶尔拖一拖",score:2}, {text:"C. 一个月以内，基本按时回款",score:4}, {text:"D. 看客户大小，大客户反而拖得久",score:2}]},
+  {id:"Q23", type:"main", line:"fin", title:"您的企业是否有系统的成本核算机制？", options:[{text:"A. 没有，只知道进账出账",score:1}, {text:"B. 有流水账，但不算细",score:2}, {text:"C. 有分项目的成本核算",score:3}, {text:"D. 有完整的成本分析体系，包括固定和变动成本",score:4}]},
+  {id:"Q24", type:"main", line:"fin", title:"您的产品或项目的定价方式是怎样的？", options:[{text:"A. 参考同行报价，差不多就行",score:2}, {text:"B. 成本加成，保证有利润就做",score:3}, {text:"C. 根据客户承受能力和项目价值综合定价",score:4}, {text:"D. 主要靠和客户谈，没有固定方法",score:1}]},
+  {id:"Q25", type:"main", line:"fin", title:"过去一年的整体利润率趋势是怎样的？", options:[{text:"A. 在下滑，利润越来越薄",score:1}, {text:"B. 基本持平，没有明显变化",score:2}, {text:"C. 在增长，虽然幅度不大",score:4}, {text:"D. 忽高忽低，看运气和单子大小",score:2}]},
+  {id:"Q26", type:"main", line:"fin", title:"您的企业是否做过年度预算或经营计划？", options:[{text:"A. 从来没有，走一步看一步",score:1}, {text:"B. 做过，但执行情况和计划差距很大",score:2}, {text:"C. 有，且大致能按计划执行",score:4}, {text:"D. 有这个想法，但不知道怎么做",score:2}]},
+  {id:"Q27", type:"main", line:"fin", title:"企业的税务和财务合规状况如何？", options:[{text:"A. 比较规范，有专业会计或代账",score:4}, {text:"B. 基本合规，但有些灰色地带",score:2}, {text:"C. 不太规范，但暂时没出问题",score:1}, {text:"D. 完全不懂财务，交给别人不管",score:1}]},
+  {id:"Q28", type:"main", line:"fin", title:"您是否能随时掌握企业当月的营收、成本和利润数据？", options:[{text:"A. 月底都看不清，更别说随时",score:1}, {text:"B. 月底能有个大概数",score:2}, {text:"C. 每周都能看到关键数据",score:3}, {text:"D. 有实时数据看板或系统",score:4}]},
+  {id:"Q29", type:"main", line:"fin", title:"您是否有明确的应收账款管理机制？", options:[{text:"A. 没有专人管，想起来才催",score:1}, {text:"B. 有记录，但催款不太主动",score:2}, {text:"C. 有专人跟催，有明确的账期管理",score:4}, {text:"D. 账期一般都不长，不太需要催",score:3}]},
+  {id:"Q30", type:"main", line:"fin", title:"在投资新设备、新工具或新项目时，您的决策依据是什么？", options:[{text:"A. 凭感觉和经验",score:1}, {text:"B. 看同行在做什么",score:2}, {text:"C. 有简单的投入产出估算",score:3}, {text:"D. 有比较完整的投资回报分析",score:4}]},
+  {id:"P1", type:"probe", line:"sales", triggerQ:"Q2", triggerOpts:[0,3], title:"您这位最大客户，主要是通过什么关系建立合作的？", options:[{text:"A. 我个人的私人关系",score:1}, {text:"B. 公司层面的正常商业合作",score:3}, {text:"C. 朋友或亲戚介绍",score:2}, {text:"D. 通过招投标或公开渠道",score:4}]},
+  {id:"P2", type:"probe", line:"sales", triggerQ:"Q3", triggerOpts:[0], title:"如果没有您亲自去谈，团队的成单能力如何？", options:[{text:"A. 基本成不了，关键客户都要我出面",score:1}, {text:"B. 小单可以，大单还是要我上",score:2}, {text:"C. 团队能独立完成大部分签约",score:4}, {text:"D. 没测试过，因为一直是我在谈",score:1}]},
+  {id:"P3", type:"probe", line:"sales", triggerQ:"Q5", triggerOpts:[0,3], title:"未成交的客户，最主要流失原因是什么？", options:[{text:"A. 价格谈不拢",score:2}, {text:"B. 交付周期不满足需求",score:3}, {text:"C. 方案或质量不达预期",score:3}, {text:"D. 沟通后不了了之，原因不明",score:1}]},
+  {id:"P4", type:"probe", line:"sales", triggerQ:"Q6", triggerOpts:[0], title:"您认为老客户不再复购，最主要的原因是什么？", options:[{text:"A. 产品质量或交付没达到预期",score:3}, {text:"B. 竞争对手价格更低",score:2}, {text:"C. 沟通服务体验不好",score:3}, {text:"D. 不清楚具体原因，客户也没说",score:1}]},
+  {id:"P5", type:"probe", line:"sales", triggerQ:"Q8", triggerOpts:[0,3], title:"承诺过但最终未能兑现的，主要集中在哪些方面？", options:[{text:"A. 交付时间，答应了但出不来",score:3}, {text:"B. 价格或成本，报了价又加价",score:3}, {text:"C. 质量或功能，说得好实际打了折",score:3}, {text:"D. 多个方面都有，这个问题比较普遍",score:1}]},
+  {id:"P6", type:"probe", line:"sales", triggerQ:"Q10", triggerOpts:[0,3], title:"流失的客户，大概在哪个阶段出的问题最多？", options:[{text:"A. 首次交付后，质量或时间不达标",score:3}, {text:"B. 合作过程中，服务响应或沟通有问题",score:3}, {text:"C. 续约时，价格或条款谈不拢",score:2}, {text:"D. 没有明显规律，各种情况都有",score:1}]},
+  {id:"P7", type:"probe", line:"sales", triggerQ:"Q1", triggerOpts:[0], title:"如果主要获客渠道突然失效，您是否有备用方案？", options:[{text:"A. 没有，也没想过这个问题",score:1}, {text:"B. 有这个意识但还没行动",score:2}, {text:"C. 正在尝试开拓其他渠道",score:3}, {text:"D. 已经有多渠道在运作",score:4}]},
+  {id:"P8", type:"probe", line:"sales", triggerQ:"Q9", triggerOpts:[3], title:"您是否有主动促使客户转介绍的机制？", options:[{text:"A. 完全没有，靠客户自愿",score:1}, {text:"B. 口头提过，但没有系统做法",score:2}, {text:"C. 有激励政策，比如返利或折扣",score:3}, {text:"D. 不需要，客户自然会介绍",score:2}]},
+  {id:"P9", type:"probe", line:"ops", triggerQ:"Q12", triggerOpts:[2,3], title:"产能饱和时，您通常怎么应对新订单？", options:[{text:"A. 硬接，加班赶工",score:1}, {text:"B. 推掉一些，但舍不得",score:2}, {text:"C. 延长交期，和客户协商",score:3}, {text:"D. 有外包或外协资源来消化",score:4}]},
+  {id:"P10", type:"probe", line:"ops", triggerQ:"Q13", triggerOpts:[0], title:"插单或加急，最常是因为什么？", options:[{text:"A. 大客户或VIP客户的要求",score:3}, {text:"B. 老板临时安排",score:2}, {text:"C. 前序出了问题，临时换单",score:3}, {text:"D. 客户催得厉害，不插就跑了",score:2}]},
+  {id:"P11", type:"probe", line:"ops", triggerQ:"Q14", triggerOpts:[0], title:"质量问题最常出现在哪个环节？", options:[{text:"A. 原材料/来料环节",score:3}, {text:"B. 生产/加工过程",score:3}, {text:"C. 最终检验没有发现就出货了",score:3}, {text:"D. 客户使用后才发现问题",score:3}]},
+  {id:"P12", type:"probe", line:"ops", triggerQ:"Q15", triggerOpts:[0], title:"如果关键岗位的核心人员离职，您预计影响有多大？", options:[{text:"A. 致命打击，可能停产或项目停滞",score:1}, {text:"B. 影响很大，需要很长时间恢复",score:2}, {text:"C. 有一定影响，但能在一两周内调整",score:3}, {text:"D. 影响可控，有备份方案",score:4}]},
+  {id:"P13", type:"probe", line:"ops", triggerQ:"Q17", triggerOpts:[0], title:"如果主力供应商突然断供，您多久能找到替代？", options:[{text:"A. 一时半会儿找不到，很麻烦",score:1}, {text:"B. 能找到替代，但质量和价格有差异",score:2}, {text:"C. 有一两家备选，随时可以切换",score:4}, {text:"D. 没想过这个问题",score:1}]},
+  {id:"P14", type:"probe", line:"ops", triggerQ:"Q16", triggerOpts:[0], title:"您企业是否有成文的操作手册或培训资料？", options:[{text:"A. 没有，全靠老带新口口相传",score:1}, {text:"B. 有一些零散的文档，但不系统",score:2}, {text:"C. 有比较完整的操作流程文档",score:4}, {text:"D. 正在编写，还没完成",score:3}]},
+  {id:"P15", type:"probe", line:"ops", triggerQ:"Q19", triggerOpts:[0], title:"您是否有正式的质量检验标准和流程？", options:[{text:"A. 没有，靠经验目测判断",score:1}, {text:"B. 有，但执行不太严格",score:2}, {text:"C. 有，而且每道工序都有检验点",score:4}, {text:"D. 有标准，但人手不够时就不检了",score:2}]},
+  {id:"P16", type:"probe", line:"fin", triggerQ:"Q21", triggerOpts:[0], title:"最近三个月，有没有出现过发工资或付供应商比较紧张的情况？", options:[{text:"A. 有过，不止一次",score:1}, {text:"B. 有过一两次，但勉强应付了",score:2}, {text:"C. 没有，资金还算充裕",score:4}, {text:"D. 月底比较紧张，但总能撑过去",score:2}]},
+  {id:"P17", type:"probe", line:"fin", triggerQ:"Q22", triggerOpts:[0,3], title:"对于长期拖欠的应收账款，您通常怎么处理？", options:[{text:"A. 一直催但催不动，也没办法",score:1}, {text:"B. 找对方负责人当面沟通",score:3}, {text:"C. 在新单里把旧账加上",score:2}, {text:"D. 有专门的催款机制或法务手段",score:4}]},
+  {id:"P18", type:"probe", line:"fin", triggerQ:"Q25", triggerOpts:[0], title:"您认为利润率下滑的最主要原因是什么？", options:[{text:"A. 竞争加剧，被迫降价",score:3}, {text:"B. 原材料/人工成本上涨",score:3}, {text:"C. 管理粗放，隐性成本高",score:3}, {text:"D. 不太清楚，感觉是各方面都有压力",score:1}]},
+  {id:"P19", type:"probe", line:"fin", triggerQ:"Q24", triggerOpts:[3], title:"您有没有尝试过根据客户需求和价值差异化定价？", options:[{text:"A. 没想过，一个价格走天下",score:1}, {text:"B. 想过但不知道怎么定",score:2}, {text:"C. 有做过，但执行不一致",score:3}, {text:"D. 一直在做，不同客户不同价格",score:4}]},
+  {id:"P20", type:"probe", line:"fin", triggerQ:"Q26", triggerOpts:[0], title:"您是否清楚企业去年的营收、利润和各项费用的具体数字？", options:[{text:"A. 大概知道营收，其他不太清楚",score:2}, {text:"B. 知道个大概，但不够精确",score:2}, {text:"C. 有准确的财务报表",score:4}, {text:"D. 完全不清楚，只看账上有没有钱",score:1}]}
 ];
 
-// ===================== QUESTION BANKS =====================
-const QUESTIONS = {
-  production: [
-    // ─── 规模判断 ───
-    { id:'Z01', section:'size', title:'贵公司现有员工总数大约多少人？', options:[
-      {text:'A. 10-19人（微型企业）', val:0},
-      {text:'B. 20-50人（小型一档）', val:1},
-      {text:'C. 50-100人（小型二档）', val:2},
-      {text:'D. 100人以上（小型三档）', val:3}
-    ], line:'size', scoreIdx:null },
-    // ─── 业绩线 ───
-    { id:'S01', section:'sales', title:'您的客源主要依赖哪种渠道？', options:[
-      {text:'A. 全凭企业主个人人脉和资源关系', val:0},
-      {text:'B. 老客户转介绍为主', val:1},
-      {text:'C. 销售团队主动开拓', val:2},
-      {text:'D. 多元渠道并行，线上线下均有布局', val:3}
-    ], line:'sales', scoreIdx:0 },
-    { id:'S02', section:'sales', title:'您最大的单一客户，占您年营收的比例大约在什么水平？', options:[
-      {text:'A. 超过三分之一', val:0},
-      {text:'B. 五分之一到三分之一之间', val:1},
-      {text:'C. 不到五分之一，客户结构较为分散', val:2},
-      {text:'D. 不到五分之一，但前三大客户合计超过一半', val:0}
-    ], line:'sales', scoreIdx:1 },
-    { id:'S03', section:'sales', title:'您公司目前有专门负责客户开拓和销售跟进的人员配置吗？', options:[
-      {text:'A. 仅企业主本人，无专职销售', val:0},
-      {text:'B. 1-2名专职或兼职销售人员', val:1},
-      {text:'C. 3-5名专职销售团队', val:2},
-      {text:'D. 5人以上，有明确分工的销售组织', val:3}
-    ], line:'sales', scoreIdx:2 },
-    { id:'S04', section:'sales', title:'您对接下来1-2个月内能够签约的新订单数量，有相对清晰的预期吗？', options:[
-      {text:'A. 完全没底，来什么算什么', val:0},
-      {text:'B. 有大概感觉，但没有系统性预估', val:1},
-      {text:'C. 有明确的意向客户清单和预估依据', val:2},
-      {text:'D. 已有完整的销售漏斗和转化预测模型', val:3}
-    ], line:'sales', scoreIdx:3 },
-    { id:'S05', section:'sales', title:'从客户首次询价/接触，到最终签约成交，您公司的整体转化率处于什么水平？', options:[
-      {text:'A. 低于30%，流失率较高', val:0},
-      {text:'B. 30%-50%，转化效率一般', val:1},
-      {text:'C. 50%-70%，转化效率较好', val:2},
-      {text:'D. 70%以上，转化体系较为成熟', val:3}
-    ], line:'sales', scoreIdx:4 },
-    { id:'S06', section:'sales', title:'您的成交客户中，后续还会继续合作或追加订单的比例大约是多少？', options:[
-      {text:'A. 大多数只做一单，之后就没有下文了', val:0},
-      {text:'B. 约三分之一会回来，但不够稳定', val:1},
-      {text:'C. 超过一半有持续合作，关系较为稳定', val:2},
-      {text:'D. 已有成熟的客户维护体系，复购率较高', val:3}
-    ], line:'sales', scoreIdx:5 },
-    { id:'S07', section:'sales', title:'您是否有过为拿下订单而答应了您清楚"可能存在风险"的条件？', options:[
-      {text:'A. 经常发生，不如此做难以成交', val:0},
-      {text:'B. 偶尔，但并非普遍现象', val:1},
-      {text:'C. 极少，我知道量力而行的重要性', val:2},
-      {text:'D. 从不，我坚持可承诺才签', val:3}
-    ], line:'sales', scoreIdx:6 },
-    { id:'S08', section:'sales', title:'过去一年内，您是否有客户明确表达不满后终止合作的情况？', options:[
-      {text:'A. 有，且不止一两个', val:0},
-      {text:'B. 有过一两次', val:1},
-      {text:'C. 极少，合作稳定性较好', val:2},
-      {text:'D. 没有，客户关系维护做得不错', val:3}
-    ], line:'sales', scoreIdx:7 },
-    { id:'S09', section:'sales', title:'与两年前相比，您公司的获客渠道结构发生了什么变化？', options:[
-      {text:'A. 越来越依赖老板人脉，渠道没有拓宽', val:0},
-      {text:'B. 部分拓宽，但仍以老渠道为主', val:1},
-      {text:'C. 已有明显拓展，新渠道贡献了有效新客', val:2},
-      {text:'D. 已建立多元渠道，且各渠道效果可量化追踪', val:3}
-    ], line:'sales', scoreIdx:8 },
-    { id:'S10', section:'sales', title:'过去12个月，您公司的新增客户数量与流失客户数量的比例大约是？', options:[
-      {text:'A. 流失多于新增，客户资产在萎缩', val:0},
-      {text:'B. 基本持平，增减相抵', val:1},
-      {text:'C. 新增多于流失，但增速不快', val:2},
-      {text:'D. 新增明显快于流失，处于增长期', val:3}
-    ], line:'sales', scoreIdx:9 },
-    // ─── 交付线 ───
-    { id:'O01', section:'ops', title:'您公司目前的产能利用率处于什么状态？', options:[
-      {text:'A. 产能闲置较多，人员和设备利用率偏低', val:0},
-      {text:'B. 正常节奏，略有盈余', val:1},
-      {text:'C. 较为饱和，部分时期需要加班赶工', val:2},
-      {text:'D. 已满负荷运转，不敢再接新单', val:1}
-    ], line:'ops', scoreIdx:0 },
-    { id:'O02', section:'ops', title:'您的生产/施工任务是如何安排先后的？', options:[
-      {text:'A. 无系统性安排，谁催得急就先做谁', val:0},
-      {text:'B. 有大概安排，但经常因突发情况改变', val:1},
-      {text:'C. 有明确排产计划，执行情况基本可控', val:2},
-      {text:'D. 有完整排产体系，并实时追踪调整', val:3}
-    ], line:'ops', scoreIdx:1 },
-    { id:'O03', section:'ops', title:'过去六个月内，您公司因质量原因被客户要求返工、退货或扣款的情况出现频率如何？', options:[
-      {text:'A. 频繁发生，是常态问题', val:0},
-      {text:'B. 偶尔有一两次', val:1},
-      {text:'C. 基本没有，质量稳定性较好', val:2},
-      {text:'D. 没有，有完善的质量管控体系', val:3}
-    ], line:'ops', scoreIdx:2 },
-    { id:'O04', section:'ops', title:'如果车间主管或核心技术骨干临时请假一周，公司的正常运转会受到多大影响？', options:[
-      {text:'A. 影响很大，部分环节可能直接停摆', val:0},
-      {text:'B. 会比较吃力，但基本还能维持', val:1},
-      {text:'C. 有一定影响，但其他人员可以顶上来', val:2},
-      {text:'D. 几乎没有影响，团队已形成AB角互补', val:3}
-    ], line:'ops', scoreIdx:3 },
-    { id:'O05', section:'ops', title:'您公司是否有书面的操作规范、作业指导书或标准流程文档？', options:[
-      {text:'A. 几乎没有，全靠老员工口传身教', val:0},
-      {text:'B. 部分关键工序有，但覆盖不全面', val:1},
-      {text:'C. 主要工序和岗位基本覆盖', val:2},
-      {text:'D. 已有完整体系，并持续更新迭代', val:3}
-    ], line:'ops', scoreIdx:4 },
-    { id:'O06', section:'ops', title:'您公司的关键原料或配件供应是否稳定？有没有出现过"订单签了但料到不了"的情况？', options:[
-      {text:'A. 经常出现，供应链是明显短板', val:0},
-      {text:'B. 偶尔出现，需要花费大量精力协调', val:1},
-      {text:'C. 基本稳定，有相对固定的供应商渠道', val:2},
-      {text:'D. 非常稳定，已建立完善的供应商管理体系', val:3}
-    ], line:'ops', scoreIdx:5 },
-    { id:'O07', section:'ops', title:'售后服务（含维修、投诉处理、纠纷解决）的负担重不重？', options:[
-      {text:'A. 很重，占用大量精力', val:0},
-      {text:'B. 有一定压力，但还能应付', val:1},
-      {text:'C. 不算严重，问题基本在交付前已解决', val:2},
-      {text:'D. 很少，交付质量有保障，售后压力极小', val:3}
-    ], line:'ops', scoreIdx:6 },
-    // ─── 财务线 ───
-    { id:'F01', section:'fin', title:'公司账上目前可动用资金，能覆盖几个月的固定支出（工资+供应商款+必要开支）？', options:[
-      {text:'A. 不足一个月', val:0},
-      {text:'B. 1-2个月', val:1},
-      {text:'C. 2-3个月', val:2},
-      {text:'D. 超过3个月，有一定安全垫', val:3}
-    ], line:'fin', scoreIdx:0 },
-    { id:'F02', section:'fin', title:'您的客户从签单到付款，平均回款周期大约是多久？', options:[
-      {text:'A. 超过90天，拖延严重', val:0},
-      {text:'B. 60-90天，基本正常但偏长', val:1},
-      {text:'C. 30-60天，处于合理区间', val:2},
-      {text:'D. 以预付款或现款为主，应收账款很少', val:3}
-    ], line:'fin', scoreIdx:1 },
-    { id:'F03', section:'fin', title:'您是否有过"订单不少、车间也忙、但账上就是没钱"的感受？', options:[
-      {text:'A. 经常如此，这是我的常态', val:0},
-      {text:'B. 偶尔有过，不是常态', val:1},
-      {text:'C. 极少，我清楚钱去哪了', val:2},
-      {text:'D. 从未有过，收入和现金流对得上', val:3}
-    ], line:'fin', scoreIdx:2 },
-    { id:'F04', section:'fin', title:'接单报价时，您会对每张订单做完整的成本核算吗？', options:[
-      {text:'A. 不会，看行情大概报，差不多就行', val:0},
-      {text:'B. 会算主要材料成本，人工等隐性成本没细算', val:1},
-      {text:'C. 清楚知道主要成本构成和大概利润空间', val:2},
-      {text:'D. 每单都有完整成本表和利润分析', val:3}
-    ], line:'fin', scoreIdx:3 },
-    { id:'F05', section:'fin', title:'您能清楚知道，上个月企业是盈利还是亏损吗？', options:[
-      {text:'A. 不清楚，要等到年底才知道', val:0},
-      {text:'B. 大概知道，但心里没底', val:1},
-      {text:'C. 每月有账，基本能看清', val:2},
-      {text:'D. 很清楚，每月有完整财务报表', val:3}
-    ], line:'fin', scoreIdx:4 },
-    { id:'F06', section:'fin', title:'您公司目前的盈利状况与您的预期相比，处于什么水平？', options:[
-      {text:'A. 不乐观，勉强撑着', val:0},
-      {text:'B. 一般般，过得去', val:1},
-      {text:'C. 还行，基本符合预期', val:2},
-      {text:'D. 挺好的，超出预期', val:3}
-    ], line:'fin', scoreIdx:5 },
-    { id:'F07', section:'fin', title:'过去一年，您在设备更新、培训学习或市场推广上是否有持续投入？', options:[
-      {text:'A. 几乎没有，顾不上也没钱投', val:0},
-      {text:'B. 偶尔有一点，但不系统', val:1},
-      {text:'C. 有预算安排，持续在投入', val:2},
-      {text:'D. 有完整的年度投资计划，按计划执行', val:3}
-    ], line:'fin', scoreIdx:6 },
-    // ─── 综合线 ───
-    { id:'B01', section:'boss', title:'企业主每天的精力和时间，最主要花在哪个方向？', options:[
-      {text:'A. 跑业务、找客户、谈单子', val:0},
-      {text:'B. 盯生产、管质量、催交期', val:0},
-      {text:'C. 算账、催款、管现金流', val:0},
-      {text:'D. 什么都得管，到处救火', val:0},
-      {text:'E. 已建立团队，基本不参与具体事务', val:3}
-    ], line:'boss', scoreIdx:0 },
-    { id:'B02', section:'boss', title:'当企业主本人因故无法全力投入时，公司运营会出现明显问题吗？', options:[
-      {text:'A. 会，一停就有明显影响', val:0},
-      {text:'B. 短期还行，时间长了会有问题', val:1},
-      {text:'C. 有影响，但团队能基本维持', val:2},
-      {text:'D. 几乎没影响，团队运转正常', val:3}
-    ], line:'boss', scoreIdx:1 },
-    { id:'B03', section:'boss', title:'对于企业未来一两年的发展方向，您的清晰度如何？', options:[
-      {text:'A. 走一步看一步，没有明确规划', val:0},
-      {text:'B. 有大概方向，但没有具体路径', val:1},
-      {text:'C. 有清晰方向，正在按计划推进', val:2},
-      {text:'D. 有完整战略规划，且定期复盘调整', val:3}
-    ], line:'boss', scoreIdx:2 },
-  ],
-
-  service: [
-    // ─── 规模判断 ───
-    { id:'Z01', section:'size', title:'贵公司现有员工总数大约多少人？', options:[
-      {text:'A. 10-19人（微型企业）', val:0},
-      {text:'B. 20-50人（小型一档）', val:1},
-      {text:'C. 50-100人（小型二档）', val:2},
-      {text:'D. 100人以上（小型三档）', val:3}
-    ], line:'size', scoreIdx:null },
-    // ─── 获客线 ───
-    { id:'S01', section:'sales', title:'您公司目前最主要的获客渠道是什么？', options:[
-      {text:'A. 依赖企业主或核心创始人的个人人脉关系', val:0},
-      {text:'B. 老客户转介绍为主', val:1},
-      {text:'C. 第三方平台（如美团、淘宝、本地生活等）', val:2},
-      {text:'D. 多元渠道并行，线上线下均有布局', val:3}
-    ], line:'sales', scoreIdx:0 },
-    { id:'S02', section:'sales', title:'您的第一大获客渠道，占整体新客来源的比例大约是多少？', options:[
-      {text:'A. 超过一半，高度依赖单一渠道', val:0},
-      {text:'B. 三分之一左右，有一定依赖', val:1},
-      {text:'C. 不到三分之一，渠道分布较均衡', val:2},
-      {text:'D. 各渠道贡献相当，有系统布局', val:3}
-    ], line:'sales', scoreIdx:1 },
-    { id:'S03', section:'sales', title:'从客户首次接触/咨询，到最终签约成交，您公司的转化率大致在什么水平？', options:[
-      {text:'A. 低于30%，流失率偏高', val:0},
-      {text:'B. 30%-50%，转化效率一般', val:1},
-      {text:'C. 50%-70%，转化体系较为成熟', val:2},
-      {text:'D. 70%以上，获客转化能力较强', val:3}
-    ], line:'sales', scoreIdx:2 },
-    { id:'S04', section:'sales', title:'您的老客户中，有多少比例会在合同/项目结束后继续合作或续约？', options:[
-      {text:'A. 大多数只做一次，没有续约', val:0},
-      {text:'B. 约三分之一有复购或续约', val:1},
-      {text:'C. 超过一半有复购，关系较稳定', val:2},
-      {text:'D. 已有成熟的续约机制，复购率较高', val:3}
-    ], line:'sales', scoreIdx:3 },
-    { id:'S05', section:'sales', title:'公司签订新单的业务能力，主要集中在谁身上？', options:[
-      {text:'A. 完全集中在企业主或某个核心创始人', val:0},
-      {text:'B. 有1-2个核心业务员，但依赖度很高', val:1},
-      {text:'C. 团队中有多人具备独立签约能力', val:2},
-      {text:'D. 已建立团队化获客和签约体系', val:3}
-    ], line:'sales', scoreIdx:4 },
-    { id:'S06', section:'sales', title:'您所在行业的竞争烈度如何？是否面临明显的价格竞争压力？', options:[
-      {text:'A. 竞争激烈，经常被迫降价才能成交', val:0},
-      {text:'B. 有竞争，但可以通过差异化维持定价', val:1},
-      {text:'C. 竞争有，但我们的定价能力还不错', val:2},
-      {text:'D. 细分领域竞争较少，定价相对主动', val:3}
-    ], line:'sales', scoreIdx:5 },
-    { id:'S07', section:'sales', title:'过去12个月，您公司的新增活跃客户与流失客户的比值大约是？', options:[
-      {text:'A. 流失多于新增，客户资产在缩减', val:0},
-      {text:'B. 基本持平，增减相抵', val:1},
-      {text:'C. 新增多于流失，处于增长中', val:2},
-      {text:'D. 增长明显，客户资产质量持续提升', val:3}
-    ], line:'sales', scoreIdx:6 },
-    { id:'S08', section:'sales', title:'您有没有对流失客户做过归因分析，找出流失的关键原因？', options:[
-      {text:'A. 没有，流失就流失了', val:0},
-      {text:'B. 有时复盘，但没形成记录', val:1},
-      {text:'C. 有定期分析，并采取了应对措施', val:2},
-      {text:'D. 有完整的客户流失预警和挽回机制', val:3}
-    ], line:'sales', scoreIdx:7 },
-    // ─── 服务线 ───
-    { id:'O01', section:'ops', title:'您公司过去一年内，关键服务岗位的人员流失情况如何？', options:[
-      {text:'A. 严重，核心人员频繁离职', val:0},
-      {text:'B. 有一些，有一定流动性', val:1},
-      {text:'C. 较少，核心团队比较稳定', val:2},
-      {text:'D. 非常稳定，有完善的激励和培养机制', val:3}
-    ], line:'ops', scoreIdx:0 },
-    { id:'O02', section:'ops', title:'您公司的服务交付是否有标准化的流程或体系？', options:[
-      {text:'A. 没有，每个人凭自己方式服务', val:0},
-      {text:'B. 有大概流程，但各人执行差异较大', val:1},
-      {text:'C. 有明确流程，服务质量基本一致', val:2},
-      {text:'D. 有完善标准化体系，且持续迭代', val:3}
-    ], line:'ops', scoreIdx:1 },
-    { id:'O03', section:'ops', title:'过去六个月内，您收到客户投诉或不满反馈的频率如何？', options:[
-      {text:'A. 频繁，是服务中的常态问题', val:0},
-      {text:'B. 偶尔有，但整体可控', val:1},
-      {text:'C. 很少，服务品质较稳定', val:2},
-      {text:'D. 极少，有完善的客户满意度管理', val:3}
-    ], line:'ops', scoreIdx:2 },
-    { id:'O04', section:'ops', title:'新入职的服务人员，从入职到能够独立完成服务交付，通常需要多长时间？', options:[
-      {text:'A. 三个月以上，主要靠观察学习自行摸索', val:0},
-      {text:'B. 一到三个月，有人带但不成体系', val:1},
-      {text:'C. 一两周，有标准和流程文档', val:2},
-      {text:'D. 一周内，有完整的培训和带教体系', val:3}
-    ], line:'ops', scoreIdx:3 },
-    { id:'O05', section:'ops', title:'您公司是否将服务经验、解决方案和专业知识积累成可复用的文档体系？', options:[
-      {text:'A. 没有，全在人的脑子里', val:0},
-      {text:'B. 有一些，但不系统也不完整', val:1},
-      {text:'C. 有体系化的积累，团队可查阅使用', val:2},
-      {text:'D. 有完善的知识管理平台，持续沉淀更新', val:3}
-    ], line:'ops', scoreIdx:4 },
-    { id:'O06', section:'ops', title:'您公司是否有过因服务质量问题导致客户要求退款、投诉扩散或合作关系终止的情况？', options:[
-      {text:'A. 有，严重的已造成实质损失', val:0},
-      {text:'B. 有过，客户有所不满但未造成严重后果', val:1},
-      {text:'C. 基本没有，服务底线守得较好', val:2},
-      {text:'D. 从未发生，服务品质有严格管控', val:3}
-    ], line:'ops', scoreIdx:5 },
-    { id:'O07', section:'ops', title:'招聘到合适的服务人才，难度大吗？', options:[
-      {text:'A. 非常困难，招不到合适的人', val:0},
-      {text:'B. 有一定难度，但能招到', val:1},
-      {text:'C. 难度不大，有稳定渠道', val:2},
-      {text:'D. 有吸引力，人才主动找来', val:3}
-    ], line:'ops', scoreIdx:6 },
-    // ─── 财务线 ───
-    { id:'F01', section:'fin', title:'公司账上目前可动用资金，能覆盖几个月的固定支出（工资+租金+必要开支）？', options:[
-      {text:'A. 不足一个月', val:0},
-      {text:'B. 1-2个月', val:1},
-      {text:'C. 2-3个月', val:2},
-      {text:'D. 超过3个月，有一定安全垫', val:3}
-    ], line:'fin', scoreIdx:0 },
-    { id:'F02', section:'fin', title:'您的客户从接受服务到付款，平均回款周期大约是多久？', options:[
-      {text:'A. 超过90天，严重拖延', val:0},
-      {text:'B. 60-90天，基本正常但偏长', val:1},
-      {text:'C. 30-60天，处于合理区间', val:2},
-      {text:'D. 以预付款或月结为主，应收账款很少', val:3}
-    ], line:'fin', scoreIdx:1 },
-    { id:'F03', section:'fin', title:'您公司的人均产出（单人创造的营收）与同行业相比，处于什么水平？', options:[
-      {text:'A. 低于行业平均，效率偏低', val:0},
-      {text:'B. 处于行业平均水平', val:1},
-      {text:'C. 高于行业平均，有竞争优势', val:2},
-      {text:'D. 明显领先，是行业标杆', val:3}
-    ], line:'fin', scoreIdx:2 },
-    { id:'F04', section:'fin', title:'您的服务定价是如何确定的？', options:[
-      {text:'A. 看竞争对手或客户出价，定价被动', val:0},
-      {text:'B. 基于成本加成，但不够精细', val:1},
-      {text:'C. 清楚知道服务成本，有明确的利润目标', val:2},
-      {text:'D. 有完整定价体系，按客户价值差异化定价', val:3}
-    ], line:'fin', scoreIdx:3 },
-    { id:'F05', section:'fin', title:'您能清楚知道，上个月企业是盈利还是亏损，以及亏损的主要原因吗？', options:[
-      {text:'A. 不清楚，要靠感觉判断', val:0},
-      {text:'B. 大概知道，但没有精确数据', val:1},
-      {text:'C. 每月有账，基本能看清', val:2},
-      {text:'D. 很清楚，每个月有完整财务报表', val:3}
-    ], line:'fin', scoreIdx:4 },
-    { id:'F06', section:'fin', title:'您公司最大的成本项是什么？是否有持续优化的空间？', options:[
-      {text:'A. 人工成本最大，但降本空间不大', val:0},
-      {text:'B. 人工/租金等主要成本较大，有一定优化空间', val:1},
-      {text:'C. 有持续在做成本优化，结构合理', val:2},
-      {text:'D. 成本结构清晰，有精细化管理', val:3}
-    ], line:'fin', scoreIdx:5 },
-    { id:'F07', section:'fin', title:'您公司目前的管理方式主要依赖什么？', options:[
-      {text:'A. 老板直接管，靠盯人做事', val:0},
-      {text:'B. 有简单分工，但制度和流程不完善', val:1},
-      {text:'C. 分工明确，各司其职', val:2},
-      {text:'D. 有完善的组织架构和绩效体系', val:3}
-    ], line:'fin', scoreIdx:6 },
-    // ─── 综合线 ───
-    { id:'B01', section:'boss', title:'企业主每天的精力和时间，最主要花在哪个方向？', options:[
-      {text:'A. 找客户、谈单子、跑业务', val:0},
-      {text:'B. 服务交付、现场执行、盯人盯事', val:0},
-      {text:'C. 算账、催款、管现金流', val:0},
-      {text:'D. 什么都管，到处救火', val:0},
-      {text:'E. 已建立团队，基本不参与具体事务', val:3}
-    ], line:'boss', scoreIdx:0 },
-    { id:'B02', section:'boss', title:'当企业主本人精力有限时，公司的获客和服务交付是否会出现明显冲突？', options:[
-      {text:'A. 经常，顾了这边就顾不上那边', val:0},
-      {text:'B. 有时发生，但还能协调', val:1},
-      {text:'C. 基本不冲突，团队各司其职', val:2},
-      {text:'D. 完全没有冲突，分工很清晰', val:3}
-    ], line:'boss', scoreIdx:1 },
-    { id:'B03', section:'boss', title:'对于企业未来一两年的发展方向，您的清晰度如何？', options:[
-      {text:'A. 走一步看一步，没有明确规划', val:0},
-      {text:'B. 有大概方向，但没有具体路径', val:1},
-      {text:'C. 有清晰方向，正在按计划推进', val:2},
-      {text:'D. 有完整战略规划，且定期复盘调整', val:3}
-    ], line:'boss', scoreIdx:2 },
-  ]
-};
-
-// 动态出题路径定义（生产型）
-const DYNAMIC_PATHS_PRODUCTION = {
-  salesHigh: ['S02','S07','S10'],   // 业绩线高风险路径
-  opsHigh: ['O05','O06'],           // 交付线高风险路径
-  finHigh: ['F03','F04'],           // 财务线高风险路径
-  bossHigh: ['B02','B03'],          // 综合线高风险路径
-  scaleC: ['S09','S10','F06','F07'], // C档规模题
-  scaleD: ['S09','S10','F06','F07','O07'] // D档规模题
-};
-
-// 动态出题路径定义（服务型）
-const DYNAMIC_PATHS_SERVICE = {
-  salesHigh: ['S05','S06','S08'],   // 获客线高风险路径
-  opsHigh: ['O05','O06'],           // 服务线高风险路径
-  finHigh: ['F03','F04'],            // 财务线高风险路径
-  bossHigh: ['B02','B03'],           // 综合线高风险路径
-  scaleC: ['S07','S08','O07','F06','F07'],
-  scaleD: ['S07','S08','O07','F06','F07']
-};
+const SQ = [
+  {id:"Q1", type:"main", line:"sales", title:"您的客户主要通过哪些渠道了解到您的企业或服务？", options:[{text:"A. 主要靠我个人的人脉和口碑介绍",score:1}, {text:"B. 线上平台引流（美团/大众点评/抖音等）",score:3}, {text:"C. 门店自然流量或地段优势",score:3}, {text:"D. 多种渠道都在做，比较均衡",score:4}]},
+  {id:"Q2", type:"main", line:"sales", title:"您最大的单一客户（或客户类型），其年度贡献占总营收的大致比例？", options:[{text:"A. 超过三分之一",score:1}, {text:"B. 约五分之一到三分之一",score:2}, {text:"C. 不足五分之一，客户来源分散",score:4}, {text:"D. 不足五分之一，但核心大客户群集中",score:3}]},
+  {id:"Q3", type:"main", line:"sales", title:"您企业专门负责获客和销售的人员有多少？", options:[{text:"A. 基本只有我自己",score:1}, {text:"B. 1-2人",score:2}, {text:"C. 3-5人",score:3}, {text:"D. 5人以上，有明确分工",score:4}]},
+  {id:"Q4", type:"main", line:"sales", title:"客户咨询后最终成交的比例大致如何？", options:[{text:"A. 不足三成",score:1}, {text:"B. 三到五成",score:2}, {text:"C. 五到八成",score:3}, {text:"D. 八成以上",score:4}]},
+  {id:"Q5", type:"main", line:"sales", title:"已成交客户的续约或持续消费情况如何？", options:[{text:"A. 大量客户做一次就不来了",score:1}, {text:"B. 有一部分回头客，但不够稳定",score:2}, {text:"C. 大部分是持续消费或长期合作",score:4}, {text:"D. 续约率还行，但客单价在下降",score:2}]},
+  {id:"Q6", type:"main", line:"sales", title:"客户主动向您推荐新客户的频率如何？", options:[{text:"A. 极少",score:1}, {text:"B. 偶尔有",score:2}, {text:"C. 比较常见，转介绍是重要来源",score:4}, {text:"D. 以前有，最近变少了",score:2}]},
+  {id:"Q7", type:"main", line:"sales", title:"您企业是否有定期回访老客户或维护客户关系的机制？", options:[{text:"A. 完全没有",score:1}, {text:"B. 靠我或少数人偶尔联系",score:2}, {text:"C. 有制度但不一定执行到位",score:3}, {text:"D. 有，且有客户档案和跟进系统",score:4}]},
+  {id:"Q8", type:"main", line:"sales", title:"在获取客户过程中，您是否承诺过超出实际能力的服务内容？", options:[{text:"A. 经常有，不答应客户就走了",score:1}, {text:"B. 偶尔有",score:2}, {text:"C. 极少，能做到的才承诺",score:4}, {text:"D. 说不太清，有时候确实承诺了做不到",score:1}]},
+  {id:"Q9", type:"main", line:"sales", title:"您的获客成本（包括时间和金钱投入）最近一年的变化趋势？", options:[{text:"A. 明显上升，获客越来越难",score:1}, {text:"B. 基本持平",score:2}, {text:"C. 在下降，有稳定的获客渠道",score:4}, {text:"D. 忽高忽低，不太稳定",score:2}]},
+  {id:"Q10", type:"main", line:"sales", title:"过去一年，是否有客户因不满而明确终止合作或不再消费？", options:[{text:"A. 有，不止一两例",score:1}, {text:"B. 有一两例",score:2}, {text:"C. 没有，客户关系基本稳定",score:4}, {text:"D. 没有明确说，但就不来了",score:2}]},
+  {id:"Q11", type:"main", line:"ops", title:"您的服务流程是否有标准化的操作规范或SOP？", options:[{text:"A. 没有，全靠个人经验和习惯",score:1}, {text:"B. 有一些零散的规范，但不系统",score:2}, {text:"C. 有比较完整的SOP文档",score:4}, {text:"D. 正在建立，还没完成",score:3}]},
+  {id:"Q12", type:"main", line:"ops", title:"不同员工为客户提供的服务质量一致性如何？", options:[{text:"A. 差异较大，客户常反馈不一样",score:1}, {text:"B. 大致一致，但有时有偏差",score:2}, {text:"C. 比较一致，有标准可依",score:4}, {text:"D. 说不准，没有系统对比过",score:2}]},
+  {id:"Q13", type:"main", line:"ops", title:"您的服务团队能够同时承载的最大客户量大概是当前实际客户量的几倍？", options:[{text:"A. 已经超负荷了",score:1}, {text:"B. 基本满负荷",score:2}, {text:"C. 还有30%-50%的余量",score:4}, {text:"D. 余量很大，产能闲置",score:3}]},
+  {id:"Q14", type:"main", line:"ops", title:"核心服务人员（如主力技师/顾问/销售）的稳定性如何？", options:[{text:"A. 流失率较高，经常要招人",score:1}, {text:"B. 偶尔有变动，但可控",score:3}, {text:"C. 团队比较稳定，流动率低",score:4}, {text:"D. 核心人员没怎么变过",score:4}]},
+  {id:"Q15", type:"main", line:"ops", title:"如果核心服务人员离职，客户是否会跟着走？", options:[{text:"A. 会，而且发生过",score:1}, {text:"B. 可能会有个别客户跟着走",score:2}, {text:"C. 基本不会，客户认的是品牌/公司",score:4}, {text:"D. 不确定，没遇到过",score:2}]},
+  {id:"Q16", type:"main", line:"ops", title:"您对客户需求的理解程度如何？", options:[{text:"A. 经常出现理解偏差，客户说的和我们做的不一样",score:1}, {text:"B. 基本能理解，偶尔有偏差",score:2}, {text:"C. 有系统的方法了解和确认客户需求",score:4}, {text:"D. 客户需求比较简单，不太会搞错",score:3}]},
+  {id:"Q17", type:"main", line:"ops", title:"服务过程中，客户追加需求或临时改需求的情况多吗？", options:[{text:"A. 经常出现，客户不断加东西",score:1}, {text:"B. 偶尔有，还能接受",score:2}, {text:"C. 很少，我们前期就把需求确认清楚",score:4}, {text:"D. 有，但我们会明确沟通额外费用和时间",score:3}]},
+  {id:"Q18", type:"main", line:"ops", title:"您的服务交付时间，客户满意度如何？", options:[{text:"A. 经常被客户催，觉得我们慢",score:1}, {text:"B. 基本按时，偶尔有延迟",score:2}, {text:"C. 一般都能按时甚至提前完成",score:4}, {text:"D. 服务类不太有明确交期概念",score:2}]},
+  {id:"Q19", type:"main", line:"ops", title:"客户投诉的处理机制是怎样的？", options:[{text:"A. 没有专门机制，有问题就临时处理",score:1}, {text:"B. 有专人处理，但没有标准流程",score:2}, {text:"C. 有投诉处理流程，且有改进闭环",score:4}, {text:"D. 很少有投诉",score:3}]},
+  {id:"Q20", type:"main", line:"ops", title:"创始人或老板目前在服务一线的参与程度如何？", options:[{text:"A. 事必躬亲，几乎所有重要客户都是我亲自服务",score:1}, {text:"B. 大客户我来，小客户交给团队",score:2}, {text:"C. 基本不参与一线服务，交给团队",score:4}, {text:"D. 想放但放不下，团队还接不住",score:2}]},
+  {id:"Q21", type:"main", line:"fin", title:"您企业账上可动用的现金，大致能覆盖多长时间的固定支出？", options:[{text:"A. 不到一个月",score:1}, {text:"B. 一到三个月",score:2}, {text:"C. 三到六个月",score:3}, {text:"D. 六个月以上",score:4}]},
+  {id:"Q22", type:"main", line:"fin", title:"您的人均产出（人效）在同行中的水平如何？", options:[{text:"A. 不清楚，没算过",score:1}, {text:"B. 感觉偏低，但没具体数据",score:2}, {text:"C. 处于行业中上水平",score:3}, {text:"D. 有明确数据，且在持续优化",score:4}]},
+  {id:"Q23", type:"main", line:"fin", title:"您的平均单客价值（客单价）近一年的趋势？", options:[{text:"A. 在下降",score:1}, {text:"B. 基本持平",score:2}, {text:"C. 在上升",score:4}, {text:"D. 波动较大，看客户类型",score:2}]},
+  {id:"Q24", type:"main", line:"fin", title:"您的定价主要依据什么？", options:[{text:"A. 参考同行价格",score:2}, {text:"B. 成本加成",score:3}, {text:"C. 根据服务价值和客户需求综合定价",score:4}, {text:"D. 客户能接受什么价格就定什么",score:1}]},
+  {id:"Q25", type:"main", line:"fin", title:"您是否清楚每项服务或每个客户的真实利润率？", options:[{text:"A. 不清楚，只知道总营收",score:1}, {text:"B. 知道大概毛利，扣完费用就不清楚了",score:2}, {text:"C. 有比较准确的利润核算",score:4}, {text:"D. 核算过但觉得数据不太准",score:2}]},
+  {id:"Q26", type:"main", line:"fin", title:"过去一年的整体利润率变化趋势？", options:[{text:"A. 在下滑，利润越来越薄",score:1}, {text:"B. 基本持平",score:2}, {text:"C. 在增长",score:4}, {text:"D. 忽高忽低",score:2}]},
+  {id:"Q27", type:"main", line:"fin", title:"您企业的人工成本占总成本的大致比例？", options:[{text:"A. 超过60%",score:1}, {text:"B. 40%-60%",score:2}, {text:"C. 20%-40%",score:3}, {text:"D. 不清楚",score:1}]},
+  {id:"Q28", type:"main", line:"fin", title:"您是否有月度或季度的经营数据分析？", options:[{text:"A. 从来没有",score:1}, {text:"B. 看一下流水，不做分析",score:2}, {text:"C. 有简单的数据分析",score:3}, {text:"D. 有系统的经营分析报表",score:4}]},
+  {id:"Q29", type:"main", line:"fin", title:"您的预付费或储值类客户的资金管理情况？", options:[{text:"A. 没有预付费模式",score:2}, {text:"B. 有预付费，但没有专门管理",score:2}, {text:"C. 有预付费，且有明确的台账管理",score:4}, {text:"D. 有预付费，但退费和投诉比较麻烦",score:1}]},
+  {id:"Q30", type:"main", line:"fin", title:"在投资新工具、新设备或拓展新业务时，您的决策依据？", options:[{text:"A. 凭感觉和经验",score:1}, {text:"B. 看同行怎么做",score:2}, {text:"C. 有简单的投入产出估算",score:3}, {text:"D. 有完整的投资回报分析",score:4}]},
+  {id:"P1", type:"probe", line:"sales", triggerQ:"Q2", triggerOpts:[0], title:"这位最大客户，主要通过什么渠道或关系建立合作的？", options:[{text:"A. 我个人的关系",score:1}, {text:"B. 公司正常商业合作",score:3}, {text:"C. 朋友或合作伙伴介绍",score:2}, {text:"D. 客户主动找上门",score:4}]},
+  {id:"P2", type:"probe", line:"sales", triggerQ:"Q3", triggerOpts:[0], title:"如果完全由团队而非您亲自获客，效果如何？", options:[{text:"A. 效果很差，关键客户都要我出面",score:1}, {text:"B. 小客户可以，大客户不行",score:2}, {text:"C. 团队能独立完成大部分获客",score:4}, {text:"D. 没测试过，一直是我在做",score:1}]},
+  {id:"P3", type:"probe", line:"sales", triggerQ:"Q4", triggerOpts:[0], title:"客户咨询后未成交，最主要原因是什么？", options:[{text:"A. 价格超出客户预期",score:2}, {text:"B. 服务内容或方案不匹配",score:3}, {text:"C. 被竞品抢走了",score:3}, {text:"D. 客户犹豫后不了了之，原因不明",score:1}]},
+  {id:"P4", type:"probe", line:"sales", triggerQ:"Q5", triggerOpts:[0], title:"您认为客户不再复购或推荐，最主要的原因是什么？", options:[{text:"A. 服务质量或效果未达预期",score:3}, {text:"B. 价格比竞品高",score:2}, {text:"C. 服务过程体验不好（态度/响应/沟通）",score:3}, {text:"D. 客户需求变化或业务调整",score:2}]},
+  {id:"P5", type:"probe", line:"sales", triggerQ:"Q8", triggerOpts:[0,3], title:"承诺过但未能兑现的，主要集中在哪些方面？", options:[{text:"A. 服务效果夸大了",score:3}, {text:"B. 服务时间承诺了但做不到",score:3}, {text:"C. 服务范围答应了大但实际缩小了",score:3}, {text:"D. 多个方面都有",score:1}]},
+  {id:"P6", type:"probe", line:"sales", triggerQ:"Q9", triggerOpts:[0], title:"获客成本上升，您认为最主要原因是什么？", options:[{text:"A. 竞争加剧，流量越来越贵",score:3}, {text:"B. 平台规则变化，自然流量减少",score:3}, {text:"C. 没有找到有效的低成本获客方式",score:2}, {text:"D. 不清楚具体原因",score:1}]},
+  {id:"P7", type:"probe", line:"sales", triggerQ:"Q10", triggerOpts:[0,3], title:"流失的客户，最常出现在哪个阶段？", options:[{text:"A. 首次服务后，不满意",score:3}, {text:"B. 服务过程中，沟通或体验出问题",score:3}, {text:"C. 续约时，价格或条款谈不拢",score:2}, {text:"D. 没有明显规律",score:1}]},
+  {id:"P8", type:"probe", line:"ops", triggerQ:"Q11", triggerOpts:[0], title:"如果有新员工入职，多久能独立提供服务？", options:[{text:"A. 三个月以上",score:1}, {text:"B. 一到三个月",score:2}, {text:"C. 两周到一个月，有培训流程",score:3}, {text:"D. 一周以内，有完善的培训和考核",score:4}]},
+  {id:"P9", type:"probe", line:"ops", triggerQ:"Q14", triggerOpts:[0], title:"员工离职最主要的原因是什么？", options:[{text:"A. 薪酬竞争力不足",score:3}, {text:"B. 工作强度太大",score:3}, {text:"C. 发展空间受限",score:3}, {text:"D. 不太清楚，走的人也不怎么说",score:1}]},
+  {id:"P10", type:"probe", line:"ops", triggerQ:"Q15", triggerOpts:[0], title:"您是否采取措施防止客户随员工流失？", options:[{text:"A. 没有特别措施",score:1}, {text:"B. 主要是维护好客户关系",score:2}, {text:"C. 有竞业协议和客户归属机制",score:4}, {text:"D. 公司品牌和服务体系足够强，客户不认个人",score:4}]},
+  {id:"P11", type:"probe", line:"ops", triggerQ:"Q17", triggerOpts:[0], title:"客户追加需求时，您通常怎么处理？", options:[{text:"A. 免费满足，怕得罪客户",score:1}, {text:"B. 嘴上答应但实际糊弄过去",score:1}, {text:"C. 评估后明确告知额外费用和时间",score:4}, {text:"D. 看情况，大客户就满足，小客户就推",score:2}]},
+  {id:"P12", type:"probe", line:"ops", triggerQ:"Q20", triggerOpts:[0], title:"如果创始人完全不参与日常服务，企业能正常运转吗？", options:[{text:"A. 完全不行，会马上出问题",score:1}, {text:"B. 能运转但质量会下降",score:2}, {text:"C. 大部分能转给团队，少数关键客户需要创始人",score:3}, {text:"D. 可以，团队已经能独立运营",score:4}]},
+  {id:"P13", type:"probe", line:"ops", triggerQ:"Q12", triggerOpts:[0], title:"您是否有定期的服务质量评估或抽查？", options:[{text:"A. 没有",score:1}, {text:"B. 偶尔看一眼",score:2}, {text:"C. 有定期的内部评估",score:3}, {text:"D. 有客户满意度调查和内部评估",score:4}]},
+  {id:"P14", type:"probe", line:"ops", triggerQ:"Q16", triggerOpts:[0], title:"服务开始前，您用什么方式确认客户需求？", options:[{text:"A. 口头沟通，没有书面记录",score:1}, {text:"B. 有简单的需求确认单",score:2}, {text:"C. 有详细的需求调研和确认文档",score:4}, {text:"D. 服务内容比较标准化，不太需要确认",score:3}]},
+  {id:"P15", type:"probe", line:"fin", triggerQ:"Q21", triggerOpts:[0], title:"最近三个月，是否出现过付工资或供应商费用紧张的情况？", options:[{text:"A. 有过，不止一次",score:1}, {text:"B. 有过一两次，勉强应付",score:2}, {text:"C. 没有",score:4}, {text:"D. 月底紧张但总能过",score:2}]},
+  {id:"P16", type:"probe", line:"fin", triggerQ:"Q23", triggerOpts:[0], title:"客单价下降，您认为主要原因是什么？", options:[{text:"A. 客户消费意愿降低",score:3}, {text:"B. 竞争对手低价冲击",score:3}, {text:"C. 客户结构下沉，低端客户占比增加",score:3}, {text:"D. 不太清楚",score:1}]},
+  {id:"P17", type:"probe", line:"fin", triggerQ:"Q26", triggerOpts:[0], title:"您认为利润率下滑的最主要原因？", options:[{text:"A. 人工成本和租金上涨",score:3}, {text:"B. 价格竞争，被迫降价",score:3}, {text:"C. 管理粗放，隐性成本高",score:3}, {text:"D. 不清楚，感觉各方面都有压力",score:1}]},
+  {id:"P18", type:"probe", line:"fin", triggerQ:"Q27", triggerOpts:[0], title:"您是否尝试过通过工具或流程优化来提升人效？", options:[{text:"A. 没有想过",score:1}, {text:"B. 想过但不知道怎么做",score:2}, {text:"C. 在尝试，有一定效果",score:3}, {text:"D. 有系统的人效提升方案",score:4}]},
+  {id:"P19", type:"probe", line:"fin", triggerQ:"Q24", triggerOpts:[3], title:"您是否根据不同客户类型做差异化定价？", options:[{text:"A. 没有，统一价格",score:1}, {text:"B. 想做但不知道怎么定",score:2}, {text:"C. 有过，但不够系统",score:3}, {text:"D. 有完整的分层定价策略",score:4}]},
+  {id:"P20", type:"probe", line:"fin", triggerQ:"Q29", triggerOpts:[3], title:"预付费客户的退费率如何？", options:[{text:"A. 退费率较高",score:1}, {text:"B. 有一些退费，但可控",score:2}, {text:"C. 退费率很低",score:4}, {text:"D. 没有预付费模式",score:2}]}
+];
 
 // ===================== STATE =====================
-let firmType = null;        // 'production' | 'service'
-let firmSize = null;        // 'A' | 'B' | 'C' | 'D'
-let currentQ = 0;
+let selectedType = '';
+let selectedSize = '';
+let allQuestions = [];
+let questionSequence = [];
 let answers = {};
-let probeAnswers = {};
-let scores = { sales:0, ops:0, fin:0, boss:0, size:0 };
-let scoreMax = { sales:30, ops:21, fin:21, boss:9, size:0 };
+let currentQIdx = 0;
+let totalQuestions = 30;
+let selectedOptIdx = -1;
+let scores = { sales:0, ops:0, fin:0, total:0 };
 let leadSubmitted = false;
-let riskSignals = { sales:0, ops:0, fin:0, boss:0 };
-let quizSequence = [];      // 动态生成的30题序列
-let sequenceIndex = 0;
-let stage = 'type';         // 'type' | 'size' | 'fixed' | 'dynamic' | 'done'
 
-// ===================== UI HELPERS =====================
-function $(id) { return document.getElementById(id); }
+const LINE_LABELS = { sales:'业绩/获客', ops:'交付/服务', fin:'财务管控' };
+const SIZE_LABELS = { S1:'微型企业(<20人)', S2:'小型一档(20-50人)', S3:'小型二档(50-100人)', S4:'小型三档(100-300人)' };
 
-function switchScreen(id) {
+// ===================== NAVIGATION =====================
+function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  $(id).classList.add('active');
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
 }
 
 function selectType(type) {
-  firmType = type;
-  showSizeScreen();
-}
-
-function showSizeScreen() {
-  const label = ENTERPRISE_TYPES[firmType].label;
-  $('size-title').textContent = '请确认您的企业规模';
-  $('size-sub').textContent = '我们将根据您的规模，调整诊断题目的侧重点';
-  let html = '';
-  SIZE_LEVELS.forEach(s => {
-    html += '<div class="size-item" onclick="selectSize(\''+s.id+'\')">';
-    html += '<div class="size-label">'+s.label+'（'+s.range+'）</div>';
-    html += '<div class="size-desc">'+s.desc+'</div></div>';
-  });
-  $('size-list').innerHTML = html;
-  switchScreen('screen-size');
+  selectedType = type;
+  showScreen('screen-size');
 }
 
 function selectSize(size) {
-  firmSize = size;
-  startQuiz();
-}
-
-// ===================== QUIZ SEQUENCE GENERATION =====================
-function buildQuizSequence() {
-  const bank = QUESTIONS[firmType];
-  const paths = firmType === 'production' ? DYNAMIC_PATHS_PRODUCTION : DYNAMIC_PATHS_SERVICE;
-
-  // 固定题（排除size题）
-  const fixedQuestions = bank.filter(q => q.id !== 'Z01' && q.section !== 'boss').slice(0, 18);
-
-  // 动态路径题
-  let dynamicPool = [];
-  if (firmSize === 'C' || firmSize === 'D') {
-    dynamicPool = bank.filter(q => (firmSize === 'D' ? paths.scaleD : paths.scaleC).includes(q.id));
-  }
-  // 补充分数较低的题目
-  const extraPool = bank.filter(q =>
-    q.section !== 'boss' &&
-    !fixedQuestions.includes(q) &&
-    !dynamicPool.includes(q) &&
-    q.id !== 'Z01'
-  );
-  dynamicPool = dynamicPool.concat(extraPool.slice(0, 8));
-
-  // 综合瓶颈题（所有人都有boss）
-  const bossQuestions = bank.filter(q => q.section === 'boss');
-
-  // 组装30题序列
-  quizSequence = [];
-  const usedIds = new Set();
-
-  // 1. 固定题（15题）
-  fixedQuestions.forEach(q => { if (!usedIds.has(q.id)) { quizSequence.push(q); usedIds.add(q.id); } });
-
-  // 2. 动态路径题（10-12题，根据风险信号选取）
-  const riskKeys = Object.keys(riskSignals).sort((a,b) => riskSignals[b] - riskSignals[a]);
-  let dynamicCount = 0;
-  riskKeys.forEach(key => {
-    const pathKey = key + 'High';
-    if (paths[pathKey] && dynamicCount < 12) {
-      paths[pathKey].forEach(id => {
-        const q = bank.find(x => x.id === id);
-        if (q && !usedIds.has(q.id) && dynamicCount < 12) {
-          quizSequence.push(q);
-          usedIds.add(q.id);
-          dynamicCount++;
-        }
-      });
-    }
-  });
-  // 补充未填满的动态题
-  if (dynamicCount < 10) {
-    dynamicPool.forEach(q => {
-      if (!usedIds.has(q.id) && dynamicCount < 10) {
-        quizSequence.push(q);
-        usedIds.add(q.id);
-        dynamicCount++;
-      }
-    });
-  }
-
-  // 3. 综合瓶颈题（3题）
-  bossQuestions.slice(0, 3).forEach(q => { if (!usedIds.has(q.id)) { quizSequence.push(q); usedIds.add(q.id); } });
-
-  // 限制30题
-  quizSequence = quizSequence.slice(0, 30);
-}
-
-// ===================== QUIZ FLOW =====================
-function startQuiz() {
-  currentQ = 0;
-  answers = {};
-  probeAnswers = {};
-  scores = { sales:0, ops:0, fin:0, boss:0 };
-  riskSignals = { sales:0, ops:0, fin:0, boss:0 };
-  leadSubmitted = false;
-  sequenceIndex = 0;
-  stage = 'quiz';
-  buildQuizSequence();
-  switchScreen('screen-question');
+  selectedSize = size;
+  allQuestions = selectedType === 'production' ? PQ : SQ;
+  buildSequence();
+  showScreen('screen-question');
   renderQuestion();
 }
 
+// ===================== BUILD SEQUENCE =====================
+function buildSequence() {
+  const mainQs = allQuestions.filter(q => q.type === 'main');
+  // Fixed: 8 from each line (Q1-8, Q11-18, Q21-28)
+  const fixed = [
+    ...mainQs.slice(0, 8),   // sales line
+    ...mainQs.slice(10, 18), // ops line
+    ...mainQs.slice(20, 28)  // fin line
+  ];
+  questionSequence = [...fixed];
+  currentQIdx = 0;
+  totalQuestions = 30;
+  answers = {};
+}
+
+// ===================== RENDER QUESTION =====================
 function renderQuestion() {
-  if (sequenceIndex >= quizSequence.length) {
-    calcScores();
-    showReport();
+  if (currentQIdx >= questionSequence.length) {
+    finishQuiz();
     return;
   }
-  const q = quizSequence[sequenceIndex];
-  const total = quizSequence.length;
-  $('q-step').textContent = '第 '+(sequenceIndex+1)+' / '+total+' 题';
-  $('q-progress').style.width = ((sequenceIndex/total)*100)+'%';
+  const q = questionSequence[currentQIdx];
+  const pct = Math.round((currentQIdx / totalQuestions) * 100);
 
-  const typeInfo = ENTERPRISE_TYPES[firmType];
-  const sectionLabels = typeInfo.sectionLabels;
-  const sectionColors = typeInfo.sectionColors;
+  document.getElementById('q-step').textContent = '第 ' + (currentQIdx+1) + ' / ' + totalQuestions + ' 题';
+  document.getElementById('q-progress').style.width = pct + '%';
 
-  const sectionLabel = sectionLabels[q.section] || q.section;
-  const sectionColor = sectionColors[q.section] || 'boss';
-
+  const isProbe = q.type === 'probe';
   let html = '';
-  html += '<div class="q-section-label"><span class="q-section-dot '+sectionColor+'"></span>'+sectionLabel+'</div>';
-  html += '<div class="q-title">'+q.title+'</div>';
+  if (isProbe) {
+    html += '<div class="q-probe-tag">🔍 追问：基于您上一题的回答</div>';
+  }
+  html += '<div class="q-section-label"><span class="q-section-dot ' + q.line + '"></span>' + LINE_LABELS[q.line] + '</div>';
+  html += '<div class="q-title fade-in">' + q.title + '</div>';
   html += '<div class="q-options">';
-  q.options.forEach((opt, i) => {
-    const sel = answers[q.id] === i ? ' selected' : '';
-    html += '<div class="q-option'+sel+'" onclick="selectOption('+i+')" id="opt-'+i+'">'+opt.text+'</div>';
+  q.options.forEach(function(opt, i) {
+    const sel = (answers[q.id] === i) ? ' selected' : '';
+    html += '<div class="q-option' + sel + '" onclick="selectOption(' + i + ')">' + opt.text + '</div>';
   });
   html += '</div>';
-  $('q-body').innerHTML = html;
+  document.getElementById('q-body').innerHTML = html;
 
-  const nextBtn = $('q-next');
-  nextBtn.classList.remove('enabled');
-  if (answers[q.id] !== undefined) nextBtn.classList.add('enabled');
-  window.scrollTo(0, 0);
+  // Restore selection state
+  if (answers[q.id] !== undefined) {
+    selectedOptIdx = answers[q.id];
+    enableNext();
+  } else {
+    selectedOptIdx = -1;
+    disableNext();
+  }
 }
 
 function selectOption(idx) {
-  const q = quizSequence[sequenceIndex];
-  answers[q.id] = idx;
-  document.querySelectorAll('.q-option').forEach(o => o.classList.remove('selected'));
-  document.getElementById('opt-'+idx).classList.add('selected');
-  $('q-next').classList.add('enabled');
+  selectedOptIdx = idx;
+  document.querySelectorAll('.q-option').forEach(function(el, i) {
+    el.classList.toggle('selected', i === idx);
+  });
+  enableNext();
 }
 
+function enableNext() {
+  const btn = document.getElementById('q-next');
+  btn.classList.add('enabled');
+  btn.textContent = currentQIdx >= questionSequence.length - 1 ? '查看诊断结果' : '下一题 →';
+}
+
+function disableNext() {
+  const btn = document.getElementById('q-next');
+  btn.classList.remove('enabled');
+  btn.textContent = '下一题 →';
+}
+
+// ===================== NEXT QUESTION =====================
 function nextQuestion() {
-  const q = quizSequence[sequenceIndex];
-  if (answers[q.id] === undefined) return;
+  if (selectedOptIdx < 0) return;
+  const q = questionSequence[currentQIdx];
+  answers[q.id] = selectedOptIdx;
 
-  // 更新风险信号
-  const selectedVal = q.options[answers[q.id]].val;
-  if (selectedVal === 0) {
-    riskSignals[q.line] = (riskSignals[q.line] || 0) + 2;
-  } else if (selectedVal === 1) {
-    riskSignals[q.line] = (riskSignals[q.line] || 0) + 1;
-  }
-
-  // 检查探针
-  if (q.probeQ && probeAnswers[q.id] === undefined) {
-    const selectedVal = q.options[answers[q.id]].val;
-    if (q.probeIf && q.probeIf.includes(selectedVal)) {
-      showProbe(q);
-      return;
+  // If main question triggered a probe, insert it
+  if (q.type === 'main') {
+    const probe = findTriggeredProbe(q, selectedOptIdx);
+    if (probe) {
+      questionSequence.splice(currentQIdx + 1, 0, probe);
+      totalQuestions++;
     }
   }
 
-  advanceQuiz();
+  currentQIdx++;
+  selectedOptIdx = -1;
+  renderQuestion();
 }
 
-function showProbe(q) {
-  const card = $('probe-card');
-  let html = '<h3>'+q.probeQ.title+'</h3><div class="q-options">';
-  q.probeQ.options.forEach((opt, i) => {
-    html += '<div class="q-option" onclick="selectProbe('+i+')" id="popt-'+i+'">'+opt.text+'</div>';
+function findTriggeredProbe(mainQ, optIdx) {
+  const probes = allQuestions.filter(function(p) {
+    return p.type === 'probe' && p.triggerQ === mainQ.id && p.triggerOpts.indexOf(optIdx) !== -1;
   });
-  html += '</div><button class="skip" onclick="skipProbe()">跳过</button>';
-  card.innerHTML = html;
-  $('probe-overlay').classList.add('show');
-}
-
-function selectProbe(optIdx) {
-  const q = quizSequence[sequenceIndex];
-  probeAnswers[q.id] = optIdx;
-  document.querySelectorAll('#probe-card .q-option').forEach(o => o.classList.remove('selected'));
-  document.getElementById('popt-'+optIdx).classList.add('selected');
-  setTimeout(() => {
-    $('probe-overlay').classList.remove('show');
-    advanceQuiz();
-  }, 300);
-}
-
-function skipProbe() {
-  const q = quizSequence[sequenceIndex];
-  probeAnswers[q.id] = -1;
-  $('probe-overlay').classList.remove('show');
-  advanceQuiz();
-}
-
-function advanceQuiz() {
-  sequenceIndex++;
-  if (sequenceIndex >= quizSequence.length) {
-    calcScores();
-    showReport();
-  } else {
-    renderQuestion();
+  if (probes.length === 0) return null;
+  // Check if already in sequence
+  const probe = probes[0];
+  for (let i = 0; i < questionSequence.length; i++) {
+    if (questionSequence[i].id === probe.id) return null;
   }
+  return probe;
 }
 
-// ===================== SCORING =====================
-function calcScores() {
-  scores = { sales:0, ops:0, fin:0, boss:0 };
-  quizSequence.forEach(q => {
-    if (q.id === 'Z01') return;
-    if (answers[q.id] === undefined) return;
-    const val = q.options[answers[q.id]].val;
-    const section = q.section;
-    if (section === 'sales' || section === 'ops' || section === 'fin' || section === 'boss') {
-      scores[section] = (scores[section] || 0) + val;
-    }
+// ===================== FINISH =====================
+function finishQuiz() {
+  calculateScores();
+  showScreen('screen-report');
+  // 先展示免费版报告（综合评估及以上），用户点击后弹留资表单
+  document.getElementById('report-content').innerHTML = buildReportPreview();
+}
+
+function calculateScores() {
+  let sT=0, sM=0, oT=0, oM=0, fT=0, fM=0;
+  questionSequence.forEach(function(q) {
+    if (q.type !== 'main') return;
+    const optIdx = answers[q.id];
+    if (optIdx === undefined) return;
+    const sc = q.options[optIdx].score;
+    if (q.line === 'sales') { sT += sc; sM += 4; }
+    if (q.line === 'ops') { oT += sc; oM += 4; }
+    if (q.line === 'fin') { fT += sc; fM += 4; }
   });
-  scores.boss = scores.boss * 2;
-  scoreMax = { sales:30, ops:21, fin:21, boss:9 };
+  scores.sales = sM > 0 ? Math.round(sT / sM * 100) : 50;
+  scores.ops = oM > 0 ? Math.round(oT / oM * 100) : 50;
+  scores.fin = fM > 0 ? Math.round(fT / fM * 100) : 50;
+  scores.total = Math.round(scores.sales * 0.35 + scores.ops * 0.35 + scores.fin * 0.3);
 }
 
-function rateLine(line) {
-  const pct = scoreMax[line] > 0 ? scores[line] / scoreMax[line] : 0;
-  if (pct >= 0.7) return 'green';
-  if (pct >= 0.4) return 'yellow';
-  return 'red';
+function getLevel(score) {
+  if (score >= 70) return { label:'健康', color:'green', icon:'🟢' };
+  if (score >= 50) return { label:'注意', color:'yellow', icon:'🟡' };
+  if (score >= 30) return { label:'警示', color:'red', icon:'🔴' };
+  return { label:'危险', color:'red', icon:'⚫' };
 }
 
-// ===================== REPORT GENERATION =====================
-function buildArticle(partial) {
-  const rSales = rateLine('sales'), rOps = rateLine('ops'), rFin = rateLine('fin');
-  const typeLabel = ENTERPRISE_TYPES[firmType].label;
-  const lines = [
-    {n: firmType==='production'?'业绩线':'获客线', s:scores.sales, m:scoreMax.sales, r:rSales},
-    {n: firmType==='production'?'交付线':'服务线', s:scores.ops, m:scoreMax.ops, r:rOps},
-    {n:'财务线', s:scores.fin, m:scoreMax.fin, r:rFin}
-  ];
-
-  const getOverallType = () => {
-    if (rSales==='red'||rOps==='red'||rFin==='red') return '存在需要认真对待的系统性风险';
-    if (rSales==='yellow'||rOps==='yellow'||rFin==='yellow') return '运转中，但部分环节需要关注';
-    return '基础稳健，存在提升空间';
-  };
-
-  let scoreCard = '<div class="report-score-cards fade-in">';
-  lines.forEach(c => {
-    scoreCard += '<div class="card"><div class="label">'+c.n+'</div><div class="score">'+c.s+'/'+c.m+'</div><div class="light light-'+c.r+'"></div></div>';
-  });
-  scoreCard += '</div>';
-
-  let header = '<div class="report-header fade-in"><div class="report-type-tag">'+typeLabel+' · '+getOverallType()+'</div><h2>小微企业诊断报告</h2><div class="date">'+new Date().toLocaleDateString('zh-CN')+'</div></div>';
-
-  let painPoints = [], warnings = [];
-  if (firmType === 'production') {
-    if (rSales==='red') { painPoints.push('客户来源高度依赖单一渠道，抗风险能力偏弱'); warnings.push('客户越集中、获客越依赖人脉，风险越集中。'); }
-    else if (rSales==='yellow') { painPoints.push('获客效率和客户维护之间存在失衡'); warnings.push('一边拓新客一边流失老客，增长难持续。'); }
-    if (rOps==='red') { painPoints.push('生产交付流程缺乏系统性管理，存在质量和效率隐患'); warnings.push('混乱不解决，只会越忙越乱。'); }
-    else if (rOps==='yellow') { painPoints.push('交付环节部分节点不够稳定'); warnings.push('平时看不出的问题，旺季集中爆发。'); }
-    if (rFin==='red') { painPoints.push('现金流偏紧，资金回笼周期较长'); warnings.push('企业死于现金流断裂的，远多于死于没利润的。'); }
-    else if (rFin==='yellow') { painPoints.push('财务数据透明度不足，可能影响经营判断'); warnings.push('蒙着眼开车，方向对了也是侥幸。'); }
-    if (riskSignals.boss >= 4) { painPoints.push('企业运营对个人精力依赖度过高，存在结构性风险'); warnings.push('老板的精力上限，就是企业的产能上限。'); }
-  } else {
-    if (rSales==='red') { painPoints.push('获客渠道集中度偏高，依赖单一路径'); warnings.push('渠道越单一，风险越集中。'); }
-    else if (rSales==='yellow') { painPoints.push('获客效率和老客维护之间存在失衡'); warnings.push('只顾拓新、忽视老客，获客成本会越来越高。'); }
-    if (rOps==='red') { painPoints.push('人才流失率高，服务交付稳定性不足'); warnings.push('人走了，服务跟着断，口碑跟着塌。'); }
-    else if (rOps==='yellow') { painPoints.push('服务标准化程度有待提升，执行一致性有波动'); warnings.push('没有标准化，就没有可复制性，就没有规模基础。'); }
-    if (rFin==='red') { painPoints.push('人效偏低或定价能力弱，整体盈利能力不足'); warnings.push('低价抢单、人效低下，往往是恶性循环的开始。'); }
-    else if (rFin==='yellow') { painPoints.push('成本结构和利润质量有待深入分析'); warnings.push('只知道赚了，但不知道为什么赚，就很难持续赚。'); }
-    if (riskSignals.boss >= 4) { painPoints.push('获客和服务交付均高度依赖创始人或核心人员'); warnings.push('所有事都压在一个人身上，长期难以持续。'); }
-  }
-  if (painPoints.length===0) painPoints.push('三条业务线整体运转正常，暂未发现明显系统性风险。建议关注可能被忽略的优化空间。');
-
-  let overviewHtml = '<div class="overview-lead">根据您的答题情况，我们识别出<strong>'+painPoints.length+'个值得关注的方向</strong>：</div>';
-  painPoints.forEach((pp, i) => { overviewHtml += '<div class="overview-num"><strong>'+(i+1)+'.</strong> '+pp+'</div>'; });
-  if (warnings.length>0) overviewHtml += '<div class="overview-warn">'+warnings.join(' ')+'</div>';
-
-  if (partial) {
-    let h = header + scoreCard;
-    h += '<div class="report-section fade-in">'+overviewHtml+'</div>';
-    h += '<div class="report-section report-blur" style="position:relative;min-height:200px;">';
-    h += '<h3>深度分析与行动建议</h3>';
-    h += '<p style="color:#888;">每条线的深度诊断 · 系统性风险回路分析 · 针对性改善路径</p>';
-    h += '<div class="report-lock"><div class="lock-icon">🔒</div><div class="lock-text">填写信息，免费查看完整报告</div><button class="unlock-btn" onclick="showLeadForm()">免费查看完整报告</button></div></div>';
-    return h;
-  }
-
-  // 完整报告
-  let h = header + scoreCard;
-  h += '<div class="report-section fade-in">'+overviewHtml+'<div class="overview-num" style="color:#888;margin-top:12px;">以下是每条线的详细诊断。</div></div>';
-
-  // 业绩/获客线
-  const line1Name = firmType==='production' ? '一、客户从哪里来 —— 业绩线' : '一、客源从哪里来 —— 获客线';
-  let line1Content = '<div class="sec-title">'+line1Name+'</div>';
-  if (rSales==='green') {
-    line1Content += '<p>获客渠道相对多元，客户结构不算高度集中，口碑转介绍也在发挥作用。这个基础在同规模企业中是不错的。</p><p>值得关注的是：老客户是否有系统化的维护机制？获客效率是否还有提升空间？做好这些，可以让增长更可控。</p>';
-  } else if (rSales==='yellow') {
-    if (riskSignals.sales >= 3) line1Content += '<p>客户集中度偏高是需要重视的信号。少数大客户占营收比例过大时，议价空间和回款节奏都会受制于人。这不一定是紧急问题，但值得提前布局分散。</p>';
-    if (riskSignals.sales >= 2) line1Content += '<p>老客户的复购率和转介绍率偏低值得关注。让老客户再次下单比从零获客容易得多。建议逐步建立客户维护机制。</p>';
-    if (line1Content === '<div class="sec-title">'+line1Name+'</div>') line1Content += '<p>业绩线有一定改善空间，但尚未出现紧急信号。建议定期检视获客效率和客户结构。</p>';
-  } else {
-    if (riskSignals.sales >= 5) line1Content += '<p>多个风险信号叠加，形成了比较脆弱的局面：获客过度依赖单一渠道，且大客户占比过高。任何一方出现状况，都可能对业务造成较大冲击。</p>';
-    if (riskSignals.sales >= 3) line1Content += '<p>为拿单而过度承诺，容易形成恶性循环：承诺→交付做不到→口碑受损→更难获客→更需要靠承诺抢单。需要尽快打断这个循环。</p>';
-    line1Content += '<div class="warn-box"><strong>如果持续不改善：</strong>客户越集中、越依赖人脉，抗风险能力越弱。一旦关键关系人缺席或核心客户流失，增长就会失速。</div>';
-  }
-
-  // 交付/服务线
-  const line2Name = firmType==='production' ? '二、活能不能干出来 —— 交付线' : '二、服务能不能做好 —— 服务线';
-  let line2Content = '<div class="sec-title">'+line2Name+'</div>';
-  if (rOps==='green') {
-    line2Content += '<p>交付目前比较稳。服务/产品质量有基本保障，排产/执行有一定计划性。这是持续经营的基础。</p><p>值得思考的是：这种稳定是靠人盯出来的，还是靠流程在支撑？如果是前者，建议逐步把关键流程书面化。</p>';
-  } else if (rOps==='yellow') {
-    if (riskSignals.ops >= 3) line2Content += '<p>关键工序缺乏标准化文档，核心人员依赖度偏高，这是生产/服务质量不稳定的根源之一。新人上手慢、老人走了断层，都会持续消耗组织效率。</p>';
-    if (riskSignals.ops >= 2) line2Content += '<p>排产管理值得关注。任务安排靠谁催得急，在业务量不大时还能应付，一忙就容易失控。建议从简单的任务看板开始。</p>';
-    if (line2Content === '<div class="sec-title">'+line2Name+'</div>') line2Content += '<p>交付/服务线有改进空间但尚未到紧急程度。</p>';
-  } else {
-    if (riskSignals.ops >= 4) line2Content += '<p>人才流失率高且服务标准化程度低，这是服务型企业最典型的恶性回路之一：人走了→服务质量下降→客户流失→口碑受损→团队压力增大→更多人离开。如果这个循环已经在运转，需要优先从稳定团队和建立标准开始打断。</p>';
-    if (riskSignals.ops >= 3) line2Content += '<p>交付质量波动不能只归咎于运气。往上游查：标准化是否到位？核心人员是否有备份？每一次质量问题的背后，都是体系的漏洞。</p>';
-    line2Content += '<div class="warn-box"><strong>如果持续不改善：</strong>生产/服务质量问题，是企业口碑最直接的杀手。问题积累到一定程度，旺季一来就爆发，损失的不只是这一单，而是多年积累的信任。</div>';
-  }
-
-  // 财务线
-  let finContent = '<div class="sec-title">三、钱到底去哪了 —— 财务线</div>';
-  if (rFin==='green') {
-    finContent += '<p>财务整体健康。现金流有安全垫，回款没有明显拖期，你对盈亏情况基本清晰。很多企业最大隐患就是不知道自己在赚还是在亏——你没这个问题。</p><p>如果想进一步，可以从清楚总账走向精细核算：哪类业务/哪类客户最赚钱？这些数据比经验直觉更可靠。</p>';
-  } else if (rFin==='yellow') {
-    if (riskSignals.fin >= 3) finContent += '<p>现金流偏紧和回款偏慢是两个相关问题。货出了/服务完了，钱没回来——账面有利润但可用资金不够，这两头挤压在一起，运营压力会比较大。</p>';
-    if (riskSignals.fin >= 2) finContent += '<p>定价时没有做完整成本核算，可能存在隐性成本被低估的情况。部分单子实际利润可能比预想的低。</p>';
-    if (finContent === '<div class="sec-title">三、钱到底去哪了 —— 财务线</div>') finContent += '<p>财务线有改善空间但未到紧急程度。</p>';
-  } else {
-    if (riskSignals.fin >= 5) finContent += '<p>现金流安全垫不足加上回款周期偏长，这是最需要优先关注的财务问题。建议先做两件事：梳理应收账款，优先催收；评估能否在签单时争取更高比例预付款。</p>';
-    if (riskSignals.fin >= 3) finContent += '<p>人效偏低且定价能力弱，容易陷入"越低价越累、越累越低价"的恶性循环。建议从搞清楚每个客户/项目的真实利润贡献开始。</p>';
-    finContent += '<div class="warn-box"><strong>如果持续不改善：</strong>财务问题是最安静的杀手，不像质量有人投诉，不像交期有人催促。它悄悄恶化，直到某天发不出工资、供应商停止供货。现金流问题占小微企业倒闭原因的相当高比例。</div>';
-  }
-
-  // 综合瓶颈
-  let bossContent = '';
-  if (riskSignals.boss >= 3) {
-    bossContent += '<div class="sec-title">四、关于当前的经营瓶颈</div>';
-    bossContent += '<p>从答题情况来看，企业运营对个人精力的依赖程度偏高。企业主既是核心驱动力，又是几乎所有关键决策的瓶颈点。</p>';
-    bossContent += '<p>这不是能力问题，而是结构问题：三个方向（获客/交付/财务）都在争同一个人的时间和注意力，在客观上难以同时兼顾。</p>';
-    bossContent += '<p>建议有意识地培养一些可以分担具体工作的机制和团队。哪怕一开始效率不如自己亲自做、过程中会出小错——这些代价，比所有事都压在一个人身上的长期风险要小得多。</p>';
-    bossContent += '<div class="warn-box"><strong>如果持续不改善：</strong>以个人精力驱动整个企业运转，长期难以持续。一旦精力到达瓶颈，三条线就会同时出现偏差。越是努力到极限，越需要开始考虑：怎么让企业慢慢不再完全依赖你的努力。</div>';
-  }
-
-  [line1Content, line2Content, finContent, bossContent].forEach(p => {
-    if (p) h += '<div class="report-section fade-in">'+p+'</div>';
-  });
-
-  h += '<div class="report-section fade-in">';
-  h += '<div class="closing">以上是基于系统动力学分析框架的综合诊断。它不能穷尽企业的全部情况，但能像一面镜子，映射出一些平时可能被忽略的结构性视角。</div>';
-  h += '<div class="closing">如果哪一段让您觉得"说的确实是我们正在发生的事"，那很可能就是值得优先处理的方向。</div></div>';
-  h += '<div class="contact-section fade-in"><h4>墨岱科技 · AI驱动企业智能化升级</h4><p>以上分析基于系统动力学方法论，数据驱动、客观呈现。<br><br>如果您觉得这份诊断指出了企业切实存在的问题，欢迎联系我们做进一步交流。我们能做的，不只是告诉您哪里出了问题——更重要的是，帮您找到具体的改善路径和可操作的方案。</p></div>';
-  h += '<div class="share-section fade-in">';
-  h += '<button class="share-btn" onclick="downloadReport()">📥 下载报告到本地</button>';
-  h += '<div class="share-note">HTML文件，可离线查看，随时打开都是完整报告</div></div>';
-  h += '<div class="qr-section fade-in">';
-  h += '<p>想进一步聊聊？扫码加我微信</p>';
-  h += '<img src="wechat-qr.png" alt="微信二维码">';
-  h += '</div>';
-  return h;
-}
-
-function showReport() {
-  switchScreen('screen-report');
-  $('report-content').innerHTML = buildArticle(true);
-  window.scrollTo(0, 0);
-}
-
+// ===================== LEAD FORM =====================
 function showLeadForm() {
-  $('hf-type').value = firmType;
-  $('hf-size').value = firmSize;
-  $('hf-sales').value = scores.sales;
-  $('hf-ops').value = scores.ops;
-  $('hf-fin').value = scores.fin;
-  $('hf-boss').value = scores.boss;
-  $('hf-answers').value = JSON.stringify(answers);
-  $('lead-overlay').classList.add('show');
+  document.getElementById('hf-type').value = selectedType === 'production' ? '生产型' : '服务型';
+  document.getElementById('hf-size').value = SIZE_LABELS[selectedSize];
+  document.getElementById('hf-sales').value = scores.sales;
+  document.getElementById('hf-ops').value = scores.ops;
+  document.getElementById('hf-fin').value = scores.fin;
+  document.getElementById('hf-total').value = scores.total;
+  const ansStr = Object.keys(answers).map(function(k){return k+'='+answers[k];}).join(',');
+  document.getElementById('hf-answers').value = ansStr;
+  document.getElementById('lead-overlay').classList.add('show');
+  // Show blurred report preview
+  document.getElementById('report-content').innerHTML = buildReportPreview();
 }
 
-function closeLead() { $('lead-overlay').classList.remove('show'); }
-
-function clearFieldError(id) {
-  var input = document.getElementById(id);
-  var errId = 'err-' + id.replace('lf-', '');
-  var errEl = document.getElementById(errId);
-  if (input) input.classList.remove('error');
-  if (errEl) { errEl.classList.remove('show'); errEl.textContent = ''; }
-}
-
-function showFieldError(id, msg) {
-  var input = document.getElementById(id);
-  var errId = 'err-' + id.replace('lf-', '');
-  var errEl = document.getElementById(errId);
-  if (input) input.classList.add('error');
-  if (errEl) { errEl.textContent = msg; errEl.classList.add('show'); }
-}
-
-function validateLeadForm() {
-  var valid = true;
-  var name = document.getElementById('lf-name').value.trim();
-  var phone = document.getElementById('lf-phone').value.trim();
-  var company = document.getElementById('lf-company').value.trim();
-
-  // 姓名：至少2字符，包含中文或英文字母，不能纯数字
-  if (!name || name.length < 2) {
-    showFieldError('lf-name', '请输入至少2个字符的姓名');
-    valid = false;
-  } else if (/^\d+$/.test(name)) {
-    showFieldError('lf-name', '姓名不能为纯数字，请输入真实姓名');
-    valid = false;
-  } else if (!/[\u4e00-\u9fa5a-zA-Z]/.test(name)) {
-    showFieldError('lf-name', '姓名需包含中文或英文字符');
-    valid = false;
+function closeLead() {
+  document.getElementById('lead-overlay').classList.remove('show');
+  // 关闭表单后回到免费版报告
+  if (!leadSubmitted) {
+    document.getElementById('report-content').innerHTML = buildReportPreview();
   }
-
-  // 手机号：11位，1开头，纯数字
-  if (!phone) {
-    showFieldError('lf-phone', '请输入手机号');
-    valid = false;
-  } else if (!/^1\d{10}$/.test(phone)) {
-    showFieldError('lf-phone', '请输入正确的11位手机号');
-    valid = false;
-  }
-
-  // 企业名称（选填，填了就校验）
-  if (company && company.length < 2) {
-    showFieldError('lf-company', '企业名称至少需要2个字符');
-    valid = false;
-  } else if (company && /^\d+$/.test(company)) {
-    showFieldError('lf-company', '企业名称不能为纯数字');
-    valid = false;
-  }
-
-  return valid;
 }
 
 function handleLeadSubmit(e) {
   e.preventDefault();
-  if (!validateLeadForm()) return false;
-
-  var btn = $('lead-submit');
+  var btn = document.getElementById('lead-submit');
+  var form = document.getElementById('lead-form');
   btn.disabled = true;
   btn.textContent = '提交中...';
-  var formData = new FormData($('lead-form'));
+
+  // 收集表单数据
+  var formData = new FormData(form);
+
+  // 方式1：尝试AJAX提交（推荐，无页面跳转）
   fetch('https://formsubmit.co/ajax/452503208@qq.com', {
     method: 'POST',
     body: formData
@@ -1095,45 +540,462 @@ function handleLeadSubmit(e) {
     .then(function(data) {
       console.log('FormSubmit response:', data);
       leadSubmitted = true;
-      $('lead-overlay').classList.remove('show');
-      $('report-content').innerHTML = buildArticle(false);
+      document.getElementById('lead-overlay').classList.remove('show');
+      document.getElementById('report-content').innerHTML = buildFullReport();
       window.scrollTo(0, 0);
     })
     .catch(function(err) {
+      // 方式2：AJAX失败（CORS/网络），回退到传统表单提交
       console.log('AJAX failed, fallback to form submit:', err);
-      var form = $('lead-form');
       form.method = 'POST';
       form.action = 'https://formsubmit.co/452503208@qq.com';
       form.target = '_blank';
       form.submit();
       leadSubmitted = true;
-      $('lead-overlay').classList.remove('show');
-      $('report-content').innerHTML = buildArticle(false);
+      document.getElementById('lead-overlay').classList.remove('show');
+      document.getElementById('report-content').innerHTML = buildFullReport();
       window.scrollTo(0, 0);
     });
-  return false;
+}
+
+
+// ===================== DIAGNOSTIC CONCLUSIONS =====================
+// Pre-defined analysis conclusions for low-score answers
+// Each question ID maps to an array of conclusion objects
+// { matchScore: N, matchText: "...", title: "...", analysis: "...", consequence: "...", direction: "...", icon: "...", severity: "high"|"mid" }
+var DIAG_CONCLUSIONS = {
+  // ============ PRODUCTION SALES LINE ============
+  "Q1": [
+    { matchScore:1, title:"获客渠道高度依赖个人人脉", analysis:"您的客户来源高度依赖个人关系网络，这意味着企业的获客能力与您个人的社交资源强绑定。一旦您的精力分散或人脉圈层固化，新增客户将难以补充。", consequence:"企业增长天花板明显受限于个人社交范围，且难以规模化复制。当您的个人精力被日常管理大量占用时，前端获客将首当其冲受影响，形成'老板越忙越没空找客户，越没客户越忙'的恶性循环。", direction:"建立系统化的获客渠道（如线上推广、行业展会、内容营销等），逐步降低对个人人脉的依赖比例。同时培养团队成员的独立获客能力。" },
+    { matchScore:2, title:"获客渠道以转介绍为主，渠道结构单一", analysis:"老客户转介绍是重要的获客来源，但如果过度依赖这一渠道，企业缺乏主动获客能力，客源增长会受到现有客户规模的限制。", consequence:"当现有客户群增长放缓或行业口碑出现波动时，新客户来源将急剧减少。同时，完全被动等待转介绍会导致企业对市场变化的响应滞后。", direction:"在维护好转介绍机制的基础上，开拓1-2个主动获客渠道，形成多元化客源结构。" }
+  ],
+  "Q2": [
+    { matchScore:1, title:"单一客户依赖度过高", analysis:"您的最大单一客户贡献了超过三分之一的营收，这种客户结构意味着企业的生存命脉掌握在极少数客户手中。一旦该客户流失或缩减合作，将对企业造成重大冲击。", consequence:"大客户一旦流失，企业营收将断崖式下跌，可能导致现金流危机甚至被迫缩减团队。同时，过度依赖单一客户还会导致企业在定价、交期等方面丧失话语权，利润空间被持续压缩。", direction:"制定大客户风险管理预案，同时加大新客户开发力度，将最大单一客户占比逐步降至20%以下。" }
+  ],
+  "Q3": [
+    { matchScore:1, title:"业务拓展仅靠老板一人", analysis:"企业几乎没有独立的销售或业务拓展团队，所有客户开发和业务谈判都依赖您亲自参与。这意味着您的精力成为企业获客能力的上限。", consequence:"随着企业规模扩大或管理事务增多，您能投入在业务开拓上的时间将不可避免地减少。如果此时团队无法独立承接获客职能，企业将面临'有产能没订单'的窘境。", direction:"选拔或招聘1-2名有潜力的业务人员，建立标准化的客户开发流程和话术体系，逐步实现获客职能从个人到团队的转移。" }
+  ],
+  "Q4": [
+    { matchScore:1, title:"缺乏订单预期和业务规划能力", analysis:"企业处于'来什么做什么'的被动接单状态，没有短期订单预期和业务规划。这意味着产能安排、资金调配、人力调度都缺乏前瞻性，容易造成资源浪费或交付压力。", consequence:"被动经营模式下的企业抗风险能力极低——淡季时产能闲置、人员成本无法摊薄，旺季时又可能因准备不足而错失订单或交付质量下降。", direction:"建立简单的意向客户跟踪机制（如Excel表格），定期盘点未来1-2个月的潜在订单，逐步形成基本的业务预判能力。" }
+  ],
+  "Q5": [
+    { matchScore:1, title:"询盘转化率偏低", analysis:"大量潜在客户在咨询后未能成交，说明在客户沟通、方案呈现或价格匹配等环节存在明显短板。这意味着前端的获客投入（时间、金钱、精力）大量浪费。", consequence:"转化率低意味着获客成本被无形放大——花同样的精力只能获得更少的实际客户。如果不改善，企业将在获客上陷入'越努力越白费'的低效循环。", direction:"梳理最近未成交的客户案例，分析流失的主要原因（价格/方案/信任/服务），针对性改善薄弱环节。" }
+  ],
+  "Q6": [
+    { matchScore:1, title:"客户一次性交易为主，缺乏持续合作", analysis:"大量客户做一单就不再来，说明企业的产品或服务未能形成持续价值输出，客户关系停留在单次交易层面。每次获客都要从零开始，客户生命周期价值极低。", consequence:"没有复购支撑的企业，必须不断投入大量资源获取新客户来维持营收，这在竞争加剧的环境下越来越难以为继。获客成本将持续上升，利润空间被不断压缩。", direction:"建立客户交付后的回访和维护机制，通过增值服务或会员体系提升客户粘性。重点分析流失客户的原因，从源头改善。" }
+  ],
+  "Q7": [
+    { matchScore:1, title:"完全没有客户关系维护机制", analysis:"企业缺乏任何系统的客户维护动作，客户合作结束后基本处于失联状态。这直接导致复购率和转介绍率低下，大量已开发的客户资源被浪费。", consequence:"客户在完成首次合作后，如果没有持续触达，很快会被竞争对手替代。您在首个客户身上积累的信任和经验，无法转化为后续收益。", direction:"建立基础的客户档案和定期回访制度，至少每季度对重要客户进行一次主动联系。" }
+  ],
+  "Q8": [
+    { matchScore:1, title:"过度承诺问题严重", analysis:"为了拿单而做出无法兑现的承诺，这是一种短期行为，会严重损害企业的信誉和客户信任。每次承诺落空都在透支企业的品牌价值。", consequence:"过度承诺会形成恶性循环——承诺→无法兑现→客户不满→流失→需要更多新客户→不得不继续过度承诺。长此以往，企业在行业内的口碑将严重受损，获客成本会大幅上升。", direction:"建立'承诺前评估'机制，对交付时间、质量标准、服务范围做出客观评估后再报价。宁可少接一单，也不要埋下信用危机的种子。" }
+  ],
+  "Q9": [
+    { matchScore:1, title:"客户几乎不会主动推荐", analysis:"转介绍率极低，说明客户对企业服务的满意度或印象不足以让他们主动向他人推荐。这可能与服务体验、交付质量或沟通方式有关。", consequence:"缺乏转介绍意味着企业必须完全依赖付费或主动渠道获客，获客成本居高不下。在竞争激烈的市场中，没有口碑红利的企业将处于明显劣势。", direction:"从交付质量、服务态度、售后响应三个维度排查改善空间。可以设计简单的转介绍激励政策，降低客户推荐的心理门槛。" }
+  ],
+  "Q10": [
+    { matchScore:1, title:"客户流失问题突出", analysis:"不止一两例客户因不满而终止合作，说明企业在服务交付或客户管理环节存在系统性的问题，而非偶发事件。", consequence:"客户流失是'冰山一角'——一个明确终止合作的客户背后，可能有更多不满意但没有表达的客户正在流失或减少合作。持续的客户流失会直接蚕食企业营收基础。", direction:"建立客户满意度反馈机制，在客户流失前发现预警信号。对已流失客户进行回访，了解真实流失原因，从根源上解决问题。" }
+  ],
+  // ============ PRODUCTION OPS LINE ============
+  "Q11": [
+    { matchScore:1, title:"交付周期经常超出客户预期", analysis:"频繁的交付延期表明企业的产能规划、生产排程或项目管理存在系统性问题。延期不仅影响客户满意度，还会打乱后续订单的排产节奏。", consequence:"交付延期会形成连锁反应——当前订单延期导致后续订单排队，客户不满增加投诉和索赔，企业被迫投入更多精力处理善后，进一步挤压正常生产时间。", direction:"梳理核心产品的标准交付周期，建立排产计划并预留缓冲时间。对延期原因进行分类统计，找出最大影响因子。" }
+  ],
+  "Q12": [
+    { matchScore:1, title:"产能严重超载", analysis:"企业已经处于'不敢轻易接新单'的状态，说明产能利用已到极限。这可能是管理效率问题，也可能是结构性产能不足。", consequence:"持续超载运转会导致员工疲劳、质量下降、交付延期等一系列问题。同时，被迫放弃新订单意味着企业在丧失增长机会，市场份额可能被竞争对手蚕食。", direction:"分析产能瓶颈环节（是设备、人员还是管理流程），针对性扩充或优化。短期可通过外协缓解，长期需要建立弹性的产能管理机制。" }
+  ],
+  "Q13": [
+    { matchScore:1, title:"缺乏生产排产计划", analysis:"企业没有系统化的排产计划，完全按'谁催得急先做谁的'原则运转。这种'救火式'生产模式会导致效率低下、资源浪费、质量不稳定。", consequence:"没有排产计划的生产，就像没有导航的开车——可能到达目的地，但走弯路、费油、浪费时间。长期来看，这种模式会限制企业的产能上限和交付可靠性。", direction:"建立基本的排产管理制度，按订单紧急程度和交期进行排序。可以使用简单的Excel排产表或轻量级生产管理工具。" }
+  ],
+  "Q14": [
+    { matchScore:1, title:"质量问题频繁发生", analysis:"产品或项目频繁出现质量问题，说明企业的质量管控体系存在明显缺陷。退货、返工和扣款不仅是直接成本损失，更是客户信任的持续消耗。", consequence:"质量问题的成本远不止返工和赔偿——每一次质量事故都在削弱客户对企业的信心。当质量问题成为常态，客户的容忍度会迅速降低，最终选择更换供应商。", direction:"建立从原材料入库到成品出库的全流程质量检验制度，明确各工序的质量标准和责任人。" }
+  ],
+  "Q15": [
+    { matchScore:1, title:"关键岗位过度依赖个别人", analysis:"核心岗位离不开特定人员，企业存在严重的'人治'风险。一旦关键人员离职，相关业务可能陷入瘫痪。", consequence:"关键人员的流失可能导致生产线停工、项目停滞、客户流失等连锁反应。同时，过度依赖会让这些人员意识到自己的不可替代性，在薪酬和话语权上对企业形成掣肘。", direction:"建立关键岗位的知识文档和操作手册，培养至少一名后备人员。逐步实现从'靠人'到'靠制度'的转变。" }
+  ],
+  "Q16": [
+    { matchScore:1, title:"新人培养周期过长", analysis:"新员工需要三个月以上才能独立胜任工作，说明企业缺乏有效的培训体系和知识传承机制。每次人员变动都意味着长期的产能缺口。", consequence:"过长的培养周期意味着招聘效率低下——招到人后很长时间无法产出价值。如果人员流动频繁，企业将长期处于'培训-上手-离职-再培训'的低效循环中。", direction:"编写关键岗位的操作手册和培训教材，建立'老带新'的标准化带教流程。将培训周期目标设定在一个月以内。" }
+  ],
+  "Q17": [
+    { matchScore:1, title:"供应商集中度过高", analysis:"原材料或外协供应商只有一两家，企业面临严重的供应链单点风险。一旦供应商出现问题（涨价、断供、质量波动），企业几乎没有回旋余地。", consequence:"供应商集中度过高会导致企业在价格谈判中完全处于被动地位，利润空间被压缩。更严重的是，一旦主力供应商突然断供，企业可能面临停产风险。", direction:"至少为关键原材料或外协服务储备2-3家备选供应商，定期进行质量和价格对比评估。" }
+  ],
+  "Q18": [
+    { matchScore:1, title:"供应链稳定性差", analysis:"频繁因原料短缺或供应商问题导致停工或延期，说明供应链管理薄弱。这不只是采购问题，更反映出企业对上游的管控和预案不足。", consequence:"供应链中断会直接导致交付延期、客户不满、赔偿损失。频繁发生会严重损害企业的交付信誉，在客户心中留下'不靠谱'的印象。", direction:"建立安全库存机制，对关键原材料设定最低库存警戒线。同时开发备选供应商，建立应急采购预案。" }
+  ],
+  "Q19": [
+    { matchScore:1, title:"质量一致性差", analysis:"不同批次或项目之间的质量差异较大，说明生产过程缺乏标准化管控。客户会因此感到产品质量不稳定，降低信任度。", consequence:"质量不一致会直接导致客户投诉增加，严重时可能引发退货、索赔甚至终止合作。对于有品牌意识的企业来说，质量波动是品牌形象的大敌。", direction:"建立标准化作业流程（SOP），对关键工序设定统一的质量标准和检验规范。实施首件检验和抽检制度。" }
+  ],
+  "Q20": [
+    { matchScore:1, title:"完全缺乏成本核算", analysis:"企业没有任何成本核算体系，这意味着每一单的利润情况都是一笔糊涂账。无法判断哪些产品/项目赚钱、哪些在亏钱，经营决策完全凭感觉。", consequence:"没有成本核算，企业无法识别利润流失点。可能在'忙忙碌碌'中实际上在亏钱，或者错过了真正高利润的业务机会。长期来看，这种'盲人摸象'式的经营会严重制约企业的发展。", direction:"从建立简单的项目/订单成本记录开始，至少把直接材料成本和直接人工成本核算清楚。" }
+  ],
+  // ============ PRODUCTION FINANCIAL LINE ============
+  "Q21": [
+    { matchScore:1, title:"现金流极度紧张", analysis:"企业账上可动用现金不足一个月的固定支出，这是非常危险的信号。现金流断裂是小微企业倒闭的首要原因，远比亏损更致命。", consequence:"一旦出现大客户延期付款、突发性支出或短期营收下滑，企业可能立即面临无法支付工资、租金或供应商货款的困境。资金链断裂往往没有缓冲时间，直接导致经营停摆。", direction:"立即梳理应收账款，加快回款。同时压缩非必要支出，建立至少能覆盖2-3个月固定支出的现金储备目标。" }
+  ],
+  "Q22": [
+    { matchScore:1, title:"回款周期过长", analysis:"客户回款周期经常超过三个月，说明企业在应收账款管理上存在明显短板。大量资金被客户占用，直接挤压企业的可用现金。", consequence:"回款慢会形成恶性循环——自身现金不足→无法正常运营→交付质量下降→客户更不愿意付款→现金更紧张。同时，长期拖欠的应收账款存在坏账风险。大量资金沉淀在应收中，甚至可能导致无法支付工资和供应商货款。", direction:"建立明确的账期管理和催款机制。对长期拖欠的客户采取分级处理——提醒、协商、暂停供货、法律手段。" }
+  ],
+  "Q23": [
+    { matchScore:1, title:"缺乏成本核算机制", analysis:"企业只有进账出账的概念，没有系统的成本核算。这意味着无法准确判断盈亏状况，经营决策缺乏数据支撑。", consequence:"没有成本数据，就无法判断哪些业务赚钱、哪些亏钱。可能在'做了很多单'的忙碌中实际上在亏损，或者在'感觉不赚钱'的领域中错失了利润机会。", direction:"从核心产品/服务开始，建立直接成本（材料+人工）的核算习惯，逐步扩展到包含间接费用的完整成本分析。" }
+  ],
+  "Q24": [
+    { matchScore:1, title:"定价方式混乱，缺乏策略", analysis:"企业的定价主要靠'跟客户谈'，没有固定的定价方法论。这种模式下，价格完全取决于谈判能力和客户类型，利润率不可控。", consequence:"缺乏定价策略会导致同类产品或服务在不同客户之间的价格差异过大，既可能因为定价过低而亏损，也可能因为定价过高而流失客户。长期来看，企业无法建立稳定的价格体系和利润预期。", direction:"建立基于成本的定价底线，同时根据客户需求和价值感知进行差异化定价。对于标准化产品/服务，制定明确的价格表。" }
+  ],
+  "Q25": [
+    { matchScore:1, title:"利润率持续下滑", analysis:"企业利润率在下降，可能的原因包括竞争加剧导致的降价压力、成本上涨、或管理效率下降。无论原因如何，利润率下滑如果不加以遏制，最终会侵蚀企业的生存基础。", consequence:"利润率下滑意味着企业在同样的营收下赚取更少的利润。如果营收增长无法弥补利润率的下降，企业实际利润将持续减少，最终可能入不敷出。", direction:"分析利润率下滑的具体原因——是成本上升还是价格下降？针对性地制定改善方案。短期内控制成本，长期提升产品/服务附加值。" }
+  ],
+  "Q26": [
+    { matchScore:1, title:"完全没有经营规划", analysis:"企业从未做过年度预算或经营计划，完全处于'走一步看一步'的状态。这意味着企业的资源调配、目标设定和风险预判都缺乏系统性。", consequence:"没有规划的企业，容易在市场变化面前手足无措。同时，缺乏明确目标会导致团队缺乏方向感，资源投入分散，难以形成合力。", direction:"从简单的年度营收目标和费用预算开始，每季度回顾执行情况。不需要复杂的预算体系，关键是建立'目标-执行-复盘'的基本管理节奏。" }
+  ],
+  "Q27": [
+    { matchScore:1, title:"财务合规风险高", analysis:"企业的税务和财务规范性不足，存在合规隐患。在小微企业发展阶段，财务不规范看似节省了成本，但积累的风险可能在未来某一刻集中爆发。", consequence:"财务不合规可能面临税务处罚、银行授信受限、融资困难等问题。当企业需要扩大规模或引入外部合作时，不规范的财务将成为严重障碍。", direction:"聘请专业会计或代账机构，建立基本的财务规范。从票据管理、纳税申报、账务处理三个基础环节开始规范。" }
+  ],
+  "Q28": [
+    { matchScore:1, title:"经营数据完全不可见", analysis:"企业无法随时掌握当月的营收、成本和利润数据，经营决策完全凭感觉。这种'盲开'状态会导致企业对市场变化和内部问题的响应严重滞后。", consequence:"没有实时数据支撑，企业无法及时发现经营异常。可能在问题已经相当严重时才后知后觉，错失最佳干预时机。", direction:"建立基本的经营数据月报制度，至少覆盖营收、成本、利润、应收账款四个核心指标。可以从简单的Excel表格开始。" }
+  ],
+  "Q29": [
+    { matchScore:1, title:"应收账款管理缺失", analysis:"企业没有专人负责应收账款管理，催款完全靠'想起来才催'。这直接导致大量资金被客户无偿占用。", consequence:"应收账款管理不善是企业现金流紧张的重要原因之一。大量资金沉淀在应收账款中，不仅影响日常运营，还存在坏账风险。", direction:"指定专人负责应收账款管理，建立账龄分析表，对逾期账款进行分级催收。对于长期拖欠的款项，必要时采取法律手段。" }
+  ],
+  "Q30": [
+    { matchScore:1, title:"投资决策凭感觉", analysis:"企业在投资新设备、新工具或新项目时完全凭感觉和经验，没有进行投入产出分析。这可能导致无效投资或错失真正有价值的投资机会。", consequence:"凭感觉的投资可能把钱花在错误的地方，造成资金浪费。同时，缺乏投资回报分析可能导致对投资效果的评估失效，无法从经验中学习。", direction:"建立简单的投资评估流程——即使是小金额投资，也至少做一个基本的投入产出估算。" }
+  ],
+  // ============ SERVICE SALES LINE (shared conclusions - many questions are parallel) ============
+  // Service Q1-Q10 use same conclusion structure, keyed by question topic
+  "SQ_Q1": [
+    { matchScore:1, title:"获客渠道高度依赖个人人脉", analysis:"您的客户来源高度依赖个人关系和口碑，企业缺乏系统化的获客能力。一旦您的社交资源被充分开发或个人精力受限，新客增长将明显乏力。", consequence:"客源增长天花板受限于个人社交范围。当您的精力被日常管理大量占用时，前端获客将首当其冲受影响。", direction:"开拓线上获客渠道（如平台入驻、内容营销、社群运营），逐步降低对个人人脉的依赖。" }
+  ]
+};
+
+// Build service conclusions from production conclusions where questions overlap
+// Service questions often have the same diagnostic meaning as production questions
+(function() {
+  // Service Q1 = Production Q1 (获客渠道依赖)
+  DIAG_CONCLUSIONS["SQ_Q1"] = DIAG_CONCLUSIONS["Q1"];
+  // Service Q2 = Production Q2 (单一客户依赖)
+  DIAG_CONCLUSIONS["SQ_Q2"] = DIAG_CONCLUSIONS["Q2"];
+  // Service Q3 = Production Q3 (业务团队只有老板)
+  DIAG_CONCLUSIONS["SQ_Q3"] = DIAG_CONCLUSIONS["Q3"];
+  // Service Q4 = Production Q5 (转化率低)
+  DIAG_CONCLUSIONS["SQ_Q4"] = DIAG_CONCLUSIONS["Q5"];
+  // Service Q5 = Production Q6 (一次性交易)
+  DIAG_CONCLUSIONS["SQ_Q5"] = DIAG_CONCLUSIONS["Q6"];
+  // Service Q6 = Production Q9 (客户不推荐)
+  DIAG_CONCLUSIONS["SQ_Q6"] = DIAG_CONCLUSIONS["Q9"];
+  // Service Q7 = Production Q7 (无客户维护)
+  DIAG_CONCLUSIONS["SQ_Q7"] = DIAG_CONCLUSIONS["Q7"];
+  // Service Q8 = Production Q8 (过度承诺)
+  DIAG_CONCLUSIONS["SQ_Q8"] = DIAG_CONCLUSIONS["Q8"];
+  // Service Q9 = Production Q10 (客户流失)
+  DIAG_CONCLUSIONS["SQ_Q9"] = DIAG_CONCLUSIONS["Q10"];
+  // Service Q10 = Production Q10 (客户流失)
+  DIAG_CONCLUSIONS["SQ_Q10"] = DIAG_CONCLUSIONS["Q10"];
+
+  // Service Q11 = Production Q15 (关键人员依赖) -> adapted for service
+  DIAG_CONCLUSIONS["SQ_Q11"] = [
+    { matchScore:1, title:"服务完全依赖创始人", analysis:"创始人事必躬亲服务几乎所有重要客户，这意味着企业无法规模化——您的时间和精力就是服务的产能上限。", consequence:"创始人一旦因故无法参与服务，客户体验将断崖式下降。同时，个人的精力瓶颈直接制约了企业的客户容量和营收天花板。", direction:"建立标准化服务流程，培养团队能力，逐步将客户服务从个人转移到团队。" }
+  ];
+  // Service Q12 = Production Q19 (质量一致性) -> adapted for service
+  DIAG_CONCLUSIONS["SQ_Q12"] = [
+    { matchScore:1, title:"服务质量一致性差", analysis:"不同员工提供的服务质量差异较大，客户体验完全取决于'碰上谁了'。这说明企业缺乏标准化的服务规范和质量管控体系。", consequence:"服务质量不稳定会严重损害客户信任。客户可能因为一次不好的体验就不再光顾，即使之前的体验很好。", direction:"建立标准化的服务流程规范（SOP），定期进行服务质量评估和员工培训。" }
+  ];
+  // Service Q13 = Production Q12 (产能) -> adapted for service
+  DIAG_CONCLUSIONS["SQ_Q13"] = [
+    { matchScore:1, title:"服务产能已经超负荷", analysis:"团队已经满负荷甚至超负荷运转，基本没有余量承接新客户。这说明服务效率或人力配置存在问题。", consequence:"持续超负荷会导致员工疲劳、服务质量下降、客户满意度降低。被迫推掉新客户意味着企业在放弃增长机会。", direction:"分析服务流程中的低效环节，通过工具、流程优化或合理增员来释放服务产能。" }
+  ];
+  // Service Q14 = Production Q15 (人员依赖) -> adapted for service
+  DIAG_CONCLUSIONS["SQ_Q14"] = [
+    { matchScore:1, title:"核心服务人员流失风险高", analysis:"核心服务人员流失率较高，这说明企业在人才保留和团队建设方面存在短板。频繁的人员更替会直接影响服务质量和客户关系。", consequence:"核心人员离职往往意味着客户跟着走——特别是那些建立了深厚信任关系的客户。每一次人员流失都是客户流失的高风险事件。", direction:"建立有竞争力的薪酬体系和职业发展通道，同时通过标准化流程降低对单个人员的依赖。" }
+  ];
+  // Service Q15 = Production Q15 (客户随人员走) -> adapted
+  DIAG_CONCLUSIONS["SQ_Q15"] = [
+    { matchScore:1, title:"客户认人不认公司", analysis:"核心服务人员离职时客户会跟着走，说明客户对企业的忠诚度建立在个人关系而非公司品牌之上。这是非常脆弱的客户关系模式。", consequence:"客户的'认人不认公司'意味着企业每培养一个服务人员，都在为他未来的独立创业积累客户资源。企业实际上在为竞争对手做嫁衣。", direction:"通过品牌建设、服务标准化、会员体系等方式，将客户关系从个人层面提升到公司层面。" }
+  ];
+  // Service Q16 = Production Q16 (需求理解偏差) -> adapted
+  DIAG_CONCLUSIONS["SQ_Q16"] = [
+    { matchScore:1, title:"客户需求理解偏差大", analysis:"经常出现服务内容与客户实际需求不匹配的情况，说明企业在需求沟通和确认环节存在系统性问题。", consequence:"需求理解偏差会导致返工、客户不满、甚至需要赔偿。每一次偏差都在消耗客户耐心，多次之后客户将选择更换服务商。", direction:"建立标准化的需求确认流程，在服务开始前以书面形式明确服务范围和标准，避免口头理解误差。" }
+  ];
+  // Service Q17 = Production Q17 (客户追加需求) -> adapted
+  DIAG_CONCLUSIONS["SQ_Q17"] = [
+    { matchScore:1, title:"客户频繁追加需求", analysis:"客户在服务过程中不断追加需求，说明前期需求确认不充分，或者企业对需求边界的管控不力。", consequence:"频繁追加需求会打乱服务计划、增加服务成本、压缩利润空间。如果不加以管控，企业可能在'满足客户'的表象下持续亏损。", direction:"在服务开始前进行充分的需求调研和确认，明确服务范围。对于追加需求，建立评估和报价机制。" }
+  ];
+  // Service Q18 = Production Q11 (交付时间)
+  DIAG_CONCLUSIONS["SQ_Q18"] = [
+    { matchScore:1, title:"服务交付经常被催", analysis:"客户经常催促服务进度，说明企业的交付速度未能达到客户预期。这可能是排期不合理、流程效率低或人员配置不足导致的。", consequence:"交付延迟会严重影响客户体验和满意度。在服务行业，客户体验就是核心竞争力，交付延迟会直接导致客户流失。", direction:"梳理服务流程中的瓶颈环节，优化排期管理。对需要一定周期的服务项目，与客户提前沟通预期时间。" }
+  ];
+  // Service Q19 = Production Q19 (投诉处理) -> adapted
+  DIAG_CONCLUSIONS["SQ_Q19"] = [
+    { matchScore:1, title:"缺乏客户投诉处理机制", analysis:"企业没有专门的投诉处理机制，客户反馈的问题只能临时处理。这种'消防式'的客诉管理无法从根本上解决问题。", consequence:"客户投诉如果得不到及时有效的处理，不满情绪会迅速积累并传播。一个不满意的客户可能影响10个潜在客户的购买决策。", direction:"建立客户投诉处理流程，明确受理人、处理时限和反馈机制。定期分析投诉数据，找出系统性问题根源。" }
+  ];
+  // Service Q20 = Production Q15 (创始人参与) -> adapted
+  DIAG_CONCLUSIONS["SQ_Q20"] = [
+    { matchScore:1, title:"创始人无法从一线抽身", analysis:"创始人事必躬亲，几乎所有重要客户都需要亲自服务，说明团队尚未建立起独立的服务能力。", consequence:"创始人的精力被锁定在日常服务中，无法投入企业战略规划、团队建设和业务拓展。企业的天花板就是创始人的时间上限。", direction:"制定从'自己做到团队做'的转移计划，优先将标准化程度高的服务交由团队执行，创始人聚焦在复杂项目的把控上。" }
+  ];
+
+  // Service Financial Q21-Q30
+  DIAG_CONCLUSIONS["SQ_Q21"] = DIAG_CONCLUSIONS["Q21"];
+  DIAG_CONCLUSIONS["SQ_Q22"] = [
+    { matchScore:1, title:"人均产出偏低且无数据", analysis:"企业不清楚人均产出水平，更谈不上优化。没有数据支撑的人效管理，等于在黑暗中开车——不知道方向，也不知道速度。", consequence:"人效低下意味着人工成本占比过高，直接侵蚀利润空间。随着最低工资标准和社会保险费用的上升，人效问题将越来越突出。", direction:"从统计营收和人员数据开始，计算出当前人均产出，然后设定提升目标。通过流程优化和工具赋能来提升人效。" }
+  ];
+  DIAG_CONCLUSIONS["SQ_Q23"] = DIAG_CONCLUSIONS["Q25"]; // 客单价下降 ≈ 利润率下降
+  DIAG_CONCLUSIONS["SQ_Q24"] = DIAG_CONCLUSIONS["Q24"]; // 定价靠客户 ≈ 定价混乱
+  DIAG_CONCLUSIONS["SQ_Q25"] = DIAG_CONCLUSIONS["Q23"]; // 不清楚利润率 ≈ 缺乏成本核算
+  DIAG_CONCLUSIONS["SQ_Q26"] = DIAG_CONCLUSIONS["Q25"]; // 利润率趋势 ≈ 利润率下滑
+  DIAG_CONCLUSIONS["SQ_Q27"] = [
+    { matchScore:1, title:"人工成本占比过高", analysis:"人工成本超过60%，说明企业的运营效率偏低，或者定价不足以覆盖人工成本。在高人工成本结构下，企业对市场波动的抵抗能力非常脆弱。", consequence:"人工成本过高会严重压缩利润空间。一旦营收出现波动或人工成本继续上涨，企业可能迅速从盈利转为亏损。", direction:"通过流程优化、工具引入、服务标准化等方式提升人均产出。同时评估定价策略，确保价格能够覆盖合理的人工成本。" }
+  ];
+  DIAG_CONCLUSIONS["SQ_Q28"] = [
+    { matchScore:1, title:"完全没有经营数据分析", analysis:"企业从未进行过经营数据分析，所有决策都凭直觉和经验。在市场环境快速变化的今天，这种模式的风险越来越高。", consequence:"没有数据分析，企业无法及时发现经营中的问题和机会。可能在亏损时不自知，也可能在机会面前犹豫不决。", direction:"从建立月度营收、成本、利润三个基本数据报表开始，培养看数据的习惯。" }
+  ];
+  DIAG_CONCLUSIONS["SQ_Q29"] = [
+    { matchScore:1, title:"预付费资金管理混乱", analysis:"预付费客户的退费和投诉比较多，说明企业在服务交付或客户期望管理上存在问题。预付费资金的滥用更可能引发信用危机。", consequence:"预付费模式下的退费投诉如果处理不当，可能引发消费者投诉甚至监管介入。同时，预收资金如果被挪用而非用于对应服务，可能面临法律风险。", direction:"建立预付费台账管理制度，确保预收资金与对应服务一一对应。提升服务交付质量，从源头减少退费需求。" }
+  ];
+  DIAG_CONCLUSIONS["SQ_Q30"] = DIAG_CONCLUSIONS["Q30"]; // 投资凭感觉
+})();
+
+// ===================== REPORT BUILD =====================
+function buildReportPreview() {
+  // 免费部分：报告头 + 状态卡片 + 综合评估
+  var h = buildReportHTML(false);
+  h += '<div style="text-align:center;padding:24px;background:#fff;border-radius:12px;margin:10px 24px;">';
+  h += '<div style="font-size:36px;margin-bottom:8px;">🔒</div>';
+  h += '<div style="font-size:14px;color:#333;margin-bottom:6px;">填写信息即可查看完整诊断报告</div>';
+  h += '<div style="font-size:12px;color:#999;line-height:1.6;">包括各业务线详细诊断分析<br>改善优先级建议和行动方案</div>';
+  h += '<button style="margin-top:16px;background:#1a1a2e;color:#fff;border:none;border-radius:24px;padding:11px 36px;font-size:14px;font-weight:500;cursor:pointer;" onclick="showLeadForm()">立即查看</button>';
+  h += '</div>';
+  return h;
+}
+
+function buildFullReport() {
+  return buildReportHTML(true);
+}
+
+function buildReportHTML(full) {
+  const typeLabel = selectedType === 'production' ? '生产型企业' : '服务型企业';
+  const salesLabel = selectedType === 'production' ? '业绩开展' : '客户获取';
+  const opsLabel = selectedType === 'production' ? '生产交付' : '服务交付';
+  const finLabel = '财务管控';
+  const today = new Date();
+  const dateStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+
+  const salesFindings = analyzeFindings('sales');
+  const opsFindings = analyzeFindings('ops');
+  const finFindings = analyzeFindings('fin');
+  const totalHighRisk = salesFindings.filter(function(f){return f.severity==='high'}).length
+    + opsFindings.filter(function(f){return f.severity==='high'}).length
+    + finFindings.filter(function(f){return f.severity==='high'}).length;
+  const totalMidRisk = salesFindings.filter(function(f){return f.severity==='mid'}).length
+    + opsFindings.filter(function(f){return f.severity==='mid'}).length
+    + finFindings.filter(function(f){return f.severity==='mid'}).length;
+
+  let h = '<div class="report-header">';
+  h += '<div class="report-type-tag">' + typeLabel + ' · ' + SIZE_LABELS[selectedSize] + '</div>';
+  h += '<h2>企业诊断报告</h2>';
+  h += '<div class="date">报告日期：' + dateStr + '</div>';
+  h += '</div>';
+
+  h += '<div class="report-health-cards fade-in">';
+  h += buildStatusCard(salesLabel, salesFindings);
+  h += buildStatusCard(opsLabel, opsFindings);
+  h += buildStatusCard(finLabel, finFindings);
+  h += '</div>';
+
+  h += '<div class="report-section fade-in">';
+  h += '<div class="sec-title">综合评估</div>';
+  h += buildOverallAssessment(totalHighRisk, totalMidRisk, salesFindings, opsFindings, finFindings);
+  h += '</div>';
+
+  // 以下为留资后解锁的完整诊断内容
+  if (full) {
+    h += '<div class="report-section fade-in">';
+    h += '<div class="sec-title">' + salesLabel + '线诊断</div>';
+    h += buildLineDiagnosis('sales', salesLabel, salesFindings);
+    h += '</div>';
+
+    h += '<div class="report-section fade-in">';
+    h += '<div class="sec-title">' + opsLabel + '线诊断</div>';
+    h += buildLineDiagnosis('ops', opsLabel, opsFindings);
+    h += '</div>';
+
+    h += '<div class="report-section fade-in">';
+    h += '<div class="sec-title">' + finLabel + '线诊断</div>';
+    h += buildLineDiagnosis('fin', finLabel, finFindings);
+    h += '</div>';
+
+    h += '<div class="report-section fade-in">';
+    h += '<div class="sec-title">改善优先级建议</div>';
+    h += buildPriorityAdvice(salesFindings, opsFindings, finFindings, salesLabel, opsLabel, finLabel);
+    h += '</div>';
+
+    h += '<div class="share-section fade-in">';
+    h += '<button class="share-btn" onclick="downloadReport()">📄 下载报告到本地</button>';
+    h += '<div class="share-note">HTML文件，可离线查看，随时打开都是完整报告</div></div>';
+
+    h += '<div class="qr-section fade-in">';
+    h += '<p>想进一步聊聊？扫码加我微信</p>';
+    h += '<img src="wechat-qr.png" alt="微信二维码">';
+    h += '</div>';
+  }
+  return h;
+}
+
+function buildStatusCard(label, findings) {
+  var highCount = findings.filter(function(f){return f.severity==='high'}).length;
+  var midCount = findings.filter(function(f){return f.severity==='mid'}).length;
+  var icon, statusText, colorClass;
+  if (highCount >= 3) {
+    icon = '⚫'; statusText = '危险'; colorClass = 'health-red';
+  } else if (highCount >= 1) {
+    icon = '🔴'; statusText = '警示'; colorClass = 'health-red';
+  } else if (midCount >= 3) {
+    icon = '🟡'; statusText = '注意'; colorClass = 'health-yellow';
+  } else {
+    icon = '🟢'; statusText = '良好'; colorClass = 'health-green';
+  }
+  return '<div class="health-card"><div class="health-label">' + label + '</div><div class="health-status ' + colorClass + '">' + icon + ' ' + statusText + '</div></div>';
+}
+
+function buildOverallAssessment(totalHigh, totalMid, salesF, opsF, finF) {
+  const salesLabel = selectedType === 'production' ? '业绩开展' : '客户获取';
+  const opsLabel = selectedType === 'production' ? '生产交付' : '服务交付';
+  const finLabel = '财务管控';
+  var h = '';
+  var riskLines = [];
+  if (salesF.filter(function(f){return f.severity==='high'}).length > 0) riskLines.push(salesLabel);
+  if (opsF.filter(function(f){return f.severity==='high'}).length > 0) riskLines.push(opsLabel);
+  if (finF.filter(function(f){return f.severity==='high'}).length > 0) riskLines.push(finLabel);
+  var midLines = [];
+  if (salesF.filter(function(f){return f.severity==='mid'}).length > 0 && riskLines.indexOf(salesLabel) === -1) midLines.push(salesLabel);
+  if (opsF.filter(function(f){return f.severity==='mid'}).length > 0 && riskLines.indexOf(opsLabel) === -1) midLines.push(opsLabel);
+  if (finF.filter(function(f){return f.severity==='mid'}).length > 0 && riskLines.indexOf(finLabel) === -1) midLines.push(finLabel);
+
+  if (totalHigh === 0 && totalMid <= 2) {
+    h += '<p class="overview-text">您的企业整体运营状况良好，各核心业务线均未发现明显风险信号。建议持续关注各维度的优化空间，保持当前的良好势头。</p>';
+  } else if (totalHigh === 0) {
+    h += '<p class="overview-text">您的企业整体运营基本正常，但部分环节存在需要关注的隐患。';
+    if (midLines.length > 0) h += '特别是<strong>' + midLines.join('、') + '</strong>维度有若干待改善点。';
+    h += '建议提前制定针对性的改善计划，防患于未然。</p>';
+  } else if (totalHigh <= 3) {
+    h += '<div class="warn-box">诊断发现多处需要重视的问题，建议系统性排查并着手改善。</div>';
+    h += '<p class="overview-text">当前问题主要集中在<strong>' + riskLines.join('、') + '</strong>维度。这些问题如果持续得不到处理，可能逐步扩散到其他业务线，影响企业的持续经营能力。建议优先解决最紧迫的环节，逐一改善。</p>';
+  } else {
+    h += '<div class="danger-box">诊断发现多条核心业务线同时存在较严重问题，需要尽快采取行动。</div>';
+    h += '<p class="overview-text"><strong>' + riskLines.join('、') + '</strong>等维度均发现了多个风险信号。这些问题如果持续恶化，可能导致客户流失加剧、交付质量下降、资金链紧张，甚至影响企业的基本生存。建议立即进行全面排查，必要时寻求专业咨询支持。</p>';
+  }
+  return h;
+}
+
+function buildLineDiagnosis(line, lineLabel, findings) {
+  var h = '';
+  var highCount = findings.filter(function(f){return f.severity==='high'}).length;
+  var midCount = findings.filter(function(f){return f.severity==='mid'}).length;
+
+  if (highCount === 0 && midCount === 0) {
+    h += '<p class="line-summary healthy">🟢 ' + lineLabel + '线整体运转良好，本次诊断未发现明显风险信号。建议继续保持当前做法，并持续寻找优化空间。</p>';
+  } else if (highCount === 0) {
+    h += '<p class="line-summary caution">🟡 ' + lineLabel + '线存在若干需要关注的隐患，虽然尚未构成严重问题，但如果不及时调整，可能逐步恶化。以下为本次诊断发现的具体情况：</p>';
+  } else if (highCount <= 2) {
+    h += '<p class="line-summary warning">🔴 ' + lineLabel + '线诊断出多个需要重视的问题，这些环节已成为制约企业经营效率的瓶颈。以下为具体分析：</p>';
+  } else {
+    h += '<p class="line-summary danger">⚫ ' + lineLabel + '线存在较严重问题，多处环节同时亮起警示，已对企业正常运转产生实质影响。以下为具体分析：</p>';
+  }
+
+  if (findings.length > 0) {
+    findings.forEach(function(f) {
+      h += '<div class="diag-item diag-' + f.severity + '">';
+      h += '<div class="diag-title">' + f.icon + ' ' + f.title + '</div>';
+      if (f.analysis) h += '<div class="diag-analysis">' + f.analysis + '</div>';
+      if (f.consequence) h += '<div class="diag-consequence"><strong>如不改善：</strong>' + f.consequence + '</div>';
+      if (f.direction) h += '<div class="diag-direction"><strong>改善方向：</strong>' + f.direction + '</div>';
+      h += '</div>';
+    });
+  }
+  return h;
+}
+
+function analyzeFindings(line) {
+  var findings = [];
+  var lineQs = allQuestions.filter(function(q) { return q.line === line && q.type === 'main'; });
+  lineQs.forEach(function(q) {
+    var optIdx = answers[q.id];
+    if (optIdx === undefined) return;
+    var opt = q.options[optIdx];
+    var sc = opt.score;
+    if (sc <= 1) {
+      var diag = getDiagConclusion(q, opt, 'high');
+      if (diag) findings.push(diag);
+    } else if (sc === 2) {
+      var diag2 = getDiagConclusion(q, opt, 'mid');
+      if (diag2) findings.push(diag2);
+    }
+  });
+  findings.sort(function(a,b) { return (a.severity === 'high' ? 0 : 1) - (b.severity === 'high' ? 0 : 1); });
+  return findings;
+}
+
+function getDiagConclusion(q, opt, severity) {
+  var optText = opt.text.replace(/^[A-D]\.\s*/, '');
+  var conclusions = null;
+  // 关键：根据企业类型选择对应的结论数据
+  // 生产型直接查 Q+id，服务型直接查 SQ_Q+id
+  if (selectedType === 'service') {
+    conclusions = DIAG_CONCLUSIONS['SQ_' + q.id];
+  }
+  if (!conclusions) {
+    conclusions = DIAG_CONCLUSIONS[q.id];
+  }
+  if (!conclusions) {
+    if (severity === 'high') {
+      return { title: optText.substring(0, 20) + '...', analysis: '当前状态：' + optText + '。这一环节存在明显短板，可能对企业的整体运营效率产生负面影响。', consequence: '长期忽视可能导致该环节问题持续恶化，拖累其他业务线的正常运转。', direction: '建议尽快梳理该环节的现状，建立基本的管控机制和改善目标。', icon: '🔴', severity: 'high' };
+    }
+    return { title: optText.substring(0, 20) + '...', analysis: '当前状态：' + optText + '。这一环节有改善空间，值得关注。', consequence: null, direction: '建议定期关注该环节的运行状况，适时优化。', icon: '🟡', severity: 'mid' };
+  }
+  var matched = null;
+  for (var i = 0; i < conclusions.length; i++) {
+    var c = conclusions[i];
+    if (c.matchScore !== undefined && c.matchScore === opt.score) { matched = c; break; }
+    if (c.matchText && optText.indexOf(c.matchText) !== -1) { matched = c; break; }
+  }
+  if (!matched) matched = conclusions[0];
+  if (!matched.icon) matched.icon = severity === 'high' ? '🔴' : '🟡';
+  if (!matched.severity) matched.severity = severity;
+  return matched;
+}
+
+function buildPriorityAdvice(salesF, opsF, finF, salesLabel, opsLabel, finLabel) {
+  var dims = [
+    { key:'sales', count: salesF.length, highCount: salesF.filter(function(f){return f.severity==='high'}).length, label: salesLabel },
+    { key:'ops', count: opsF.length, highCount: opsF.filter(function(f){return f.severity==='high'}).length, label: opsLabel },
+    { key:'fin', count: finF.length, highCount: finF.filter(function(f){return f.severity==='high'}).length, label: finLabel }
+  ];
+  dims.sort(function(a,b) {
+    if (b.highCount !== a.highCount) return b.highCount - a.highCount;
+    return b.count - a.count;
+  });
+  var totalIssues = dims[0].count + dims[1].count + dims[2].count;
+  var h = '<p>根据本次诊断发现的' + totalIssues + '个问题点，建议按以下优先级推进改善工作：</p>';
+  if (totalIssues > 0) {
+    h += '<div class="priority-item"><span class="priority-num">1</span><div><strong>' + dims[0].label + '</strong> — 发现' + dims[0].count + '个问题点（其中' + dims[0].highCount + '个高风险），最需要优先关注。</div></div>';
+    h += '<div class="priority-item"><span class="priority-num">2</span><div><strong>' + dims[1].label + '</strong> — 发现' + dims[1].count + '个问题点（其中' + dims[1].highCount + '个高风险），建议在解决首要问题后逐步推进。</div></div>';
+    h += '<div class="priority-item"><span class="priority-num">3</span><div><strong>' + dims[2].label + '</strong> — 发现' + dims[2].count + '个问题点，改善优先级相对较低，保持当前水平并持续优化。</div></div>';
+  } else {
+    h += '<p>本次诊断未发现明显风险信号，企业整体运营状况良好。建议持续关注各维度的优化空间。</p>';
+  }
+  h += '<div class="priority-note">以上建议基于本次诊断的答题数据分析，如需深入了解具体改善方案，欢迎联系墨岱科技进行深度诊断。</div>';
+  return h;
 }
 
 // ===================== DOWNLOAD =====================
-function getStandaloneReportHTML() {
-  const html = buildArticle(false);
-  const css = '<style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:#f5f5f5;color:#333}.report-screen{background:#f5f5f5;padding-bottom:40px}.report-header{background:linear-gradient(135deg,#1a1a2e,#0f3460);color:#fff;padding:40px 24px 32px;text-align:center}.report-type-tag{display:inline-block;background:rgba(255,255,255,0.15);border-radius:20px;padding:6px 20px;font-size:13px;margin-bottom:12px}.report-header h2{font-size:22px;font-weight:500;margin-bottom:6px}.report-header .date{font-size:12px;color:rgba(255,255,255,0.6)}.report-score-cards{display:flex;gap:12px;padding:20px 24px}.report-score-cards .card{flex:1;background:#fff;border-radius:12px;padding:16px 12px;text-align:center}.report-score-cards .card .label{font-size:12px;color:#999;margin-bottom:6px}.report-score-cards .card .score{font-size:22px;font-weight:500}.report-score-cards .card .light{display:inline-block;width:10px;height:10px;border-radius:50%;margin-top:4px}.light-green{background:#27ae60}.light-yellow{background:#f39c12}.light-red{background:#e74c3c}.report-section{background:#fff;border-radius:12px;margin:12px 24px;padding:20px}.report-section h3{font-size:15px;font-weight:500;margin-bottom:12px;color:#1a1a2e}.report-section p{font-size:15px;line-height:2;color:#333;margin-bottom:10px}.sec-title{font-size:17px;font-weight:600;color:#1a1a2e;margin:24px 0 12px;padding-bottom:8px;border-bottom:1px solid #eee}.sec-title:first-child{margin-top:0}.warn-box{color:#c0392b;background:#fff5f5;border-left:3px solid #e74c3c;padding:14px 16px;margin:14px 0;font-size:14px;line-height:1.9;border-radius:0 10px 10px 0}.overview-num{font-size:15px;line-height:2.2;color:#333;margin-bottom:6px;padding-left:4px}.overview-lead{font-size:17px;font-weight:500;color:#1a1a2e;line-height:2;margin-bottom:14px}.overview-warn{font-size:14px;line-height:2;color:#c0392b;margin:10px 0;padding:10px 14px;background:#fff5f5;border-radius:8px}.closing{font-size:15px;line-height:2;color:#888;margin-bottom:8px}.contact-section{background:#fff;border-radius:12px;margin:12px 24px;padding:24px;text-align:center}.contact-section h4{font-size:15px;font-weight:500;margin-bottom:8px}.contact-section p{font-size:13px;color:#666;line-height:1.6}</style>';
-  return '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>墨岱科技 · 企业诊断报告</title>'+css+'</head><body><div class="report-screen">'+html+'</div></body></html>';
-}
-
 function downloadReport() {
-  const html = getStandaloneReportHTML();
-  const blob = new Blob([html], {type:'text/html;charset=utf-8'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  const dateStr = new Date().toLocaleDateString('zh-CN').replace(/\//g,'-');
+  var dlCSS = '*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:#f5f5f5;color:#333;padding:20px;max-width:600px;margin:0 auto}.report-header{background:linear-gradient(135deg,#1a1a2e,#0f3460);color:#fff;padding:30px 20px;text-align:center;border-radius:12px;margin-bottom:16px}.report-header h2{font-size:20px;margin-bottom:4px}.report-header .date{font-size:11px;color:rgba(255,255,255,0.6)}.report-type-tag{display:inline-block;background:rgba(255,255,255,0.15);border-radius:20px;padding:4px 16px;font-size:12px;margin-bottom:8px}.report-health-cards{display:flex;gap:10px;margin-bottom:16px;padding:0 4px}.health-card{flex:1;background:#fff;border-radius:12px;padding:14px 10px;text-align:center}.health-label{font-size:11px;color:#999;margin-bottom:6px}.health-status{font-size:13px;font-weight:500}.health-green{color:#27ae60}.health-yellow{color:#e67e22}.health-red{color:#e74c3c}.report-section{background:#fff;border-radius:12px;padding:16px;margin-bottom:10px}.report-section .sec-title{font-size:16px;font-weight:600;color:#1a1a2e;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #eee}.report-section p{font-size:14px;line-height:1.9;margin-bottom:8px}.overview-text{font-size:14px;line-height:1.9;color:#333}.warn-box{color:#c0392b;background:#fff5f5;border-left:3px solid #e74c3c;padding:12px 14px;margin:10px 0;font-size:13px;line-height:1.8;border-radius:0 10px 10px 0}.danger-box{color:#fff;background:#c0392b;padding:12px 14px;margin:10px 0;font-size:14px;line-height:1.8;border-radius:0 10px 10px 0;font-weight:500}.line-summary{font-size:14px;line-height:1.8;padding:8px 12px;border-radius:8px;margin-bottom:10px}.line-summary.healthy{background:#e8f5e9;color:#2e7d32}.line-summary.caution{background:#fff3e0;color:#e65100}.line-summary.warning{background:#fff5f5;color:#c62828}.line-summary.danger{background:#f3e5f5;color:#6a1b9a}.diag-item{padding:12px 14px;margin:8px 0;border-radius:10px;border-left:4px solid}.diag-high{border-left-color:#e74c3c;background:#fef9f9}.diag-mid{border-left-color:#f39c12;background:#fffdf5}.diag-title{font-size:14px;font-weight:600;margin-bottom:6px;color:#333}.diag-analysis{font-size:13px;line-height:1.8;color:#555;margin-bottom:4px}.diag-consequence{font-size:13px;line-height:1.8;color:#c0392b;margin-bottom:4px}.diag-direction{font-size:13px;line-height:1.8;color:#2e7d32}.no-issue{font-size:13px;color:#888;text-align:center;padding:10px}.priority-item{display:flex;align-items:flex-start;gap:12px;margin:10px 0}.priority-num{width:28px;height:28px;background:#1a1a2e;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex-shrink:0}.priority-item div{font-size:13px;line-height:1.8;color:#555}.priority-item strong{color:#333}.priority-note{margin-top:14px;padding:12px;background:#f0f4ff;border-radius:8px;font-size:12px;color:#666;line-height:1.8}.share-section{text-align:center;padding:20px 0}.share-btn{background:#1a1a2e;color:#fff;border:none;padding:14px 40px;border-radius:30px;font-size:15px;cursor:pointer}.share-note{font-size:11px;color:#aaa;margin-top:8px}.qr-section{text-align:center;padding:20px 0}.qr-section p{font-size:13px;color:#666;margin-bottom:10px}.qr-section img{width:150px;height:150px;border-radius:10px}.fade-in{animation:fadeIn 0.5s ease}@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}.report-blur{filter:blur(6px);pointer-events:none;user-select:none}.report-lock{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:10}.lock-icon{font-size:48px;margin-bottom:12px}.lock-text{font-size:16px;color:#333;margin-bottom:20px}.unlock-btn{background:#1a1a2e;color:#fff;border:none;padding:12px 32px;border-radius:24px;font-size:14px;cursor:pointer}.screen{display:none}.screen.active{display:block}';
+  var htmlContent = '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>墨岱科技 · 企业诊断报告</title><style>' + dlCSS + '</style></head><body>' + buildReportHTML(true) + '</body></html>';
+  var blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
   a.href = url;
-  a.download = '墨岱科技_企业诊断报告_' + dateStr + '.html';
-  document.body.appendChild(a);
+  a.download = '墨岱科技-企业诊断报告-' + new Date().toISOString().slice(0,10) + '.html';
   a.click();
-  document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
+
 </script>
 </body>
 </html>
